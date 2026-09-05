@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -334,6 +335,7 @@ export function AtlasApp() {
           <button onClick={openBreakthroughs}>What AI solved</button>
           <button aria-label="Surprise me with a problem" onClick={surprise}>Surprise me</button>
           <button onClick={browseAtlas}>Browse the atlas</button>
+          <Link href="/research">Research history</Link>
           {isValyuMode && (user ? (
             <button onClick={logOut}>{user.name || user.email.split("@")[0]} · Sign out</button>
           ) : (

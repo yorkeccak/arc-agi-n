@@ -8,6 +8,7 @@ import { AuthDialog } from "@/components/auth-dialog";
 import { ResearchDocument, countUnresolvedCitations, extractReportSections } from "@/components/research-document";
 import { SourceFavicon, sourceHost } from "@/components/source-favicon";
 import { parseResearchEffort, researchEfforts, type ResearchEffort } from "@/lib/research-effort";
+import { rememberLocalResearch } from "@/lib/local-research-history";
 
 interface ResearchResult {
   taskId: string;
@@ -129,6 +130,16 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
         polls += 1;
         statusRef.current = data.status;
         setResearch(data);
+        if (selfHosted && access) {
+          rememberLocalResearch({
+            id: taskId,
+            title: data.title || localContext.title || "Research report",
+            status: data.status,
+            createdAt: data.createdAt,
+            completedAt: data.completedAt,
+            reportPath: `/research/${encodeURIComponent(taskId)}?access=${encodeURIComponent(access)}`,
+          });
+        }
         setRequestError(undefined);
         if (activeStatuses.has(data.status)) schedule(Math.min(20_000, 5_000 + Math.floor(polls / 4) * 5_000));
       } catch (error) {
@@ -156,7 +167,7 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
       activeRequest?.abort();
       document.removeEventListener("visibilitychange", resumeWhenVisible);
     };
-  }, [access, taskId, retryKey]);
+  }, [access, taskId, retryKey, selfHosted, localContext.title]);
 
   const progress = useMemo(() => {
     const current = research.progress?.currentStep;
@@ -193,7 +204,7 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
         <Link href="/#atlas" className="report-logo" aria-label="Return to ARC-AGI-N">
           <ArcLogo />
         </Link>
-        <Link href="/#atlas" className="report-back"><ArrowLeft size={16} /> Return to the atlas</Link>
+        <Link href="/research" className="history-back"><ArrowLeft size={16} /> Research history</Link>
       </header>
 
       <div className="report-body">

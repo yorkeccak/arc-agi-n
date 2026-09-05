@@ -3,6 +3,18 @@ import test from "node:test";
 
 const baseUrl = process.env.TEST_BASE_URL || "http://localhost:3100";
 
+test("history page is reachable and anonymous requests cannot list private reports", async () => {
+  const page = await fetch(`${baseUrl}/research`);
+  assert.equal(page.status, 200);
+  const html = await page.text();
+  assert.match(html, /Research history/);
+  assert.match(html, /noindex/);
+  const history = await fetch(`${baseUrl}/api/deepresearch/history`);
+  assert.ok([401, 403].includes(history.status));
+  assert.match(history.headers.get("cache-control"), /no-store/);
+  assert.equal((await history.json()).jobs, undefined);
+});
+
 test("paid endpoints reject cross-origin and non-JSON requests before launching work", async () => {
   for (const path of ["/api/search", "/api/deepresearch"]) {
     const crossOrigin = await fetch(`${baseUrl}${path}`, {
