@@ -18,6 +18,14 @@ This formalizes the argument of Frey, Serre, Ribet, Wiles and Taylor-Wiles, buil
 
 The artifact reports a from-scratch Lean 4.33.1 build, a comparator check against a Mathlib-only statement, and acceptance by the independent nanoda kernel with disclosed performance patches. The theorem depends only on Lean's three standard axioms. These are the authors' published verification results; we have not rerun that resource-intensive verification.
 
+### Taking a stab at an open problem
+
+The [10 August research account](https://www.anthropic.com/research/riemann-zeta) reports a 67.2% lower bound for the proportion of zeta zeros on the critical line, up from 41.6%. The Riemann hypothesis itself remains open. A non-mathematician initiated the attempt, encouraged continued exploration, and specialists later reviewed the result.
+
+The [released Lean artifact](https://github.com/anthropics/zeta-23-lean) now redirects to the `formal-math` repository's `zeta23` project. Its verification workflow includes a pinned toolchain, comparator and independent kernel checks. We have not rerun those checks.
+
+The useful lesson for a starting prompt is persistence with verification: explore seriously, test alternatives, and make smaller contributions explicit when the original target remains out of reach. Encouragement is not evidence that an argument is correct.
+
 ## Selected results
 
 | Date | Result | What it proves, and what it does not |

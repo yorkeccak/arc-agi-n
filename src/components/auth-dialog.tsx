@@ -77,11 +77,11 @@ export function AuthDialog({ open, onClose, returnTo }: AuthDialogProps) {
       <div ref={dialogRef} className="auth-dialog" role="dialog" aria-modal="true" aria-labelledby="auth-dialog-title" aria-describedby="auth-dialog-description" onClick={(event) => event.stopPropagation()}>
         <button ref={closeButtonRef} className="dialog-close" onClick={onClose} aria-label="Close sign in">Close</button>
         <p>Valyu account</p>
-        <h2 id="auth-dialog-title">{resumesResearch ? "Sign in to research this problem." : "Sign in to ARC-AGI-N."}</h2>
+        <h2 id="auth-dialog-title">{resumesResearch ? "Sign in to research this problem." : "Sign in for DeepResearch."}</h2>
         <span id="auth-dialog-description">
           {resumesResearch
             ? "Valyu DeepResearch will build a sourced report on prior work, open gaps and a practical starting plan, then email you when it is ready."
-            : "Use your Valyu account for live problem search and sourced DeepResearch reports."}
+            : "Search is open to everyone. Sign in with Valyu to build reports on a problem's history, prior work and promising approaches."}
         </span>
         {configured ? (
           <a className="primary-action auth-action" href={signInPath}>

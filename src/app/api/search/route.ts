@@ -1,11 +1,8 @@
 import { NextResponse } from "next/server";
-import { Valyu, type AnswerResponse, type AnswerStreamChunk } from "valyu-js";
-import { isSelfHostedMode } from "@/lib/app-mode";
+import type { AnswerStreamChunk } from "valyu-js";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { validatePaidRequest } from "@/lib/request-security";
-import { withDeadline } from "@/lib/network";
 import { issueResearchToken } from "@/lib/research-token";
-import { getValyuAccessToken } from "@/lib/valyu-session";
 import type { DiscoveredProblem, Field } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -163,9 +160,10 @@ const isAuthoritativeSource = (result: SourceResult) => {
 };
 
 const weakEvidencePaths = /\/(?:news|events?|talks?|courses?|people|profiles?|press|blog|topics)(?:\/|$)|\/(?:~|users?\/)[^/]+/i;
+const isBlockedSource = (result: SourceResult) => /^(?:checking (?:your )?browser|just a moment|one moment,? please|access denied|attention required|security (?:check|verification)|verify (?:that )?you(?: are|'re) human|robot check|captcha)\b/i.test((result.title || "").trim());
 
 const isEvidenceSource = (result: SourceResult) => {
-  if (!isAuthoritativeSource(result) || isWeakSource(result.url)) return false;
+  if (isBlockedSource(result) || !isAuthoritativeSource(result) || isWeakSource(result.url)) return false;
   try {
     const url = new URL(result.url);
     if (weakEvidencePaths.test(url.pathname)) return false;
@@ -178,7 +176,7 @@ const isEvidenceSource = (result: SourceResult) => {
 };
 
 const asLeads = (results: SourceResult[]) => results
-  .filter((result) => result.url && result.title && !isWeakSource(result.url) && isAuthoritativeSource(result))
+  .filter((result) => result.url && result.title && !isBlockedSource(result) && !isWeakSource(result.url) && isAuthoritativeSource(result))
   .slice(0, 8)
   .map((result) => ({
     title: result.title,
@@ -355,53 +353,26 @@ const validateProblems = (
   });
 };
 
-async function answerViaOAuth(query: string, accessToken: string, systemInstructions: string, requestSignal: AbortSignal, searchType: "all" | "proprietary" = "all") {
-  const proxyUrl = `${process.env.VALYU_APP_URL || "https://platform.valyu.ai"}/api/oauth/proxy`;
-  const response = await fetch(proxyUrl, {
+async function searchViaApiKey(query: string, apiKey: string, requestSignal: AbortSignal, searchType: "all" | "proprietary") {
+  const response = await fetch(`${process.env.VALYU_API_URL || "https://api.valyu.ai/v1"}/search`, {
     method: "POST",
-    headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
+    headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
     body: JSON.stringify({
-      path: "/v1/answer",
-      method: "POST",
-      body: {
-        query,
-        search_type: searchType,
-        structured_output: problemSchema,
-        fast_mode: true,
-        system_instructions: systemInstructions,
-      },
-    }),
-    signal: AbortSignal.any([requestSignal, AbortSignal.timeout(80_000)]),
-  });
-  if (!response.ok) {
-    if (response.status === 401) throw new Error("Session expired. Sign in again.");
-    throw new Error(response.status === 402 ? "Insufficient Valyu credits" : "Valyu search unavailable");
-  }
-  return response.json();
-}
-
-async function searchViaOAuth(query: string, accessToken: string, requestSignal: AbortSignal, searchType: "all" | "proprietary" = "all") {
-  const response = await fetch(`${process.env.VALYU_APP_URL || "https://platform.valyu.ai"}/api/oauth/proxy`, {
-    method: "POST",
-    headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      path: "/v1/search",
-      method: "POST",
-      body: {
-        query,
-        search_type: searchType,
-        max_num_results: 12,
-        relevance_threshold: 0.35,
-        response_length: "short",
-        fast_mode: searchType !== "proprietary",
-        exclude_sources: weakSourceDomains,
-      },
+      query,
+      search_type: searchType,
+      max_num_results: 12,
+      is_tool_call: true,
+      relevance_threshold: 0.35,
+      response_length: "short",
+      fast_mode: searchType !== "proprietary",
+      excluded_sources: weakSourceDomains,
+      instructions: "Prioritize sources that explicitly name an unresolved question. Prefer primary papers, scholarly reviews, official research institutes and authoritative open-problem lists.",
     }),
     signal: AbortSignal.any([requestSignal, AbortSignal.timeout(25_000)]),
   });
   if (!response.ok) return [];
-  const data = await response.json() as { results?: SourceResult[] };
-  return data.results || [];
+  const data = await response.json() as { success?: boolean; results?: SourceResult[] };
+  return data.success === false ? [] : data.results || [];
 }
 
 async function* answerViaApiKey(
@@ -429,6 +400,7 @@ async function* answerViaApiKey(
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
   let buffer = "";
+  let eventType = "";
   try {
     while (true) {
       const { done, value } = await reader.read();
@@ -437,8 +409,11 @@ async function* answerViaApiKey(
       const lines = buffer.split("\n");
       buffer = lines.pop() || "";
       for (const line of lines) {
-        if (!line.startsWith("data: ")) continue;
-        const value = line.slice(6);
+        if (!line.trim()) eventType = "";
+        if (line.startsWith("event:")) eventType = line.slice(6).trim();
+        if (!line.startsWith("data:")) continue;
+        if (eventType === "error") throw new Error("Search provider failed");
+        const value = line.slice(5).trimStart();
         if (value === "[DONE]") {
           yield { type: "done" } satisfies AnswerStreamChunk;
           continue;
@@ -448,6 +423,9 @@ async function* answerViaApiKey(
           data = JSON.parse(value) as Record<string, unknown>;
         } catch {
           continue;
+        }
+        if (data.success === false || data.type === "error" || data.error != null) {
+          throw new Error("Search provider failed");
         }
         if (Array.isArray(data.search_results) && data.success === undefined) {
           yield { type: "search_results", search_results: data.search_results } as AnswerStreamChunk;
@@ -500,12 +478,9 @@ export async function POST(request: Request) {
     const researchQuery = `Find up to 4 concrete, currently unsolved research questions related to: ${normalizedQuery}${field ? ` in ${field}` : ""}. Prioritize 2023-2026 paper conclusions, review future-directions sections and maintained authoritative problem lists containing the exact phrases open problem, open question, remains unresolved, unknown or future work. Each question must be narrow and falsifiable, not a topic heading. For every candidate, quote a short verbatim source passage that explicitly says the question, uncertainty or blocking gap remains open, and return its exact URL. Classify agentReadiness as agent-ready, hybrid or physical-world. Prefer agent-ready questions with named public datasets, codebases, formal libraries or bounded compute. The firstStep must be executable within 72 hours and the successCriterion must say exactly what result would count as progress or falsify the route. For a formal mathematics question, require a rigorous sub-lemma, proof-producing computation, exact certificate, explicit counterexample or provably improved bound; random trials and numerical evidence never establish a theorem. Check basic parameter feasibility before proposing a computation. Omit physical-world candidates unless the request explicitly asks for experimental work. Return fewer candidates when evidence is weak. Exclude solved questions, invented thresholds, policy advocacy, generic deployment goals and projects dependent mainly on political adoption. Reject a candidate if any retrieved source announces its proof, solution or resolution.`;
     const evidenceQuery = `${normalizedQuery}${field ? ` in ${field}` : ""}. Find recent primary papers and scholarly reviews, preferably from 2023-2026, whose text explicitly says a concrete question is an open problem, open question, remains unresolved, remains unknown, or is future work. Exclude papers announcing proofs or solutions.`;
     const systemInstructions = `Act as a skeptical scientific research editor. Return narrow, falsifiable, currently open questions${field ? ` in ${field}` : ""}, never topic labels. Omit any candidate unless a retrieved primary, peer-reviewed or institutional source contains a verbatim passage explicitly describing the unresolved question, uncertainty or failure mode. Put that exact excerpt and exact URL in sourceEvidence; never invent or paraphrase evidence. Prefer recent reviews plus primary work and independent publications. Never use social posts, Wikipedia, news, personal notes, event pages, course pages or aggregators as open-status evidence. Prefer tractable frontier edges over famous monuments. Do not return a Clay problem, a grand unification problem, dark-matter identity or another field-defining monument unless the request names it directly. Prefer agent-ready work using named public data, code, formal tools or bounded compute. executionResources must name what is available. firstStep must fit 72 hours. successCriterion must be measurable and falsifiable. For formal mathematics, firstStep must target a rigorous sub-lemma, proof-producing computation, exact certificate, explicit counterexample or provably improved bound. Never claim that Monte Carlo, random sampling, a tested range or failure to find a counterexample proves or materially supports a universal theorem. Validate elementary parameter feasibility before proposing a computation. Mark work needing both computation and later experiments as hybrid. Mark work that cannot progress without a lab, field campaign or proprietary facility as physical-world. Exclude physical-world candidates unless explicitly requested. Never invent a benchmark, threshold, dataset or open status. Return fewer candidates rather than weak ones.`;
-    const selfHosted = isSelfHostedMode();
-    const apiKey = selfHosted ? process.env.VALYU_API_KEY : undefined;
-    const accessToken = selfHosted ? undefined : await getValyuAccessToken();
-    if (selfHosted && !apiKey) return NextResponse.json({ error: "VALYU_API_KEY is not configured." }, { status: 503 });
-    if (!selfHosted && !accessToken) return NextResponse.json({ error: "Sign in to run live search." }, { status: 401 });
-    const limit = checkRateLimit(request, "search", selfHosted ? 20 : 40, 10 * 60 * 1000);
+    const apiKey = process.env.VALYU_API_KEY;
+    if (!apiKey) return NextResponse.json({ error: "Live search is temporarily unavailable." }, { status: 503 });
+    const limit = checkRateLimit(request, "search", 20, 10 * 60 * 1000);
     if (!limit.allowed) {
       return NextResponse.json({ error: "Too many searches. Try again shortly." }, { status: 429, headers: { "Retry-After": String(limit.retryAfter) } });
     }
@@ -557,73 +532,42 @@ export async function POST(request: Request) {
           send({ type: "status", message: "Opening research and web indexes" });
           let problems: DiscoveredProblem[] = [];
 
-          if (selfHosted) {
-            const client = new Valyu(apiKey!);
-            const searchEvidence = (searchType: "all" | "proprietary", fastMode: boolean) => withDeadline(client.search(evidenceQuery, {
-              searchType,
-              maxNumResults: 12,
-              relevanceThreshold: 0.35,
-              responseLength: "short",
-              fastMode,
-              excludeSources: weakSourceDomains,
-              instructions: "Prioritize sources that explicitly name an unresolved question. Prefer primary papers, scholarly reviews, official research institutes and authoritative open-problem lists.",
-            }), 25_000, "Search evidence timed out").then(async (evidence) => {
-              if (evidence.success) await emitSources(evidence.results);
-            });
-            await Promise.allSettled([
-              searchEvidence("all", true),
-              searchEvidence("proprietary", false),
-            ]);
-            searchSignal.throwIfAborted();
-            if (seenSources.size > 0) send({ type: "status", message: `Reading ${seenSources.size} authoritative sources` });
+          await Promise.allSettled((["all", "proprietary"] as const).map(async (searchType) => {
+            const evidence = await searchViaApiKey(evidenceQuery, apiKey, searchSignal, searchType);
+            await emitSources(evidence);
+          }));
+          searchSignal.throwIfAborted();
+          if (seenSources.size > 0) send({ type: "status", message: `Reading ${seenSources.size} authoritative sources` });
 
-            const answer = answerViaApiKey(
-              groundWithSources(researchQuery, authoritativeSources.values()),
-              apiKey!,
-              systemInstructions,
-              searchSignal,
-            );
+          const answer = answerViaApiKey(
+            groundWithSources(researchQuery, authoritativeSources.values()),
+            apiKey,
+            systemInstructions,
+            searchSignal,
+          );
 
-            let streamedContent = "";
-            let synthesisStarted = false;
-            const iterator = answer[Symbol.asyncIterator]();
-            while (true) {
-              const next = await iterator.next();
-              if (next.done) break;
-              const chunk = next.value;
-              if (searchSignal.aborted) break;
-              if (chunk.type === "search_results" && chunk.search_results) {
-                await emitSources(chunk.search_results);
-                send({ type: "status", message: `Reading ${seenSources.size} promising sources` });
-              }
-              if (chunk.type === "content" && chunk.content) {
-                streamedContent += chunk.content;
-                if (!synthesisStarted) {
-                  synthesisStarted = true;
-                  send({ type: "status", message: "Synthesizing exact open questions" });
-                }
-              }
-              if (chunk.type === "metadata") {
-                if (chunk.search_results) await emitSources(chunk.search_results);
-                problems = parseProblems(chunk.contents || streamedContent);
-              }
-              if (chunk.type === "error") throw new Error(chunk.error || "Search failed");
+          let streamedContent = "";
+          let synthesisStarted = false;
+          for await (const chunk of answer) {
+            if (searchSignal.aborted) break;
+            if (chunk.type === "search_results" && chunk.search_results) {
+              await emitSources(chunk.search_results);
+              send({ type: "status", message: `Reading ${seenSources.size} promising sources` });
             }
-            if (problems.length === 0) problems = parseProblems(streamedContent);
-          } else {
-            const [paperSources, allSources] = await Promise.all([
-              searchViaOAuth(evidenceQuery, accessToken!, searchSignal, "proprietary"),
-              searchViaOAuth(evidenceQuery, accessToken!, searchSignal, "all"),
-            ]);
-            await emitSources([...paperSources, ...allSources]);
-            searchSignal.throwIfAborted();
-            if (seenSources.size > 0) send({ type: "status", message: `Reading ${seenSources.size} authoritative sources` });
-            const result = await answerViaOAuth(groundWithSources(researchQuery, authoritativeSources.values()), accessToken!, systemInstructions, searchSignal) as AnswerResponse;
-            if (result.success === false) throw new Error(result.error || "Search failed");
-            await emitSources(result.search_results || []);
-            send({ type: "status", message: "Synthesizing exact open questions" });
-            problems = parseProblems(result.contents);
+            if (chunk.type === "content" && chunk.content) {
+              streamedContent += chunk.content;
+              if (!synthesisStarted) {
+                synthesisStarted = true;
+                send({ type: "status", message: "Synthesizing exact open questions" });
+              }
+            }
+            if (chunk.type === "metadata") {
+              if (chunk.search_results) await emitSources(chunk.search_results);
+              problems = parseProblems(chunk.contents || streamedContent);
+            }
+            if (chunk.type === "error") throw new Error(chunk.error || "Search failed");
           }
+          if (problems.length === 0) problems = parseProblems(streamedContent);
 
           send({
             type: "status",
@@ -649,7 +593,7 @@ export async function POST(request: Request) {
           if (process.env.NODE_ENV !== "production") {
             console.error("[search]", error instanceof Error ? `${error.name}: ${error.message}` : "Unknown search failure");
           }
-          const message = error instanceof Error && (error.message.includes("credits") || error.message.includes("Sign in") || error.message.includes("timed out"))
+          const message = error instanceof Error && (error.message.includes("credits") || error.message.includes("timed out"))
             ? error.message
             : "Live research search failed. Try again.";
           send({ type: "error", message });

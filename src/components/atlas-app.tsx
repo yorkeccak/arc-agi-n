@@ -10,6 +10,7 @@ import { BreakthroughsPanel } from "@/components/breakthroughs-panel";
 import { ProblemDrawer } from "@/components/problem-drawer";
 import { SourceFavicon, sourceHost } from "@/components/source-favicon";
 import { fieldColors, fields, problems } from "@/lib/problems";
+import { readSearchResponse, SearchResponseError } from "@/lib/search-stream";
 import type { AuthUser } from "@/lib/oauth";
 import type { DiscoveredProblem, Field, OpenProblem, SearchLead } from "@/lib/types";
 
@@ -65,13 +66,6 @@ const readPendingProblem = (id: string | null) => {
     return undefined;
   }
 };
-
-type SearchStreamEvent =
-  | { type: "status"; message: string }
-  | { type: "source"; lead: SearchLead }
-  | { type: "problem"; problem: DiscoveredProblem }
-  | { type: "done"; message?: string }
-  | { type: "error"; message: string };
 
 const asOpenProblem = (problem: DiscoveredProblem, index: number, leads: SearchLead[]): OpenProblem => {
   const sources = problem.sourceEvidence.map((evidence) => {
@@ -141,6 +135,7 @@ export function AtlasApp() {
   const isValyuMode = process.env.NEXT_PUBLIC_APP_MODE === "valyu";
   const closeProblem = useCallback(() => { setResumeResearch(false); setSelected(undefined); }, []);
   const closeBreakthroughs = useCallback(() => setBreakthroughsOpen(false), []);
+  const closeAuth = useCallback(() => setAuthOpen(false), []);
 
   useEffect(() => {
     if (!mobileMenu) return;
@@ -175,13 +170,7 @@ export function AtlasApp() {
       : discoveredProblems.filter((problem) => problem.field === field)
   ), [discoveredProblems, field]);
 
-  const search = async (nextQuery: string, nextField: Field | "All" = "All", authenticated = false) => {
-    if (isValyuMode && !user && !authenticated) {
-      const returnTo = `/?q=${encodeURIComponent(nextQuery)}&field=${encodeURIComponent(nextField)}&resume=search`;
-      setAuthReturnTo(returnTo);
-      setAuthOpen(true);
-      return;
-    }
+  const search = async (nextQuery: string, nextField: Field | "All" = "All") => {
     searchController.current?.abort();
     const controller = new AbortController();
     searchController.current = controller;
@@ -204,17 +193,7 @@ export function AtlasApp() {
         body: JSON.stringify({ query: nextQuery, field: nextField === "All" ? undefined : nextField }),
         signal: controller.signal,
       });
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || "Search failed");
-      }
-      if (!response.body) throw new Error("Search stream unavailable");
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = "";
-      let streamComplete = false;
-      const handleEvent = (event: SearchStreamEvent) => {
+      await readSearchResponse(response, (event) => {
         if (controller.signal.aborted || searchController.current !== controller) return;
         if (event.type === "status") setSearchPhase(event.message);
         if (event.type === "source") {
@@ -225,33 +204,12 @@ export function AtlasApp() {
         }
         if (event.type === "done") {
           if (event.message) setSearchPhase(event.message);
-          streamComplete = true;
         }
-        if (event.type === "error") {
-          if (/sign in/i.test(event.message)) {
-            setUser(undefined);
-            setAuthOpen(true);
-          }
-          throw new Error(event.message);
-        }
-      };
-
-      while (!streamComplete) {
-        const { done, value } = await reader.read();
-        buffer += decoder.decode(value, { stream: !done });
-        const lines = buffer.split("\n");
-        buffer = done ? "" : lines.pop() || "";
-        for (const line of lines) {
-          if (!line.trim()) continue;
-          handleEvent(JSON.parse(line) as SearchStreamEvent);
-          if (streamComplete) break;
-        }
-        if (done) break;
-      }
-      if (streamComplete) await reader.cancel();
+      });
     } catch (error) {
       if (controller.signal.aborted || searchController.current !== controller) return;
-      setSearchError(error instanceof Error ? error.message : "Search failed");
+      setSearchError(error instanceof SearchResponseError ? error.message : "The search connection was interrupted. Please try again.");
+      controller.abort();
     } finally {
       if (searchController.current === controller) setLoading(false);
     }
@@ -269,21 +227,9 @@ export function AtlasApp() {
           setSelected(resumedProblem);
           setResumeResearch(params.get("research") === "1" && Boolean(data.user));
           window.history.replaceState({}, "", "/");
-          return;
-        }
-        const resumedQuery = params.get("q")?.trim();
-        const resumedField = params.get("field");
-        const nextField = resumedField && (fields as readonly string[]).includes(resumedField) ? resumedField as Field : "All";
-        if (data.user && params.get("resume") === "search" && resumedQuery && resumedQuery.length >= 2) {
-          setQuery(resumedQuery);
-          setField(nextField);
-          window.history.replaceState({}, "", "/");
-          void search(resumedQuery, nextField, true);
         }
       })
       .catch(() => undefined);
-  // Search is intentionally resumed once from the signed return URL.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const submitSearch = (event: FormEvent) => {
@@ -358,9 +304,8 @@ export function AtlasApp() {
           key={item}
           aria-pressed={field === item}
           onClick={() => changeField(item)}
-          style={{ "--field-color": fieldColors[item] } as React.CSSProperties}
         >
-          <i aria-hidden="true" />{item}
+          {item}
         </button>
       ))}
     </nav>
@@ -389,7 +334,7 @@ export function AtlasApp() {
           {isValyuMode && (user ? (
             <button onClick={logOut}>{user.name || user.email.split("@")[0]} · Sign out</button>
           ) : (
-            <button onClick={() => { setAuthReturnTo(undefined); setAuthOpen(true); }}>Sign in</button>
+            <button onClick={() => { setAuthReturnTo(undefined); setAuthOpen(true); }}>Sign in for DeepResearch</button>
           ))}
         </nav>
       </header>
@@ -611,7 +556,7 @@ export function AtlasApp() {
       <AnimatePresence>
         {breakthroughsOpen && <BreakthroughsPanel onClose={closeBreakthroughs} />}
       </AnimatePresence>
-      <AuthDialog open={authOpen} onClose={() => setAuthOpen(false)} returnTo={authReturnTo} />
+      <AuthDialog open={authOpen} onClose={closeAuth} returnTo={authReturnTo} />
     </main>
   );
 }
