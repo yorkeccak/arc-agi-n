@@ -87,7 +87,7 @@ test("public search cannot fall back to OAuth when its deployment key is absent"
 });
 
 test("access challenges are excluded from visible sources and synthesis grounding", async () => {
-  const blockedTitles = ["Checking your browser - reCAPTCHA", "Access denied", "Just a moment...", "Attention Required! | Cloudflare"];
+  const blockedTitles = ["Checking your browser - reCAPTCHA", "Access denied", "Just a moment...", "Attention Required! | Cloudflare", "Client Challenge"];
   const { POST } = await loadSearch({ VALYU_API_KEY: "test-deployment-key" }, async (url, options) => {
     if (url.endsWith("/search")) {
       return Response.json({ success: true, results: [
@@ -103,6 +103,45 @@ test("access challenges are excluded from visible sources and synthesis groundin
   const response = await POST(createRequest("search", { query: "Open problems in climate science" }));
   const events = (await response.text()).trim().split("\n").map((line) => JSON.parse(line));
   assert.deepEqual(events.filter((event) => event.type === "source").map((event) => event.lead.title), ["Cloud feedback uncertainty"]);
+});
+
+test("explicit open-status passages must still match a retrieved paper", async () => {
+  const paperUrl = "https://arxiv.org/pdf/2502.19278.pdf";
+  const observedPassage = "The problem of outcomes is still open: After the basis is chosen and quantum superpositions are suppressed";
+  const candidate = (url, passage) => ({
+    title: "Problem of outcomes in quantum measurements",
+    question: "Why does a measurement yield a single definite outcome?",
+    whyOpen: "The review describes the outcome problem as open.",
+    firstStep: "Reproduce a published decoherence example with QuTiP.",
+    field: "Physics",
+    subfield: "Quantum foundations",
+    sourceEvidence: [{ url, passage }],
+    agentReadiness: "agent-ready",
+    executionResources: "Python and QuTiP",
+    successCriterion: "A reproducible comparison against the published baseline.",
+  });
+  for (const [sourceUrl, sourceText, passage, expected] of [
+    [paperUrl, observedPassage, observedPassage, 1],
+    [paperUrl, observedPassage.replace("is still open", "is open"), observedPassage.replace("is still open", "is open"), 1],
+    [paperUrl, "The retrieved paper discusses a different topic entirely.", observedPassage, 0],
+    ["https://arxiv.org/list/quant-ph/new", observedPassage, observedPassage, 0],
+  ]) {
+    const { POST } = await loadSearch({ VALYU_API_KEY: "test-deployment-key" }, async (url, options) => {
+      if (url.endsWith("/search")) {
+        return Response.json({ success: true, results: [{
+          title: "The Quantum Measurement Problem: A Review of Recent Trends",
+          url: sourceUrl,
+          source_type: "academic paper",
+          content: sourceText,
+        }] });
+      }
+      if (sourceUrl.includes("/list/")) assert.equal(JSON.parse(options.body).query.includes(sourceUrl), false);
+      return new Response(`data: ${JSON.stringify({ success: true, contents: { problems: [candidate(sourceUrl, passage)] } })}\n\n`);
+    });
+    const response = await POST(createRequest("search", { query: "Open problems in quantum physics" }));
+    const events = (await response.text()).trim().split("\n").map((line) => JSON.parse(line));
+    assert.equal(events.filter((event) => event.type === "problem").length, expected);
+  }
 });
 
 test("provider failures produce a sanitized error rather than successful empty results", async () => {
@@ -187,11 +226,15 @@ const loadResearch = async (mode, accessToken) => {
       "@/lib/problems": { problems: [canonicalProblem] },
       "@/lib/report-access": { issueReportAccessToken: () => undefined },
       "@/lib/research-token": { verifyResearchToken: () => undefined },
+      "@/lib/research-effort": await loadModule("../src/lib/research-effort.ts"),
       "@/lib/valyu-session": { getValyuAccessToken: async () => accessToken, getValyuUser: async () => undefined },
       "valyu-js": { Valyu: class {
         constructor(key) {
           calls.push({ kind: "api-key", key });
-          this.deepresearch = { create: async () => ({ success: true, deepresearch_id: "test-task" }) };
+          this.deepresearch = { create: async (options) => {
+            calls.push({ kind: "research", options });
+            return { success: true, deepresearch_id: "test-task" };
+          } };
         }
       } },
     },
@@ -220,5 +263,28 @@ test("default self-hosted DeepResearch uses the deployment key without sign-in",
   const { POST, calls } = await loadResearch(undefined);
   const response = await POST(createRequest("deepresearch", { problem: canonicalProblem }));
   assert.equal(response.status, 200);
-  assert.deepEqual(calls, [{ kind: "api-key", key: "test-deployment-key" }]);
+  assert.deepEqual(calls[0], { kind: "api-key", key: "test-deployment-key" });
+  assert.equal(calls[1].options.mode, "fast");
+});
+
+test("research effort defaults to fast and is forwarded in both deployment modes", async () => {
+  for (const mode of [undefined, "valyu"]) {
+    for (const effort of [undefined, "fast", "standard", "heavy"]) {
+      const { POST, calls } = await loadResearch(mode, "test-user-token");
+      const response = await POST(createRequest("deepresearch", { problem: canonicalProblem, effort }));
+      assert.equal(response.status, 200);
+      const providerRequest = mode === "valyu" ? JSON.parse(calls[0].options.body).body : calls[1].options;
+      assert.equal(providerRequest.mode, effort || "fast");
+      assert.equal((await response.json()).effort, effort || "fast");
+    }
+  }
+});
+
+test("invalid research effort is rejected before creating a paid task", async () => {
+  for (const effort of ["max", "xhigh", null, 5, {}, ""]) {
+    const { POST, calls } = await loadResearch("valyu", "test-user-token");
+    const response = await POST(createRequest("deepresearch", { problem: canonicalProblem, effort }));
+    assert.equal(response.status, 400);
+    assert.equal(calls.length, 0);
+  }
 });

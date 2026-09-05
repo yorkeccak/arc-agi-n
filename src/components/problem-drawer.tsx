@@ -8,6 +8,7 @@ import { ArcLogo } from "@/components/arc-logo";
 import { PromptHandoff } from "@/components/prompt-handoff";
 import { SourceFavicon, sourceHost } from "@/components/source-favicon";
 import { buildSolverBrief } from "@/lib/solver-brief";
+import { researchEfforts, type ResearchEffort } from "@/lib/research-effort";
 import type { OpenProblem } from "@/lib/types";
 
 interface ProblemDrawerProps {
@@ -15,8 +16,9 @@ interface ProblemDrawerProps {
   signedIn: boolean;
   isValyuMode: boolean;
   autoStartResearch?: boolean;
+  initialEffort?: ResearchEffort;
   onClose: () => void;
-  onRequireAuth: () => void;
+  onRequireAuth: (effort: ResearchEffort) => void;
 }
 
 const exactTools = ["Lean", "Z3", "SAT/SMT", "SageMath", "ILP"];
@@ -25,10 +27,12 @@ export function ProblemDrawer({
   signedIn,
   isValyuMode,
   autoStartResearch = false,
+  initialEffort = "fast",
   onClose,
   onRequireAuth,
 }: ProblemDrawerProps) {
   const router = useRouter();
+  const [effort, setEffort] = useState<ResearchEffort>(initialEffort);
   const [startingResearch, setStartingResearch] = useState(false);
   const [researchUncertain, setResearchUncertain] = useState(false);
   const [error, setError] = useState<string>();
@@ -106,7 +110,7 @@ export function ProblemDrawer({
   const startResearch = async () => {
     if (researchInFlight.current || researchUncertain) return;
     if (isValyuMode && !signedIn) {
-      onRequireAuth();
+      onRequireAuth(effort);
       return;
     }
     setError(undefined);
@@ -117,7 +121,7 @@ export function ProblemDrawer({
       const response = await fetch("/api/deepresearch", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ problem }),
+        body: JSON.stringify({ problem, effort }),
         signal: timeout,
       });
       const data = await response.json();
@@ -125,7 +129,7 @@ export function ProblemDrawer({
       if (!response.ok) {
         if (response.status === 401) {
           setStartingResearch(false);
-          onRequireAuth();
+          onRequireAuth(effort);
           return;
         }
         throw new Error(data.error || "Could not start research");
@@ -135,6 +139,7 @@ export function ProblemDrawer({
           window.localStorage.setItem(`arc-agi-n:report:${data.taskId}`, JSON.stringify({
             title: problem.title,
             notified: data.notified === true,
+            effort: data.effort ?? effort,
           }));
         } catch {
           // The report still works without local display context.
@@ -182,6 +187,7 @@ export function ProblemDrawer({
         <header className="drawer-header">
           <ArcLogo title="ARC-AGI-N problem dossier" />
           <button ref={closeButtonRef} onClick={onClose} aria-label="Return to previous view"><ArrowLeft size={15} /> Back</button>
+          <button className="drawer-actions-jump" onClick={() => document.getElementById("problem-actions")?.scrollIntoView({ block: "start" })} aria-label="Jump to prompt and research actions">Start here</button>
         </header>
 
         <div className="drawer-title-block">
@@ -253,11 +259,27 @@ export function ProblemDrawer({
 
       </div>
 
-      <footer className="drawer-actions">
+      <footer className="drawer-actions" id="problem-actions">
         {error && <div className="drawer-action-error" role="alert">{error}</div>}
         <PromptHandoff key={problem.id} prompt={buildSolverBrief(problem)} />
         <div className="research-action-group">
           <p>Get the groundwork done first.</p>
+          <fieldset className="research-effort" disabled={startingResearch || researchUncertain} aria-describedby="research-effort-note">
+            <legend>Research effort</legend>
+            <div className="research-effort-options">
+              {researchEfforts.map((option, index) => (
+                <label key={option.value} title={option.description}>
+                  <input type="radio" name="research-effort" value={option.value} checked={effort === option.value} onChange={() => setEffort(option.value)} />
+                  <span className="research-effort-option" data-level={index + 1}>
+                    <span className="effort-bars" aria-hidden="true"><i /><i /><i /></span>
+                    <b>{option.label}</b>
+                    <small>{option.estimate}</small>
+                  </span>
+                </label>
+              ))}
+            </div>
+            <p id="research-effort-note">More depth takes more time and credits.</p>
+          </fieldset>
           <button className="primary-action" aria-label="Build a DeepResearch plan for this problem" onClick={startResearch} disabled={startingResearch || researchUncertain}>
             {startingResearch ? <LoaderCircle className="spin" size={19} /> : null}
             <span>

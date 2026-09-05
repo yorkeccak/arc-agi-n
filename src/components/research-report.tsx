@@ -7,9 +7,11 @@ import { ArcLogo } from "@/components/arc-logo";
 import { AuthDialog } from "@/components/auth-dialog";
 import { ResearchDocument, countUnresolvedCitations, extractReportSections } from "@/components/research-document";
 import { SourceFavicon, sourceHost } from "@/components/source-favicon";
+import { parseResearchEffort, researchEfforts, type ResearchEffort } from "@/lib/research-effort";
 
 interface ResearchResult {
   taskId: string;
+  effort?: ResearchEffort;
   status: string;
   progress?: { currentStep: number; totalSteps: number };
   output?: string;
@@ -70,13 +72,14 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
   );
   const localContext = useMemo(() => {
     try {
-      const parsed = JSON.parse(localContextRaw) as { title?: unknown; notified?: unknown };
+      const parsed = JSON.parse(localContextRaw) as { title?: unknown; notified?: unknown; effort?: unknown };
       return {
         title: typeof parsed.title === "string" && parsed.title.trim().length > 0 && parsed.title.length <= 180 ? parsed.title.trim() : undefined,
         notified: parsed.notified === true,
+        effort: parsed.effort === undefined ? undefined : parseResearchEffort(parsed.effort),
       };
     } catch {
-      return { title: undefined, notified: false };
+      return { title: undefined, notified: false, effort: undefined };
     }
   }, [localContextRaw]);
 
@@ -178,6 +181,8 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
   const isPaused = research.status === "awaiting_input" || research.status === "paused";
   const authRequired = research.status === "auth-required";
   const title = compactResearchTitle(research.title) || localContext.title || "Your DeepResearch report";
+  const reportEffort = (research.effort === undefined ? undefined : parseResearchEffort(research.effort)) ?? localContext.effort;
+  const effortDetails = researchEfforts.find((option) => option.value === reportEffort);
   const sections = useMemo(() => research.output ? extractReportSections(research.output).filter((section) => section.title.toLowerCase() !== "sources") : [], [research.output]);
   const unresolvedCitations = useMemo(() => research.output ? countUnresolvedCitations(research.output, research.sources) : 0, [research.output, research.sources]);
 
@@ -202,7 +207,7 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
               <b>{statusLabel(research.status)}</b>
             </div>
             {!isComplete && !hasStopped && !isPaused && !authRequired && (
-              <p>DeepResearch is reading the literature to map the history, foundations and strongest prior attempts. Your report will identify promising avenues and lay out a 72-hour starting plan you can give to your agent. Most reports take 5 to 15 minutes.</p>
+              <p>DeepResearch is reading the literature to map the history, foundations and strongest prior attempts. Your report will identify promising avenues and lay out a 72-hour starting plan you can give to your agent. {effortDetails ? `${effortDetails.label} effort: ${effortDetails.estimate}.` : "Duration depends on the selected effort."}</p>
             )}
             {isPaused && <p>Your research is paused. Its progress is saved; this page will update when it resumes.</p>}
             {authRequired && <p>Sign in with your Valyu account to view this DeepResearch report.</p>}
