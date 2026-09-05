@@ -707,6 +707,15 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .report-markdown .inline-citation:hover, .report-markdown .inline-citation:focus-visible { border-color: #ffffff50; background: #293235; color: var(--white); }
 .report-markdown .inline-citation .source-favicon { width: 15px; height: 15px; border: 0; border-radius: 3px; background: transparent; color: var(--white); font-size: 10px; }
 .report-markdown .inline-citation .source-favicon img { width: 15px; height: 15px; margin: 0; border: 0; object-fit: contain; }
+.citation-preview { position: fixed; z-index: 120; padding: 17px; display: block; overflow: auto; overscroll-behavior: contain; border: 1px solid #ffffff26; border-radius: 13px; background: #1a2022; box-shadow: 0 12px 40px #0008, 0 2px 8px #0005; color: var(--white); font-family: var(--font-now); text-align: left; white-space: normal; animation: citation-reveal .12s ease-out; }
+.citation-preview-site { display: flex; align-items: center; gap: 9px; color: #aeb8bb; font-size: 12px; line-height: 1.4; }
+.citation-preview-site > span:nth-child(2) { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.citation-preview-site > svg { flex: none; }
+.citation-preview .source-favicon { width: 22px; height: 22px; border: 0; border-radius: 5px; background: #ffffff0d; }
+.citation-preview-title { margin-top: 12px; display: block; font-size: 15px; font-weight: 600; line-height: 1.45; letter-spacing: -.01em; overflow-wrap: anywhere; }
+.citation-preview-excerpt { margin-top: 9px; display: block; color: #b0b8ba; font-size: 13px; line-height: 1.6; overflow-wrap: anywhere; }
+.citation-preview-footer { margin-top: 15px; padding-top: 11px; display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid #ffffff12; color: #879396; font-size: 11px; line-height: 1.4; }
+@keyframes citation-reveal { from { opacity: 0; } to { opacity: 1; } }
 .report-markdown .unresolved-citation { margin: 0 2px; color: #e5a46d; font-size: .76em; text-decoration: none; white-space: nowrap; }
 .report-markdown .unresolved-citation:hover { color: #ffc18c; }
 .report-mobile-contents { display: none; }
