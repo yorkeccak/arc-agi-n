@@ -4,6 +4,7 @@ import { isSelfHostedMode } from "@/lib/app-mode";
 import { withDeadline } from "@/lib/network";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { verifyReportAccessToken } from "@/lib/report-access";
+import { parseResearchEffort } from "@/lib/research-effort";
 import { getValyuAccessToken } from "@/lib/valyu-session";
 
 export const dynamic = "force-dynamic";
@@ -61,6 +62,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ task
     return NextResponse.json({
       taskId,
       status: data.status || "unknown",
+      effort: data.mode === undefined ? undefined : parseResearchEffort(data.mode),
       progress: data.progress ? {
         currentStep: data.progress.current_step ?? data.progress.currentStep ?? 0,
         totalSteps: data.progress.total_steps ?? data.progress.totalSteps ?? 0,

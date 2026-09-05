@@ -11,6 +11,7 @@ import { ProblemDrawer } from "@/components/problem-drawer";
 import { SourceFavicon, sourceHost } from "@/components/source-favicon";
 import { fieldColors, fields, problems } from "@/lib/problems";
 import { readSearchResponse, SearchResponseError } from "@/lib/search-stream";
+import { parseResearchEffort, type ResearchEffort } from "@/lib/research-effort";
 import type { AuthUser } from "@/lib/oauth";
 import type { DiscoveredProblem, Field, OpenProblem, SearchLead } from "@/lib/types";
 
@@ -128,12 +129,13 @@ export function AtlasApp() {
   const [browsing, setBrowsing] = useState(false);
   const [nearbyProblems, setNearbyProblems] = useState<OpenProblem[]>([]);
   const [resumeResearch, setResumeResearch] = useState(false);
+  const [initialResearchEffort, setInitialResearchEffort] = useState<ResearchEffort>("fast");
   const [breakthroughsOpen, setBreakthroughsOpen] = useState(false);
   const searchController = useRef<AbortController | null>(null);
   const mobileMenuButton = useRef<HTMLButtonElement>(null);
   const resultsScroll = useRef<HTMLDivElement>(null);
   const isValyuMode = process.env.NEXT_PUBLIC_APP_MODE === "valyu";
-  const closeProblem = useCallback(() => { setResumeResearch(false); setSelected(undefined); }, []);
+  const closeProblem = useCallback(() => { setResumeResearch(false); setInitialResearchEffort("fast"); setSelected(undefined); }, []);
   const closeBreakthroughs = useCallback(() => setBreakthroughsOpen(false), []);
   const closeAuth = useCallback(() => setAuthOpen(false), []);
 
@@ -224,6 +226,7 @@ export function AtlasApp() {
         const problemId = params.get("problem");
         const resumedProblem = problems.find((problem) => problem.id === problemId) || readPendingProblem(problemId);
         if (resumedProblem) {
+          setInitialResearchEffort(parseResearchEffort(params.get("effort") ?? undefined) ?? "fast");
           setSelected(resumedProblem);
           setResumeResearch(params.get("research") === "1" && Boolean(data.user));
           window.history.replaceState({}, "", "/");
@@ -284,10 +287,10 @@ export function AtlasApp() {
     setUser(undefined);
   };
 
-  const requireResearchAuth = () => {
+  const requireResearchAuth = (effort: ResearchEffort) => {
     if (!selected) return;
     if (selected.provisional) savePendingProblem(selected);
-    setAuthReturnTo(`/?problem=${encodeURIComponent(selected.id)}&research=1`);
+    setAuthReturnTo(`/?problem=${encodeURIComponent(selected.id)}&research=1&effort=${encodeURIComponent(effort)}`);
     setAuthOpen(true);
   };
 
@@ -552,7 +555,7 @@ export function AtlasApp() {
         </section>
       )}
 
-      {selected && <ProblemDrawer key={selected.id} problem={selected} signedIn={Boolean(user)} isValyuMode={isValyuMode} autoStartResearch={resumeResearch} onClose={closeProblem} onRequireAuth={requireResearchAuth} />}
+      {selected && <ProblemDrawer key={selected.id} problem={selected} signedIn={Boolean(user)} isValyuMode={isValyuMode} autoStartResearch={resumeResearch} initialEffort={initialResearchEffort} onClose={closeProblem} onRequireAuth={requireResearchAuth} />}
       <AnimatePresence>
         {breakthroughsOpen && <BreakthroughsPanel onClose={closeBreakthroughs} />}
       </AnimatePresence>

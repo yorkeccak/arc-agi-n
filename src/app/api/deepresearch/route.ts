@@ -7,6 +7,7 @@ import { checkRateLimit } from "@/lib/rate-limit";
 import { validatePaidRequest } from "@/lib/request-security";
 import { issueReportAccessToken } from "@/lib/report-access";
 import { verifyResearchToken } from "@/lib/research-token";
+import { parseResearchEffort, type ResearchEffort } from "@/lib/research-effort";
 import { getValyuAccessToken, getValyuUser } from "@/lib/valyu-session";
 import type { OpenProblem } from "@/lib/types";
 
@@ -54,7 +55,7 @@ const readUserEmail = async () => {
   return user?.email;
 };
 
-async function createViaOAuth(problem: OpenProblem, accessToken: string, alertEmail?: NotificationTarget) {
+async function createViaOAuth(problem: OpenProblem, accessToken: string, effort: ResearchEffort, alertEmail?: NotificationTarget) {
   const response = await fetch(`${process.env.VALYU_APP_URL || "https://platform.valyu.ai"}/api/oauth/proxy`, {
     method: "POST",
     headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
@@ -63,10 +64,10 @@ async function createViaOAuth(problem: OpenProblem, accessToken: string, alertEm
       method: "POST",
       body: {
         query: buildQuery(problem),
-        mode: "fast",
+        mode: effort,
         output_formats: ["markdown", "pdf"],
         alert_email: alertEmail,
-        metadata: { source: "arc-agi-n", problem_id: problem.id, problem_title: problem.title },
+        metadata: { source: "arc-agi-n", problem_id: problem.id, problem_title: problem.title, effort },
       },
     }),
     signal: AbortSignal.timeout(30_000),
@@ -93,6 +94,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid JSON request." }, { status: 400 });
     }
     const suppliedProblem = body && typeof body === "object" ? (body as { problem?: OpenProblem }).problem : undefined;
+    const effort = parseResearchEffort(body && typeof body === "object" ? (body as { effort?: unknown }).effort : undefined);
+    if (!effort) return NextResponse.json({ error: "Choose Fast, Medium or High research effort." }, { status: 400 });
     if (!suppliedProblem?.id || !suppliedProblem.title || !suppliedProblem.statement) {
       return NextResponse.json({ error: "A valid problem is required." }, { status: 400 });
     }
@@ -138,14 +141,15 @@ export async function POST(request: Request) {
       }
       const task = await withDeadline(new Valyu(apiKey).deepresearch.create({
         query: buildQuery(problem),
-        mode: "fast",
+        mode: effort,
         outputFormats: ["markdown", "pdf"],
         alertEmail: userEmail,
-        metadata: { source: "arc-agi-n", problem_id: problem.id, problem_title: problem.title },
+        metadata: { source: "arc-agi-n", problem_id: problem.id, problem_title: problem.title, effort },
       }), 30_000, "DeepResearch launch timed out");
       if (!task.success || !task.deepresearch_id) throw new Error(task.error || "Could not start research");
       return NextResponse.json({
         taskId: task.deepresearch_id,
+        effort,
         status: task.status || "queued",
         notified: false,
         reportPath: reportPath(task.deepresearch_id),
@@ -158,10 +162,11 @@ export async function POST(request: Request) {
     if (!limit.allowed) {
       return NextResponse.json({ error: "Research launch limit reached. Try again later." }, { status: 429, headers: { "Retry-After": String(limit.retryAfter) } });
     }
-    const task = await withDeadline(createViaOAuth(problem, accessToken, hostedAlertEmail), 30_000, "DeepResearch launch timed out");
+    const task = await withDeadline(createViaOAuth(problem, accessToken, effort, hostedAlertEmail), 30_000, "DeepResearch launch timed out");
     if (!task.deepresearch_id) throw new Error(task.error || "Could not start research");
     return NextResponse.json({
       taskId: task.deepresearch_id,
+      effort,
       status: task.status || "queued",
       notified: Boolean(hostedAlertEmail),
       reportPath: reportPath(task.deepresearch_id),

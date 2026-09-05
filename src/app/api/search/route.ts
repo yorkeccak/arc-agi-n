@@ -160,13 +160,14 @@ const isAuthoritativeSource = (result: SourceResult) => {
 };
 
 const weakEvidencePaths = /\/(?:news|events?|talks?|courses?|people|profiles?|press|blog|topics)(?:\/|$)|\/(?:~|users?\/)[^/]+/i;
-const isBlockedSource = (result: SourceResult) => /^(?:checking (?:your )?browser|just a moment|one moment,? please|access denied|attention required|security (?:check|verification)|verify (?:that )?you(?: are|'re) human|robot check|captcha)\b/i.test((result.title || "").trim());
+const isBlockedSource = (result: SourceResult) => /^(?:checking (?:your )?browser|just a moment|one moment,? please|access denied|attention required|client challenge|security (?:check|verification)|verify (?:that )?you(?: are|'re) human|robot check|captcha)\b/i.test((result.title || "").trim());
 
 const isEvidenceSource = (result: SourceResult) => {
   if (isBlockedSource(result) || !isAuthoritativeSource(result) || isWeakSource(result.url)) return false;
   try {
     const url = new URL(result.url);
     if (weakEvidencePaths.test(url.pathname)) return false;
+    if (/(^|\.)arxiv\.org$/.test(url.hostname) && /^\/(?:list|search)(?:\/|$)/.test(url.pathname)) return false;
     const source = `${result.source || ""} ${result.source_type || ""}`;
     const publisherHost = authoritativeDomainPatterns.slice(0, -3).some((pattern) => pattern.test(url.hostname));
     return /paper|journal|academic|arxiv|pubmed|biorxiv|medrxiv|review/i.test(source) || publisherHost || /\.pdf$/i.test(url.pathname);
@@ -220,7 +221,7 @@ const passageAppearsInSource = (passage: string, source: string) => {
   return windows.some((window) => normalizedSource.includes(window));
 };
 
-const passageStatesResearchGap = (passage: string) => /\b(?:open (?:problem|question|issue)|remain(?:s|ed)? (?:open|unknown|unclear|unresolved|uncertain|poorly constrained)|unresolved|unknown whether|not (?:yet |fully )?(?:known|understood|resolved|established|explained)|still (?:unknown|unclear|debated|uncertain)|future work|further research|major challenge|key challenge|challenge remains|important uncertainty|dominant uncertainty|lack of|missing)\b/i.test(passage);
+const passageStatesResearchGap = (passage: string) => /\b(?:open (?:problem|question|issue)|(?:is|are) open|remain(?:s|ed)? (?:open|unknown|unclear|unresolved|uncertain|poorly constrained)|unresolved|unknown whether|not (?:yet |fully )?(?:known|understood|resolved|established|explained)|still (?:open|unknown|unclear|debated|uncertain)|future work|further research|major challenge|key challenge|challenge remains|important uncertainty|dominant uncertainty|lack of|missing)\b/i.test(passage);
 
 const sourceFramesResearchGap = (source: ObservedSource) => {
   if (passageStatesResearchGap(source.title)) return true;
