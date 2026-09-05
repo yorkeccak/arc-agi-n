@@ -2,10 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Check, LoaderCircle } from "lucide-react";
-import { siClaude, siCursor } from "simple-icons";
+import Image from "next/image";
+import { ArrowLeft, ArrowRight, ArrowUpRight, LoaderCircle } from "lucide-react";
 import { ArcLogo } from "@/components/arc-logo";
+import { PromptHandoff } from "@/components/prompt-handoff";
 import { SourceFavicon, sourceHost } from "@/components/source-favicon";
+import { buildSolverBrief } from "@/lib/solver-brief";
 import type { OpenProblem } from "@/lib/types";
 
 interface ProblemDrawerProps {
@@ -18,25 +20,6 @@ interface ProblemDrawerProps {
 }
 
 const exactTools = ["Lean", "Z3", "SAT/SMT", "SageMath", "ILP"];
-const agentTargets = [
-  { name: "Claude", icon: siClaude },
-  { name: "ChatGPT", domain: "chatgpt.com" },
-  { name: "Cursor", icon: siCursor },
-] as const;
-
-const buildSolverBrief = (problem: OpenProblem) => {
-  const sourceLedger = problem.sources.map((source, index) => [
-    `${index + 1}. ${source.title}`,
-    source.url,
-    source.passage ? `Open-status passage: “${source.passage}”` : undefined,
-  ].filter(Boolean).join("\n")).join("\n\n");
-  const resources = problem.executionResources ? `\n\nAvailable execution resources: ${problem.executionResources}` : "";
-  const success = problem.successCriterion ? `\n\nSuccess or falsification criterion: ${problem.successCriterion}` : "";
-  const sourcesAlreadyIncluded = problem.sources.length > 0 && problem.sources.every((source) => problem.starterPrompt.includes(source.url));
-
-  return `${problem.starterPrompt}${resources}${success}${sourcesAlreadyIncluded ? "" : `\n\nSource ledger:\n${sourceLedger}`}\n\nProvenance rules: verify that the exact question remains open before attempting it; attach a URL to every literature-derived claim; distinguish theorem, reproduced computation, experimental result and speculation; do not present a numerical search as proof.`;
-};
-
 export function ProblemDrawer({
   problem,
   signedIn,
@@ -46,11 +29,9 @@ export function ProblemDrawer({
   onRequireAuth,
 }: ProblemDrawerProps) {
   const router = useRouter();
-  const [copiedTarget, setCopiedTarget] = useState<string>();
   const [startingResearch, setStartingResearch] = useState(false);
   const [researchUncertain, setResearchUncertain] = useState(false);
   const [error, setError] = useState<string>();
-  const [copyError, setCopyError] = useState<string>();
   const drawerRef = useRef<HTMLElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
@@ -87,7 +68,7 @@ export function ProblemDrawer({
       }
       if (event.key !== "Tab" || !drawerRef.current) return;
       const focusable = Array.from(drawerRef.current.querySelectorAll<HTMLElement>(
-        "a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex='-1'])",
+        "a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex='-1'])",
       ));
       if (focusable.length === 0) return;
       const first = focusable[0];
@@ -121,17 +102,6 @@ export function ProblemDrawer({
       });
     };
   }, [onClose, problem.title]);
-
-  const copyPrompt = async (target: string) => {
-    try {
-      await navigator.clipboard.writeText(buildSolverBrief(problem));
-      setCopiedTarget(target);
-      setCopyError(undefined);
-      window.setTimeout(() => setCopiedTarget(undefined), 1800);
-    } catch {
-      setCopyError("The solver brief could not be copied. Check clipboard permission and try again.");
-    }
-  };
 
   const startResearch = async () => {
     if (researchInFlight.current || researchUncertain) return;
@@ -285,41 +255,19 @@ export function ProblemDrawer({
 
       <footer className="drawer-actions">
         {error && <div className="drawer-action-error" role="alert">{error}</div>}
-        {copyError && <div className="drawer-action-error" role="alert">{copyError}</div>}
-        <div className="solver-choice">
-          <div className="action-explainer">
-            <b>Copy a starting prompt</b>
-            <span>The question, sources and a first step. Choose your agent, then paste the prompt to begin.</span>
-          </div>
-          <div className="agent-actions" aria-label="Copy solver brief for an agent">
-            {agentTargets.map((target) => (
-              <button
-                className="agent-action"
-                key={target.name}
-                aria-label={`Copy solver brief for ${target.name}`}
-                onClick={() => copyPrompt(target.name)}
-              >
-                {copiedTarget === target.name ? <Check size={17} /> : (
-                  "icon" in target ? (
-                    <svg className="agent-brand-mark" viewBox="0 0 24 24" aria-hidden="true"><path d={target.icon.path} /></svg>
-                  ) : (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={`https://www.google.com/s2/favicons?domain=${target.domain}&sz=64`} alt="" />
-                  )
-                )}
-                <span>{copiedTarget === target.name ? "Copied" : target.name}</span>
-              </button>
-            ))}
-          </div>
+        <PromptHandoff key={problem.id} prompt={buildSolverBrief(problem)} />
+        <div className="research-action-group">
+          <p>Get the groundwork done first.</p>
+          <button className="primary-action" aria-label="Build a DeepResearch plan for this problem" onClick={startResearch} disabled={startingResearch || researchUncertain}>
+            {startingResearch ? <LoaderCircle className="spin" size={19} /> : null}
+            <span>
+              <b>{startingResearch ? "Starting DeepResearch…" : "Build a DeepResearch plan"}</b>
+              <small>History, foundations, prior attempts and avenues to explore, with sources and a 72-hour starting plan.</small>
+            </span>
+            {!startingResearch && <ArrowRight size={18} />}
+          </button>
+          <a className="research-powered-by" href="https://valyu.ai" target="_blank" rel="noreferrer">DeepResearch powered by <Image src="/valyu.svg" alt="Valyu" width={42} height={16} /></a>
         </div>
-        <button className="primary-action" aria-label="Build a DeepResearch plan for this problem" onClick={startResearch} disabled={startingResearch || researchUncertain}>
-          {startingResearch ? <LoaderCircle className="spin" size={19} /> : null}
-          <span>
-            <b>{startingResearch ? "Starting DeepResearch…" : "Build a DeepResearch plan"}</b>
-            <small>History, foundations, prior attempts and avenues to explore, with sources and a 72-hour starting plan.</small>
-          </span>
-          {!startingResearch && <ArrowRight size={18} />}
-        </button>
       </footer>
     </aside>
   );

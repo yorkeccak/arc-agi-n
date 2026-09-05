@@ -304,9 +304,8 @@ export function AtlasApp() {
           key={item}
           aria-pressed={field === item}
           onClick={() => changeField(item)}
-          style={{ "--field-color": fieldColors[item] } as React.CSSProperties}
         >
-          <i aria-hidden="true" />{item}
+          {item}
         </button>
       ))}
     </nav>
