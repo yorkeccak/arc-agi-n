@@ -160,9 +160,10 @@ const isAuthoritativeSource = (result: SourceResult) => {
 };
 
 const weakEvidencePaths = /\/(?:news|events?|talks?|courses?|people|profiles?|press|blog|topics)(?:\/|$)|\/(?:~|users?\/)[^/]+/i;
+const isBlockedSource = (result: SourceResult) => /^(?:checking (?:your )?browser|just a moment|one moment,? please|access denied|attention required|security (?:check|verification)|verify (?:that )?you(?: are|'re) human|robot check|captcha)\b/i.test((result.title || "").trim());
 
 const isEvidenceSource = (result: SourceResult) => {
-  if (!isAuthoritativeSource(result) || isWeakSource(result.url)) return false;
+  if (isBlockedSource(result) || !isAuthoritativeSource(result) || isWeakSource(result.url)) return false;
   try {
     const url = new URL(result.url);
     if (weakEvidencePaths.test(url.pathname)) return false;
@@ -175,7 +176,7 @@ const isEvidenceSource = (result: SourceResult) => {
 };
 
 const asLeads = (results: SourceResult[]) => results
-  .filter((result) => result.url && result.title && !isWeakSource(result.url) && isAuthoritativeSource(result))
+  .filter((result) => result.url && result.title && !isBlockedSource(result) && !isWeakSource(result.url) && isAuthoritativeSource(result))
   .slice(0, 8)
   .map((result) => ({
     title: result.title,

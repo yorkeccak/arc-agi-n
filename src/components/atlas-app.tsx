@@ -10,6 +10,7 @@ import { BreakthroughsPanel } from "@/components/breakthroughs-panel";
 import { ProblemDrawer } from "@/components/problem-drawer";
 import { SourceFavicon, sourceHost } from "@/components/source-favicon";
 import { fieldColors, fields, problems } from "@/lib/problems";
+import { readSearchResponse, SearchResponseError } from "@/lib/search-stream";
 import type { AuthUser } from "@/lib/oauth";
 import type { DiscoveredProblem, Field, OpenProblem, SearchLead } from "@/lib/types";
 
@@ -65,13 +66,6 @@ const readPendingProblem = (id: string | null) => {
     return undefined;
   }
 };
-
-type SearchStreamEvent =
-  | { type: "status"; message: string }
-  | { type: "source"; lead: SearchLead }
-  | { type: "problem"; problem: DiscoveredProblem }
-  | { type: "done"; message?: string }
-  | { type: "error"; message: string };
 
 const asOpenProblem = (problem: DiscoveredProblem, index: number, leads: SearchLead[]): OpenProblem => {
   const sources = problem.sourceEvidence.map((evidence) => {
@@ -199,17 +193,7 @@ export function AtlasApp() {
         body: JSON.stringify({ query: nextQuery, field: nextField === "All" ? undefined : nextField }),
         signal: controller.signal,
       });
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || "Search failed");
-      }
-      if (!response.body) throw new Error("Search stream unavailable");
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = "";
-      let streamComplete = false;
-      const handleEvent = (event: SearchStreamEvent) => {
+      await readSearchResponse(response, (event) => {
         if (controller.signal.aborted || searchController.current !== controller) return;
         if (event.type === "status") setSearchPhase(event.message);
         if (event.type === "source") {
@@ -220,29 +204,12 @@ export function AtlasApp() {
         }
         if (event.type === "done") {
           if (event.message) setSearchPhase(event.message);
-          streamComplete = true;
         }
-        if (event.type === "error") {
-          throw new Error(event.message);
-        }
-      };
-
-      while (!streamComplete) {
-        const { done, value } = await reader.read();
-        buffer += decoder.decode(value, { stream: !done });
-        const lines = buffer.split("\n");
-        buffer = done ? "" : lines.pop() || "";
-        for (const line of lines) {
-          if (!line.trim()) continue;
-          handleEvent(JSON.parse(line) as SearchStreamEvent);
-          if (streamComplete) break;
-        }
-        if (done) break;
-      }
-      if (streamComplete) await reader.cancel();
+      });
     } catch (error) {
       if (controller.signal.aborted || searchController.current !== controller) return;
-      setSearchError(error instanceof Error ? error.message : "Search failed");
+      setSearchError(error instanceof SearchResponseError ? error.message : "The search connection was interrupted. Please try again.");
+      controller.abort();
     } finally {
       if (searchController.current === controller) setLoading(false);
     }

@@ -86,6 +86,25 @@ test("public search cannot fall back to OAuth when its deployment key is absent"
   assert.equal(response.status, 503);
 });
 
+test("access challenges are excluded from visible sources and synthesis grounding", async () => {
+  const blockedTitles = ["Checking your browser - reCAPTCHA", "Access denied", "Just a moment...", "Attention Required! | Cloudflare"];
+  const { POST } = await loadSearch({ VALYU_API_KEY: "test-deployment-key" }, async (url, options) => {
+    if (url.endsWith("/search")) {
+      return Response.json({ success: true, results: [
+        ...blockedTitles.map((title, index) => ({ title, url: `https://www.nature.com/articles/blocked-${index}`, content: "Please verify you are human." })),
+        { title: "Cloud feedback uncertainty", url: "https://www.nature.com/articles/valid-paper", content: "Cloud feedback remains uncertain." },
+      ] });
+    }
+    const query = JSON.parse(options.body).query;
+    for (const title of blockedTitles) assert.equal(query.includes(title), false);
+    assert.match(query, /Cloud feedback uncertainty/);
+    return new Response('data: {"success":true,"contents":{"problems":[]}}\n\n');
+  });
+  const response = await POST(createRequest("search", { query: "Open problems in climate science" }));
+  const events = (await response.text()).trim().split("\n").map((line) => JSON.parse(line));
+  assert.deepEqual(events.filter((event) => event.type === "source").map((event) => event.lead.title), ["Cloud feedback uncertainty"]);
+});
+
 test("provider failures produce a sanitized error rather than successful empty results", async () => {
   for (const failure of [
     'data: {"success":false,"error":"provider-private-detail"}\n\n',
