@@ -140,6 +140,7 @@ export function ProblemDrawer({
             title: problem.title,
             notified: data.notified === true,
             effort: data.effort ?? effort,
+            ...(!isValyuMode ? { reportPath: data.reportPath, status: data.status || "queued", createdAt: new Date().toISOString() } : {}),
           }));
         } catch {
           // The report still works without local display context.

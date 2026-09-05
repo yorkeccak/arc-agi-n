@@ -64,6 +64,7 @@ That is ARC-AGI-N. The name is a joke about what comes after the benchmark. This
 2. **Explore.** Read the exact question, known obstacles, references and a bounded contribution worth attempting. Browse the globe or refine your search.
 3. **Take it to your tools.** Copy a source-backed starter prompt for Claude, ChatGPT, Cursor or any other agent.
 4. **Go deeper.** Request a DeepResearch plan covering foundations, history, prior attempts, potential avenues and a concrete starting plan.
+5. **Pick up where you left off.** Research history brings running jobs and finished reports together, with the same maths, citations and PDF exports. Self-hosted history stays on your browser; connected accounts retrieve their recent app research through Valyu.
 
 Reports have a return URL, live status, Markdown and LaTeX rendering, linked citations, copyable code and PDF download. The breakthrough log separates proofs, formalizations, experiments and benchmark results, with sources and verification notes.
 
