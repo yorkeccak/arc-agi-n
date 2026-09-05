@@ -703,8 +703,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .report-markdown tr:last-child td { border-bottom: 0; }
 .report-markdown thead { background: #171b1c; color: var(--white); }
 .report-markdown tbody tr:nth-child(even) { background: rgba(241, 242, 238, .025); }
-.report-markdown .inline-citation { position: relative; top: 1px; min-height: 24px; margin: 0 2px; padding: 1px 6px 1px 3px; display: inline-flex; align-items: center; gap: 4px; border: 1px solid rgba(241, 242, 238, .24); background: #e8e9e4; color: var(--black); font-size: 10px; font-weight: 600; line-height: 1; text-decoration: none; white-space: nowrap; transition: border-color .16s, background .16s; }
-.report-markdown .inline-citation:hover { border-color: var(--signal); background: white; color: var(--black); }
+.report-markdown .inline-citation { min-height: 25px; margin: 0 2px; padding: 3px 7px 3px 5px; display: inline-flex; align-items: center; vertical-align: baseline; gap: 5px; border: 1px solid #ffffff16; border-radius: 7px; background: #1b2224; color: #d5dcd9; font-size: 11px; font-weight: 500; line-height: 1; text-decoration: none; white-space: nowrap; transition: border-color .16s, background .16s; }
+.report-markdown .inline-citation:hover, .report-markdown .inline-citation:focus-visible { border-color: #ffffff50; background: #293235; color: var(--white); }
+.report-markdown .inline-citation .source-favicon { width: 15px; height: 15px; border: 0; border-radius: 3px; background: transparent; color: var(--white); font-size: 10px; }
+.report-markdown .inline-citation .source-favicon img { width: 15px; height: 15px; margin: 0; border: 0; object-fit: contain; }
 .report-markdown .unresolved-citation { margin: 0 2px; color: #e5a46d; font-size: .76em; text-decoration: none; white-space: nowrap; }
 .report-markdown .unresolved-citation:hover { color: #ffc18c; }
 .report-mobile-contents { display: none; }
