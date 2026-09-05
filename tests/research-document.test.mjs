@@ -6,7 +6,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import ts from "typescript";
 
 const dependencies = Object.fromEntries(await Promise.all([
-  "react", "react/jsx-runtime", "lucide-react", "react-markdown", "rehype-katex", "remark-gfm", "remark-math",
+  "react", "react-dom", "react/jsx-runtime", "lucide-react", "react-markdown", "rehype-katex", "remark-gfm", "remark-math",
 ].map(async (name) => [name, await import(name)])));
 const loadComponent = async (path) => {
   const source = await readFile(new URL(path, import.meta.url), "utf8");
@@ -21,6 +21,7 @@ const loadComponent = async (path) => {
   return testModule.exports;
 };
 dependencies["@/components/source-favicon"] = await loadComponent("../src/components/source-favicon.tsx");
+dependencies["@/components/citation-link"] = await loadComponent("../src/components/citation-link.tsx");
 const { ResearchDocument } = await loadComponent("../src/components/research-document.tsx");
 const render = (content, sources = []) => renderToStaticMarkup(createElement(ResearchDocument, { content, sources }));
 

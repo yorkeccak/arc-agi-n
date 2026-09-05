@@ -6,7 +6,7 @@ import ReactMarkdown, { type Components } from "react-markdown";
 import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
-import { SourceFavicon, sourceHost } from "@/components/source-favicon";
+import { CitationLink } from "@/components/citation-link";
 
 export interface ResearchSource {
   title: string;
@@ -222,17 +222,12 @@ export function ResearchDocument({ content, sources = [] }: { content: string; s
 
       if (isCitation && href.startsWith("http")) {
         return (
-          <a
+          <CitationLink
             href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-citation"
-            aria-label={`Source ${label.replace(/^\[|\]$/g, "")}: ${source?.title || sourceHost(href)}`}
-            title={`${source?.title || "Source"} · ${sourceHost(href)}`}
-          >
-            <SourceFavicon url={href} />
-            <span>{label.replace(/^\[|\]$/g, "")}</span>
-          </a>
+            label={label.replace(/^\[|\]$/g, "")}
+            title={source?.title}
+            snippet={source?.snippet}
+          />
         );
       }
 
