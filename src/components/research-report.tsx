@@ -178,9 +178,6 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
   const isPaused = research.status === "awaiting_input" || research.status === "paused";
   const authRequired = research.status === "auth-required";
   const title = compactResearchTitle(research.title) || localContext.title || "Your DeepResearch report";
-  const subtitle = isComplete && research.title && research.title !== title
-    ? "Foundations, prior work, open gaps, and a 72-hour starting plan."
-    : undefined;
   const sections = useMemo(() => research.output ? extractReportSections(research.output).filter((section) => section.title.toLowerCase() !== "sources") : [], [research.output]);
   const unresolvedCitations = useMemo(() => research.output ? countUnresolvedCitations(research.output, research.sources) : 0, [research.output, research.sources]);
 
@@ -198,21 +195,21 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
         <section className="report-intro">
           <p className="report-route">DeepResearch / {taskId.slice(0, 8)}</p>
           <h1>{title}</h1>
-          {subtitle && <p className="report-subtitle">{subtitle}</p>}
+          {isComplete && <p className="report-subtitle">Your starting plan: foundations, prior work, promising avenues and next steps, with sources.</p>}
           <div className="report-state">
             <div className="report-state-title" role="status" aria-live="polite">
               {isComplete ? <Check size={19} /> : isPaused ? <CirclePause size={19} /> : authRequired ? <LogIn size={19} /> : <LoaderCircle className={hasStopped ? "" : "spin"} size={19} />}
               <b>{statusLabel(research.status)}</b>
             </div>
             {!isComplete && !hasStopped && !isPaused && !authRequired && (
-              <p>Valyu DeepResearch is building a sourced starting plan: foundations, problem history, the strongest prior attempts, what remains blocked, and promising avenues to test. Most plans take 5 to 15 minutes.</p>
+              <p>DeepResearch is reading the literature to map the history, foundations and strongest prior attempts. Your report will identify promising avenues and lay out a 72-hour starting plan you can give to your agent. Most reports take 5 to 15 minutes.</p>
             )}
-            {isPaused && <p>The task is paused upstream. Its current work is preserved; return later to continue when it resumes.</p>}
-            {authRequired && <p>Your hosted Valyu session has expired. Sign in again to continue loading this report.</p>}
+            {isPaused && <p>Your research is paused. Its progress is saved; this page will update when it resumes.</p>}
+            {authRequired && <p>Sign in with your Valyu account to view this DeepResearch report.</p>}
             {hasStopped && <p>{research.error || "This task did not finish. Return to the atlas to start a new report."}</p>}
             {authRequired && <button className="report-inline-action" onClick={() => setAuthOpen(true)}><LogIn size={15} /> Sign in to continue</button>}
             {requestError && <button className="report-inline-action" onClick={() => setRetryKey((key) => key + 1)}><RefreshCw size={15} /> Retry now</button>}
-            {progress !== undefined && !isComplete && !isPaused && !authRequired && (
+            {progress !== undefined && !isComplete && !hasStopped && !isPaused && !authRequired && (
               <div className="report-progress" role="progressbar" aria-label="DeepResearch report progress" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress}><i style={{ width: `${progress}%` }} /></div>
             )}
             {progress === undefined && !isComplete && !hasStopped && !isPaused && !authRequired && <div className="report-progress is-indeterminate" role="progressbar" aria-label="DeepResearch report in progress"><i /></div>}
@@ -223,8 +220,8 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
               <p>{localContext.notified
                 ? "You can close this page. Valyu will email you a link when the report is ready."
                 : selfHosted
-                  ? "This report has a permanent URL. Copy it before leaving, or set DEEPRESEARCH_ALERT_EMAIL to receive a completion email."
-                  : "This report has a permanent URL. Keep this page open or copy the link and return later."}</p>
+                  ? "You can close this page. Copy this private report link to return when it is ready."
+                  : "You can close this page. Copy the report link to return when it is ready."}</p>
               <button onClick={copyUrl}>{copied ? <Check size={16} /> : <Copy size={16} />}{copied ? "Link copied" : "Copy report link"}</button>
             </div>
           )}

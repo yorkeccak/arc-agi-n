@@ -17,8 +17,9 @@ Security fixes target the current default branch. There is no maintained support
 - Use a strong, stable `RESEARCH_TOKEN_SECRET`. Rotating it invalidates existing signed capabilities, including affected report links.
 - Register exact HTTPS OAuth callback URLs. Keep production and preview credentials separate and remove unused callbacks.
 - Treat signed research links as private access capabilities. Do not paste them into public issues, analytics events, screenshots or shared logs.
-- Hosted mode charges the signed-in user's organisation. Self-hosted mode uses the deployment owner's API key. Restrict access to self-hosted instances and set provider-side spending controls before exposing them to the internet.
-- Process-local rate limits are best-effort, not a distributed spending limit. Apply edge protection and provider-side spending controls for public self-hosted deployments.
+- Search uses the deployment owner's `VALYU_API_KEY` in both modes and does not require sign-in. Hosted DeepResearch uses the signed-in user's organisation and credits; self-hosted DeepResearch uses the owner's key.
+- Public search can spend the deployment owner's credits. Apply edge abuse protection and provider-side spending controls in both modes. Restrict access to self-hosted instances when they are not intended for public use.
+- Process-local rate limits are best-effort, not a distributed spending limit. OAuth protection on DeepResearch does not protect the public search budget.
 - Vercel uses the platform's `X-Real-IP` header. On other hosts, enable `TRUST_PROXY_HEADERS` only when your trusted proxy overwrites that header. Do not enable it on a directly exposed server.
 - Keep dependencies current and run the available checks before release. Review changes to authentication, paid API calls, report access and external URL handling with particular care.
 

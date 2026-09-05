@@ -141,6 +141,7 @@ export function AtlasApp() {
   const isValyuMode = process.env.NEXT_PUBLIC_APP_MODE === "valyu";
   const closeProblem = useCallback(() => { setResumeResearch(false); setSelected(undefined); }, []);
   const closeBreakthroughs = useCallback(() => setBreakthroughsOpen(false), []);
+  const closeAuth = useCallback(() => setAuthOpen(false), []);
 
   useEffect(() => {
     if (!mobileMenu) return;
@@ -175,13 +176,7 @@ export function AtlasApp() {
       : discoveredProblems.filter((problem) => problem.field === field)
   ), [discoveredProblems, field]);
 
-  const search = async (nextQuery: string, nextField: Field | "All" = "All", authenticated = false) => {
-    if (isValyuMode && !user && !authenticated) {
-      const returnTo = `/?q=${encodeURIComponent(nextQuery)}&field=${encodeURIComponent(nextField)}&resume=search`;
-      setAuthReturnTo(returnTo);
-      setAuthOpen(true);
-      return;
-    }
+  const search = async (nextQuery: string, nextField: Field | "All" = "All") => {
     searchController.current?.abort();
     const controller = new AbortController();
     searchController.current = controller;
@@ -228,10 +223,6 @@ export function AtlasApp() {
           streamComplete = true;
         }
         if (event.type === "error") {
-          if (/sign in/i.test(event.message)) {
-            setUser(undefined);
-            setAuthOpen(true);
-          }
           throw new Error(event.message);
         }
       };
@@ -269,21 +260,9 @@ export function AtlasApp() {
           setSelected(resumedProblem);
           setResumeResearch(params.get("research") === "1" && Boolean(data.user));
           window.history.replaceState({}, "", "/");
-          return;
-        }
-        const resumedQuery = params.get("q")?.trim();
-        const resumedField = params.get("field");
-        const nextField = resumedField && (fields as readonly string[]).includes(resumedField) ? resumedField as Field : "All";
-        if (data.user && params.get("resume") === "search" && resumedQuery && resumedQuery.length >= 2) {
-          setQuery(resumedQuery);
-          setField(nextField);
-          window.history.replaceState({}, "", "/");
-          void search(resumedQuery, nextField, true);
         }
       })
       .catch(() => undefined);
-  // Search is intentionally resumed once from the signed return URL.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const submitSearch = (event: FormEvent) => {
@@ -389,7 +368,7 @@ export function AtlasApp() {
           {isValyuMode && (user ? (
             <button onClick={logOut}>{user.name || user.email.split("@")[0]} · Sign out</button>
           ) : (
-            <button onClick={() => { setAuthReturnTo(undefined); setAuthOpen(true); }}>Sign in</button>
+            <button onClick={() => { setAuthReturnTo(undefined); setAuthOpen(true); }}>Sign in for DeepResearch</button>
           ))}
         </nav>
       </header>
@@ -611,7 +590,7 @@ export function AtlasApp() {
       <AnimatePresence>
         {breakthroughsOpen && <BreakthroughsPanel onClose={closeBreakthroughs} />}
       </AnimatePresence>
-      <AuthDialog open={authOpen} onClose={() => setAuthOpen(false)} returnTo={authReturnTo} />
+      <AuthDialog open={authOpen} onClose={closeAuth} returnTo={authReturnTo} />
     </main>
   );
 }

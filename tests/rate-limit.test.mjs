@@ -69,27 +69,3 @@ test("paid request guard rejects foreign origins, cross-site requests and non-JS
   assert.equal(validatePaidRequest(request({ "sec-fetch-site": "cross-site" })).status, 403);
   assert.equal(validatePaidRequest(request({ "Content-Type": "text/plain" })).status, 415);
 });
-
-test("hosted search forwards cancellation to both upstream request types", async () => {
-  const source = await readFile(new URL("../src/app/api/search/route.ts", import.meta.url), "utf8");
-  const parsed = ts.createSourceFile("route.ts", source, ts.ScriptTarget.Latest, true);
-  const helpers = parsed.statements.filter((node) => ts.isFunctionDeclaration(node) &&
-    ["answerViaOAuth", "searchViaOAuth"].includes(node.name?.text));
-  assert.equal(helpers.length, 2);
-  const { outputText } = ts.transpileModule(helpers.map((node) => node.getText(parsed)).join("\n"), {
-    compilerOptions: { target: ts.ScriptTarget.ES2022 },
-  });
-  const signals = [];
-  const mockFetch = async (_url, options) => {
-    signals.push(options.signal);
-    return { ok: true, json: async () => ({ results: [] }) };
-  };
-  const { answerViaOAuth, searchViaOAuth } = new Function("fetch", "process", "problemSchema", "weakSourceDomains",
-    `${outputText}; return { answerViaOAuth, searchViaOAuth };`)(mockFetch, { env: {} }, {}, []);
-  const controller = new AbortController();
-  await searchViaOAuth("test", "test-token", controller.signal);
-  await answerViaOAuth("test", "test-token", "test", controller.signal);
-  controller.abort();
-  assert.equal(signals.length, 2);
-  assert.ok(signals.every((signal) => signal.aborted));
-});

@@ -288,8 +288,8 @@ export function ProblemDrawer({
         {copyError && <div className="drawer-action-error" role="alert">{copyError}</div>}
         <div className="solver-choice">
           <div className="action-explainer">
-            <b>Copy a solver brief</b>
-            <span>Exact question, first foothold, sources and guardrails - ready to paste into an agent.</span>
+            <b>Copy a starting prompt</b>
+            <span>The question, sources and a first step. Choose your agent, then paste the prompt to begin.</span>
           </div>
           <div className="agent-actions" aria-label="Copy solver brief for an agent">
             {agentTargets.map((target) => (
@@ -312,11 +312,11 @@ export function ProblemDrawer({
             ))}
           </div>
         </div>
-        <button className="primary-action" aria-label="Build a DeepResearch report for this problem" onClick={startResearch} disabled={startingResearch || researchUncertain}>
+        <button className="primary-action" aria-label="Build a DeepResearch plan for this problem" onClick={startResearch} disabled={startingResearch || researchUncertain}>
           {startingResearch ? <LoaderCircle className="spin" size={19} /> : null}
           <span>
-            <b>{startingResearch ? "Building research report" : "Research this problem"}</b>
-            <small>DeepResearch: foundations, history, prior attempts and promising avenues</small>
+            <b>{startingResearch ? "Starting DeepResearch…" : "Build a DeepResearch plan"}</b>
+            <small>History, foundations, prior attempts and avenues to explore, with sources and a 72-hour starting plan.</small>
           </span>
           {!startingResearch && <ArrowRight size={18} />}
         </button>

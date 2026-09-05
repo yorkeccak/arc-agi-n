@@ -89,7 +89,7 @@ Import your fork into Vercel as a Next.js project, or use another Node.js host. 
 
 Optional `DEEPRESEARCH_ALERT_EMAIL` enables completion emails. The app displays a signed report URL immediately; keep it private. Protect shared instances with access controls and provider-side spending limits because all requests use your API key.
 
-See [Hosting](docs/HOSTING.md) for deployment details and the optional OAuth mode. See [Security](SECURITY.md) before exposing an instance publicly.
+The optional OAuth mode also keeps search public and bills it to the deployment's API key; only DeepResearch requires sign-in and uses the user's credits. See [Hosting](docs/HOSTING.md) for configuration and [Security](SECURITY.md) before exposing an instance publicly.
 
 ## Development
 
