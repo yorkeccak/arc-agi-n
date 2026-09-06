@@ -9,12 +9,16 @@ import { ResearchDocument, countUnresolvedCitations, extractReportSections } fro
 import { SourceFavicon, sourceHost } from "@/components/source-favicon";
 import { parseResearchEffort, researchEfforts, type ResearchEffort } from "@/lib/research-effort";
 import { rememberLocalResearch } from "@/lib/local-research-history";
+import { ResearchActivity } from "@/components/research-activity";
+import type { ActivitySource, ResearchActivityStep } from "@/lib/research-activity";
 
 interface ResearchResult {
   taskId: string;
   effort?: ResearchEffort;
   status: string;
   progress?: { currentStep: number; totalSteps: number };
+  activity?: ResearchActivityStep[];
+  activitySources?: ActivitySource[];
   output?: string;
   sources?: Array<{ title: string; url: string; sourceId?: number; snippet?: string }>;
   pdfUrl?: string;
@@ -172,8 +176,8 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
   const progress = useMemo(() => {
     const current = research.progress?.currentStep;
     const total = research.progress?.totalSteps;
-    if (!current || !total) return undefined;
-    return Math.min(100, Math.max(1, Math.round((current / total) * 100)));
+    if (current === undefined || !total) return undefined;
+    return Math.min(100, Math.max(0, Math.round((current / total) * 100)));
   }, [research.progress]);
 
   const copyUrl = async () => {
@@ -230,6 +234,8 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
             )}
             {progress === undefined && !isComplete && !hasStopped && !isPaused && !authRequired && <div className="report-progress is-indeterminate" role="progressbar" aria-label="DeepResearch report in progress"><i /></div>}
           </div>
+
+          {!authRequired && <ResearchActivity steps={research.activity || []} sources={research.activitySources || []} status={research.status} progress={research.progress} />}
 
           {!isComplete && !hasStopped && !authRequired && (
             <div className="report-return-note">
