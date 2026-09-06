@@ -252,6 +252,7 @@ test("research effort defaults to fast and is forwarded in both deployment modes
       assert.equal(response.status, 200);
       const providerRequest = mode === "valyu" ? JSON.parse(calls[0].options.body).body : calls[1].options;
       assert.equal(providerRequest.mode, effort || "fast");
+      assert.deepEqual(providerRequest.tools, { code_execution: true, charts: true });
       assert.equal((await response.json()).effort, effort || "fast");
     }
   }

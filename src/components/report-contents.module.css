@@ -1,0 +1,23 @@
+.contents { min-width: 0; color: var(--muted); text-align: left; }
+.toggle { min-height: 44px; display: flex; align-items: center; width: 100%; gap: 9px; padding: 8px 10px; background: transparent; border: 0; border-radius: 8px; color: inherit; cursor: pointer; font-size: 13px; }
+.toggle span { flex: 1; min-width: 0; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.toggle svg { flex: none; }
+.toggle:hover { color: var(--white); background: #ffffff08; }
+.entries { max-height: min(52vh, 560px); overflow-y: auto; overscroll-behavior: contain; padding: 4px 4px 4px 0; scrollbar-width: thin; }
+.entries a { position: relative; display: flex; align-items: flex-start; gap: 7px; min-height: 40px; padding: 10px 12px; border: 0; border-radius: 7px; color: var(--muted); text-decoration: none; font-size: 12px; line-height: 1.45; transition: color 150ms, background-color 150ms; }
+.entries a span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+.entries a svg { flex: none; margin-top: 2px; }
+.entries a.primary { font-weight: 500; color: #c7cdcb; }
+.entries a:hover { color: var(--white); background: #ffffff08; }
+.entries a[aria-current] { color: var(--white); background: #ffffff0d; }
+.entries a[aria-current]::before { content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 2px; border-radius: 2px; background: var(--signal); }
+.mobile { display: none; }
+@media (max-width: 700px) {
+  .desktop { display: none; }
+  .mobile { position: sticky; top: 0; z-index: 8; display: block; margin: 0 0 24px; border-radius: 12px; background: #101516; box-shadow: 0 0 0 1px #ffffff14, 0 8px 24px #0003; }
+  .mobile .toggle { min-height: 50px; padding: 10px 14px; }
+  .mobile .entries { position: absolute; top: 100%; width: 100%; max-height: 55dvh; padding: 6px; border-radius: 0 0 12px 12px; background: #101516; box-shadow: 0 12px 24px #0006; }
+  .mobile .entries a { min-height: 44px; }
+  .mobile ~ :global(.report-markdown) :is(h1, h2, h3, figure) { scroll-margin-top: 70px; }
+}
+@media (prefers-reduced-motion: reduce) { .entries a { transition: none; } }

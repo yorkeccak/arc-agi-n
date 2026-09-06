@@ -1,0 +1,29 @@
+.activity { width: min(700px, 100%); margin: 32px 0 8px; text-align: left; }
+.activity h2, .finished { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 18px; font-weight: 500; }
+.finished { min-height: 44px; justify-content: space-between; cursor: pointer; }
+.metrics { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 14px 0 24px; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.updating { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; }
+.waiting, .footnote { color: var(--muted); font-size: 13px; line-height: 1.6; text-wrap: pretty; }
+.timeline { margin: 0; padding: 0; list-style: none; }
+.timeline > li { position: relative; display: flex; gap: 14px; padding-bottom: 24px; }
+.timeline > li:not(:last-child)::before { content: ""; position: absolute; top: 30px; bottom: 4px; left: 14px; width: 1px; background: var(--line); }
+.stepIcon { position: relative; flex: 0 0 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: #171c1d; color: var(--muted); }
+.active { color: var(--signal); }
+.stepBody { min-width: 0; flex: 1; padding-top: 4px; }
+.stepTitle { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.stepTitle b { font-size: 14px; font-weight: 500; }
+.stepTitle small { flex-shrink: 0; color: var(--muted); font-size: 11px; }
+.stepBody > p { margin: 6px 0 12px; color: var(--muted); line-height: 1.5; font-size: 13px; overflow-wrap: anywhere; text-wrap: pretty; }
+.sources { display: grid; gap: 3px; margin-top: 10px; padding: 5px; border-radius: 13px; background: #101516; box-shadow: 0 0 0 1px rgba(255,255,255,.08); }
+.sources a { display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 9px; border-radius: 8px; color: inherit; text-decoration: none; transition: background-color 150ms; }
+.sources a:hover, .sources a:focus-visible { background: #202728; }
+.sources a > span:nth-child(2) { min-width: 0; flex: 1; }
+.sources b { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; font-size: 12px; font-weight: 500; line-height: 1.5; }
+.sources small { display: block; margin-top: 3px; font-size: 11px; color: var(--muted); overflow-wrap: anywhere; }
+.sources svg { flex: none; color: var(--muted); }
+.expand { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0; margin-bottom: 12px; border: 0; background: transparent; color: var(--muted); font-size: 12px; cursor: pointer; }
+.allSources { border-top: 1px solid var(--line); padding-top: 8px; }
+.allSources summary { display: flex; align-items: center; justify-content: space-between; min-height: 44px; font-size: 13px; cursor: pointer; }
+.allSources summary span { color: var(--muted); font-variant-numeric: tabular-nums; }
+@media (max-width: 480px) { .updating { margin-left: 0; }.timeline > li { gap: 10px; }.stepTitle { flex-wrap: wrap; gap: 4px 10px; } }
+@media (prefers-reduced-motion: reduce) { .activity :global(.spin) { animation: none; }.sources a { transition: none; } }

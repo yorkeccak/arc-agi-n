@@ -1,5 +1,7 @@
 "use client";
 
+import { trackEvent } from "@/lib/analytics";
+
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, BookOpen, Check, Clock3, LoaderCircle, RefreshCw, Search } from "lucide-react";
@@ -101,7 +103,7 @@ export function ResearchHistory({ selfHosted }: { selfHosted: boolean }) {
             <BookOpen size={28} strokeWidth={1.4} />
             <h2>Sign in to see your reports.</h2>
             <p>Sign in with the Valyu account you use for DeepResearch to see your reports and running jobs. Problem search stays free to use without signing in.</p>
-            <a className="history-primary" href="/api/oauth/start?returnTo=%2Fresearch">Continue with Valyu <ArrowRight size={17} /></a>
+            <a className="history-primary" href="/api/oauth/start?returnTo=%2Fresearch" onClick={() => trackEvent("sign_in_started", { resumes_research: false })}>Continue with Valyu <ArrowRight size={17} /></a>
           </section>
         ) : (
           <>
@@ -128,7 +130,7 @@ export function ResearchHistory({ selfHosted }: { selfHosted: boolean }) {
               <ul className="history-list">
                 {filtered.slice(0, visibleCount).map((job) => (
                   <li key={job.id}>
-                    <Link className="history-job" href={"reportPath" in job ? job.reportPath : `/research/${encodeURIComponent(job.id)}`} prefetch={false}>
+                    <Link className="history-job" href={"reportPath" in job ? job.reportPath : `/research/${encodeURIComponent(job.id)}`} prefetch={false} onClick={() => trackEvent("history_report_opened", { status: job.status })}>
                       <span className={`history-job-icon${job.status === "completed" ? " is-ready" : ""}`} aria-hidden="true">{job.status === "completed" ? <BookOpen size={22} strokeWidth={1.5} /> : working.has(job.status) ? <LoaderCircle size={22} className="spin" /> : <Clock3 size={22} />}</span>
                       <span className="history-job-copy"><span className="history-job-meta"><span className={job.status === "completed" ? "history-ready" : ""}>{job.status === "completed" && <Check size={13} />}{statusLabel(job.status)}</span>{formatDate(job.createdAt) && <time dateTime={job.createdAt}>{formatDate(job.createdAt)}</time>}</span><h2>{job.title}</h2></span>
                       <span className="history-job-open">{job.status === "completed" ? "Read report" : "View job"} <ArrowRight size={18} /></span>

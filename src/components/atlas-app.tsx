@@ -12,6 +12,7 @@ import { BreakthroughsPanel } from "@/components/breakthroughs-panel";
 import { ProblemDrawer } from "@/components/problem-drawer";
 import { SourceFavicon, sourceHost } from "@/components/source-favicon";
 import { fieldColors, fields, problems } from "@/lib/problems";
+import { trackEvent } from "@/lib/analytics";
 import { readSearchResponse, SearchResponseError } from "@/lib/search-stream";
 import { parseResearchEffort, type ResearchEffort } from "@/lib/research-effort";
 import type { AuthUser } from "@/lib/oauth";
@@ -174,8 +175,12 @@ export function AtlasApp() {
       : discoveredProblems.filter((problem) => problem.field === field)
   ), [discoveredProblems, field]);
 
-  const search = async (nextQuery: string, nextField: Field | "All" = "All") => {
+  const search = async (nextQuery: string, nextField: Field | "All" = "All", origin = "typed") => {
     searchController.current?.abort();
+    const startedAt = performance.now();
+    const foundSources = new Set<string>();
+    const foundProblems = new Set<string>();
+    trackEvent("search_started", { field: nextField, origin });
     const controller = new AbortController();
     searchController.current = controller;
     setField(nextField);
@@ -201,17 +206,23 @@ export function AtlasApp() {
         if (controller.signal.aborted || searchController.current !== controller) return;
         if (event.type === "status") setSearchPhase(event.message);
         if (event.type === "source") {
+          foundSources.add(event.lead.url);
           setLeads((current) => current.some((lead) => lead.url === event.lead.url) ? current : [...current, event.lead]);
         }
         if (event.type === "problem") {
+          foundProblems.add(event.problem.title);
           setDiscoveredProblems((current) => current.some((problem) => problem.title === event.problem.title) ? current : [...current, event.problem]);
         }
         if (event.type === "done") {
           if (event.message) setSearchPhase(event.message);
         }
       });
+      if (!controller.signal.aborted && searchController.current === controller) {
+        trackEvent("search_completed", { source_count: foundSources.size, problem_count: foundProblems.size, duration_ms: Math.round(performance.now() - startedAt) });
+      }
     } catch (error) {
       if (controller.signal.aborted || searchController.current !== controller) return;
+      trackEvent("search_failed", { duration_ms: Math.round(performance.now() - startedAt) });
       setSearchError(error instanceof SearchResponseError ? error.message : "The search connection was interrupted. Please try again.");
       controller.abort();
     } finally {
@@ -239,10 +250,11 @@ export function AtlasApp() {
 
   const submitSearch = (event: FormEvent) => {
     event.preventDefault();
-    if (query.trim().length >= 2) void search(query.trim());
+    if (query.trim().length >= 2) void search(query.trim(), "All", submittedQuery ? "refine" : "typed");
   };
 
   const surprise = () => {
+    trackEvent("surprise_clicked");
     const candidates = field === "All" ? problems : problems.filter((item) => item.field === field);
     setNearbyProblems([]);
     setSelected(candidates[Math.floor(Math.random() * candidates.length)]);
@@ -250,6 +262,7 @@ export function AtlasApp() {
   };
 
   const openBreakthroughs = () => {
+    trackEvent("breakthroughs_opened");
     setMobileMenu(false);
     setBreakthroughsOpen(true);
   };
@@ -275,9 +288,10 @@ export function AtlasApp() {
     closeBreakthroughs();
     setMobileMenu(false);
   };
-  const browseAtlas = () => clearSearch(true);
+  const browseAtlas = () => { trackEvent("atlas_browsed"); clearSearch(true); };
 
   const stopSearch = () => {
+    trackEvent("search_stopped");
     searchController.current?.abort();
     searchController.current = null;
     setLoading(false);
@@ -287,12 +301,14 @@ export function AtlasApp() {
 
   const changeField = (nextField: Field | "All") => {
     if (nextField === field) return;
+    trackEvent("field_selected", { field: nextField });
     setField(nextField);
   };
 
   const logOut = async () => {
     const response = await fetch("/api/auth/session", { method: "DELETE" });
     if (!response.ok) throw new Error("Could not sign out");
+    trackEvent("sign_out_completed");
     setUser(undefined);
   };
 
@@ -324,7 +340,7 @@ export function AtlasApp() {
   );
 
   return (
-    <main className="arc-shell" id="atlas">
+    <main className={`arc-shell${!submittedQuery && !browsing ? " is-landing" : ""}`} id="atlas">
       <header className="arc-header">
         <button className="arc-wordmark" aria-label="Return to the ARC-AGI-N globe" onClick={goHome}>
           <ArcLogo />
@@ -369,7 +385,7 @@ export function AtlasApp() {
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 maxLength={500}
-                placeholder='Try “Open problems in climate science”'
+                placeholder="Find open problems…"
                 aria-label="Search open problems by field, method, dataset, or time budget"
               />
               <button type="submit" aria-label="Find open problems" disabled={query.trim().length < 2}><ArrowRight size={22} strokeWidth={1.5} /></button>
@@ -381,7 +397,7 @@ export function AtlasApp() {
                 "Open problems in quantum physics",
                 "Open problems in climate science",
               ].map((example) => (
-                <button key={example} onClick={() => { setQuery(example); void search(example); }}>{example}</button>
+                <button key={example} onClick={() => { setQuery(example); void search(example, "All", "example"); }}>{example}</button>
               ))}
             </div>
 
@@ -427,8 +443,8 @@ export function AtlasApp() {
                 </header>
                 <p className="lead-disclaimer">Searching papers and the web for open questions and ways to start. Sources appear as we find them.</p>
                 {loading && <div className="search-activity"><span aria-hidden="true"><i /></span><p role="status">{searchPhase}</p><button onClick={stopSearch}>Stop search</button></div>}
-                {searchStopped && <p className="search-notice" role="status">{searchPhase} <button onClick={() => void search(submittedQuery)}>Run again</button></p>}
-                {searchError && <div className="search-error" role="alert">{searchError} <button onClick={() => void search(submittedQuery)}>Retry search</button></div>}
+                {searchStopped && <p className="search-notice" role="status">{searchPhase} <button onClick={() => void search(submittedQuery, field, "retry")}>Run again</button></p>}
+                {searchError && <div className="search-error" role="alert">{searchError} <button onClick={() => void search(submittedQuery, field, "retry")}>Retry search</button></div>}
                 {leads.length > 0 && (
                   <div className="source-stream">
                     <div className="source-stream-head"><span>{loading ? "Sources arriving" : "Sources found"}</span><span>{leads.length}</span></div>
@@ -441,6 +457,7 @@ export function AtlasApp() {
                             rel="noreferrer"
                             key={lead.url}
                             className="source-card"
+                            onClick={() => trackEvent("source_opened", { surface: "search" })}
                             initial={{ opacity: 0, x: 16 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.28, delay: Math.min(index * 0.035, 0.2) }}
@@ -481,7 +498,7 @@ export function AtlasApp() {
                         {problem.sourceEvidence.slice(0, 3).map((evidence) => {
                           const lead = leads.find((candidate) => candidate.url === evidence.url);
                           return (
-                            <a href={evidence.url} target="_blank" rel="noreferrer" key={evidence.url}>
+                            <a href={evidence.url} target="_blank" rel="noreferrer" key={evidence.url} onClick={() => trackEvent("source_opened", { surface: "search" })}>
                               <SourceFavicon url={evidence.url} />
                               <span>
                                 <small>{lead?.sourceType || sourceHost(evidence.url)}{lead?.publishedAt ? ` · ${lead.publishedAt.slice(0, 10)}` : ""}</small>
