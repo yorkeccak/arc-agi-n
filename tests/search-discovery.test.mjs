@@ -87,8 +87,9 @@ const streamResult = (chunks, reason = "stop") => ({
     chunkDelayInMs: null,
   }),
 });
-const toolResult = (count = 1) => streamResult(Array.from({ length: count }, (_, index) => ({
-  type: "tool-call", toolCallId: `call-${index}`, toolName: "valyuSearch", input: JSON.stringify({ query: `quantum physics open questions ${index}` }),
+const toolResult = (count = 1, queriesPerCall = 2) => streamResult(Array.from({ length: count }, (_, index) => ({
+  type: "tool-call", toolCallId: `call-${index}`, toolName: "valyuSearch",
+  input: JSON.stringify({ queries: Array.from({ length: queriesPerCall }, (__, queryIndex) => `quantum physics open questions ${index}-${queryIndex}`) }),
 })), "tool-calls");
 const outputResult = (elements) => streamResult([
   { type: "text-start", id: "answer" },
@@ -126,15 +127,18 @@ test("real SDK executes retrieval then structured discovery using the requested 
   assert.equal(model.doStreamCalls[0].providerOptions.openai.reasoningEffort, "medium");
   assert.equal(model.doStreamCalls[0].providerOptions.openai.store, false);
   assert.equal(model.doStreamCalls[0].toolChoice.type, "required");
-  assert.equal(calls.length, 1);
-  assert.equal(calls[0].url, "https://api.valyu.ai/v1/search");
-  assert.equal(calls[0].options.headers["x-api-key"], "test-search-key");
-  const payload = JSON.parse(calls[0].options.body);
-  assert.equal(payload.search_type, undefined);
-  assert.equal(payload.is_tool_call, true);
-  assert.equal(payload.response_length, 12_000);
-  assert.equal(Number.isInteger(payload.response_length), true);
-  assert.ok(payload.response_length > 0);
+  assert.equal(model.doStreamCalls[1].toolChoice.type, "none");
+  assert.equal(calls.length, 2);
+  for (const call of calls) {
+    assert.equal(call.url, "https://api.valyu.ai/v1/search");
+    assert.equal(call.options.headers["x-api-key"], "test-search-key");
+    const payload = JSON.parse(call.options.body);
+    assert.equal(payload.search_type, undefined);
+    assert.equal(payload.is_tool_call, true);
+    assert.equal(payload.response_length, 12_000);
+    assert.equal(Number.isInteger(payload.response_length), true);
+    assert.ok(payload.response_length > 0);
+  }
   assert.equal(events.filter((event) => event.type === "source").length, 1);
   assert.equal(events.filter((event) => event.type === "problem").length, 1);
   assert.ok(events.findIndex((event) => event.type === "source") < events.findIndex((event) => event.type === "problem"));
@@ -144,6 +148,29 @@ test("tool execution enforces the four-search budget even for parallel calls", a
   const { calls, result } = await executeDiscovery({ searches: 6 });
   assert.equal(calls.length, 4);
   assert.equal(result, 1);
+});
+
+test("queries in one tool call start concurrently", { timeout: 2_000 }, async () => {
+  const model = new MockLanguageModelV3({ doStream: [toolResult(1, 2), outputResult([])] });
+  const started = [];
+  let release;
+  const gate = new Promise((resolve) => { release = resolve; });
+  const { runDiscovery } = loadDiscovery({
+    model,
+    fetch: async (url, options) => {
+      started.push(JSON.parse(options.body).query);
+      await gate;
+      return Response.json({ success: true, results: [] });
+    },
+  });
+  const discovery = runDiscovery({
+    query: "Open problems in quantum physics", apiKey: "test-search-key", openaiKey: "test-model-key",
+    signal: new AbortController().signal, onStatus: () => {}, onSource: () => {}, onProblem: () => {},
+  });
+  while (started.length < 2) await new Promise((resolve) => setTimeout(resolve, 0));
+  assert.equal(started.length, 2);
+  release();
+  assert.equal(await discovery, 0);
 });
 
 test("structured elements reach the client before the final model response completes", { timeout: 2_000 }, async () => {
@@ -215,5 +242,6 @@ test("provider diagnostics identify failed retrieval without returning response 
   assert.equal(diagnostics[0].stage, "retrieval");
   assert.equal(diagnostics[0].reason, "rate_limit");
   assert.equal(diagnostics[0].http_status, 429);
+  assert.equal(model.doStreamCalls[1].toolChoice.type, "auto");
   assert.doesNotMatch(JSON.stringify(diagnostics), /secret|private|test-key/);
 });

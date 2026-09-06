@@ -120,9 +120,9 @@ export function BreakthroughsPanel({ onClose, onHome }: BreakthroughsPanelProps)
             <p>Maths, science and code</p>
             <h1 id="breakthrough-title">Recent breakthroughs.</h1>
             <p className="breakthrough-lede">
-              {breakthroughs.length} results. Read the original sources and see how each was checked.
+              Fermat, Ramsey numbers, protein design and more.
             </p>
-            <a className="breakthrough-jump" href="#breakthrough-timeline">See the results <ArrowUpRight size={16} /></a>
+            <a className="breakthrough-jump" href="#breakthrough-timeline">Start at the newest <ArrowUpRight size={16} /></a>
           </div>
           <figure className="astra-result">
             {/* eslint-disable-next-line @next/next/no-img-element */}
