@@ -29,6 +29,7 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3100
 NEXT_PUBLIC_APP_URL=http://localhost:3100
 NEXT_PUBLIC_MAPBOX_TOKEN=pk_your_mapbox_public_token
 VALYU_API_KEY=your_valyu_api_key
+OPENAI_API_KEY=your_openai_api_key
 RESEARCH_TOKEN_SECRET=replace_with_a_random_64_character_hex_value
 ```
 
@@ -74,7 +75,7 @@ Reports have a return URL, live status, Markdown and LaTeX rendering, linked cit
 
 ### What powers it
 
-[Valyu](https://docs.valyu.ai) provides web and academic search through its Answer API, and long-running research plans through DeepResearch. Mapbox renders the globe. The app is Next.js 16, React 19 and TypeScript, with React Markdown, GFM and KaTeX for reports.
+[Valyu](https://docs.valyu.ai) provides web and academic search, and long-running research plans through DeepResearch. Live discovery uses a tool-calling model to search, follow up and stream structured problem cards with source links. Mapbox renders the globe. The app is Next.js 16, React 19 and TypeScript, with React Markdown, GFM and KaTeX for reports.
 
 Self-hosting uses your own server-side API key. No sign-in, separate model API key or local database is required.
 
