@@ -1,4 +1,5 @@
 import { track } from "@vercel/analytics";
+import { clientSearchFailure, searchFailureReasons, type ClientSearchFailure } from "@/lib/search-diagnostics";
 
 export const analyticsEnabled = process.env.NEXT_PUBLIC_ANALYTICS_ENABLED === "true";
 
@@ -13,7 +14,7 @@ const problem = { field, problem_type: oneOf("atlas", "search") };
 const events = {
   search_started: { field, origin: oneOf("typed", "example", "retry", "refine") },
   search_completed: { source_count: count, problem_count: count, duration_ms: count },
-  search_failed: { duration_ms: count },
+  search_failed: { duration_ms: count, source_count: count, problem_count: count, reason: oneOf(...searchFailureReasons), http_status: count, online: boolean },
   search_stopped: {},
   atlas_browsed: {},
   surprise_clicked: {},
@@ -54,6 +55,24 @@ export function trackEvent(name: EventName, properties: Properties = {}) {
     track(name, eventProperties(name, properties));
   } catch {
     // Telemetry must never interrupt the user's action.
+  }
+}
+
+export function reportSearchFailure(failure: ClientSearchFailure) {
+  const safe = clientSearchFailure(failure);
+  if (!safe) return;
+  trackEvent("search_failed", { ...safe });
+  if (!analyticsEnabled || typeof window === "undefined") return;
+  try {
+    void fetch("/api/search/failure", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(safe),
+      keepalive: true,
+      credentials: "omit",
+    }).catch(() => undefined);
+  } catch {
+    // A failed diagnostic request must not trigger another report.
   }
 }
 

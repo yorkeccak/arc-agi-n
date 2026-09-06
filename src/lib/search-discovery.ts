@@ -4,6 +4,7 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { isStepCount, Output, streamText, tool } from "ai";
 import { z } from "zod";
 import { issueResearchToken } from "@/lib/research-token";
+import { searchFailureDetails, type SearchFailureReason } from "@/lib/search-diagnostics";
 import type { DiscoveredProblem, Field, SearchLead } from "@/lib/types";
 
 export const problemSchema = z.object({
@@ -63,6 +64,14 @@ interface DiscoveryOptions {
   onStatus: (message: string) => void;
   onSource: (source: SearchLead) => void;
   onProblem: (problem: DiscoveredProblem) => void;
+  onDiagnostic?: (diagnostic: {
+    event: "provider_failed" | "retrieval_completed";
+    stage: "retrieval" | "synthesis";
+    reason?: SearchFailureReason;
+    http_status?: number;
+    attempt?: number;
+    duration_ms?: number;
+  }) => void;
 }
 
 const searchResponseSchema = z.object({
@@ -108,19 +117,22 @@ Cite only source IDs returned by the tool. Never invent URLs, quotations, result
         execute: async ({ query }) => {
           signal.throwIfAborted();
           if (searches >= 4) return { error: "Search budget reached. Use the sources already retrieved." };
-          searches++;
+          const attempt = ++searches;
+          const startedAt = Date.now();
+          const deadline = AbortSignal.timeout(30_000);
           onStatus(`Searching: ${query}`);
           try {
             const response = await fetch(`${process.env.VALYU_API_URL || "https://api.valyu.ai/v1"}/search`, {
               method: "POST",
               headers: { "Content-Type": "application/json", "x-api-key": options.apiKey },
               body: JSON.stringify({ query, max_num_results: 8, response_length: 12_000, is_tool_call: true }),
-              signal: AbortSignal.any([signal, AbortSignal.timeout(30_000)]),
+              signal: AbortSignal.any([signal, deadline]),
             });
-            if (!response.ok) throw new Error("Search provider unavailable");
+            if (!response.ok) throw Object.assign(new Error("Search provider unavailable"), { statusCode: response.status });
             const data = searchResponseSchema.parse(await response.json());
             if (data.success === false) throw new Error("Search provider unavailable");
             successfulSearches++;
+            options.onDiagnostic?.({ event: "retrieval_completed", stage: "retrieval", attempt, duration_ms: Date.now() - startedAt });
             const found: SearchSource[] = [];
             for (const item of data.results.slice(0, 8)) {
               let url: URL;
@@ -146,14 +158,18 @@ Cite only source IDs returned by the tool. Never invent URLs, quotations, result
             }
             onStatus("Reading the sources and finding open questions…");
             return { sources: found };
-          } catch {
+          } catch (error) {
             signal.throwIfAborted();
+            options.onDiagnostic?.({ event: "provider_failed", stage: "retrieval", attempt, duration_ms: Date.now() - startedAt, ...searchFailureDetails(error), ...(deadline.aborted ? { reason: "timeout" } : {}) });
             return { error: "Search failed. Try another query within the remaining budget. Do not invent sources." };
           }
         },
       }),
     },
-    onError: () => { streamFailed = true; },
+    onError: ({ error }) => {
+      streamFailed = true;
+      options.onDiagnostic?.({ event: "provider_failed", stage: "synthesis", ...searchFailureDetails(error) });
+    },
   });
   let count = 0;
   let ungrounded = 0;
@@ -172,6 +188,5 @@ Cite only source IDs returned by the tool. Never invent URLs, quotations, result
   if (streamFailed || !successfulSearches || (ungrounded > 0 && count === 0)) {
     throw new Error("Discovery did not finish with sourced results");
   }
-  console.info("[search] Complete", { searches, sources: sources.size, problems: count, ungrounded });
   return count;
 }

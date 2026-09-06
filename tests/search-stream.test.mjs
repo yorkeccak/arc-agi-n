@@ -80,3 +80,14 @@ test("a done event cancels an upstream stream that remains open", async () => {
   await readSearchResponse(new Response(stream), () => {});
   assert.equal(cancelled, true);
 });
+
+test("stream failures expose stable categories without raw response details", async () => {
+  for (const [response, reason] of [
+    [new Response("private", { status: 429 }), "rate_limit"],
+    [new Response("private", { status: 503 }), "http_error"],
+    [new Response(null), "missing_body"],
+    [new Response("not-json\n"), "invalid_stream"],
+    [new Response('{"type":"error","message":"secret"}\n'), "server_error"],
+    [new Response('{"type":"status","message":"Reading"}\n'), "incomplete_stream"],
+  ]) await assert.rejects(readSearchResponse(response, () => {}), (error) => error.reason === reason);
+});

@@ -6,6 +6,9 @@ import { MockLanguageModelV3 } from "ai/test";
 import * as zod from "zod";
 import ts from "typescript";
 
+const diagnosticsSource = await readFile(new URL("../src/lib/search-diagnostics.ts", import.meta.url), "utf8");
+const diagnosticsJs = ts.transpileModule(diagnosticsSource, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText;
+const searchDiagnostics = await import(`data:text/javascript;base64,${Buffer.from(diagnosticsJs).toString("base64")}`);
 const moduleSource = await readFile(new URL("../src/lib/search-discovery.ts", import.meta.url), "utf8");
 const { outputText } = ts.transpileModule(moduleSource, {
   compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
@@ -20,6 +23,7 @@ const loadDiscovery = ({ model, fetch: mockFetch = () => assert.fail("Unexpected
     ai,
     zod,
     "@/lib/research-token": { issueResearchToken: () => "test-signature" },
+    "@/lib/search-diagnostics": searchDiagnostics,
   };
   const require = (name) => {
     assert.ok(Object.hasOwn(dependencies, name), `Unexpected module boundary: ${name}`);
@@ -197,4 +201,19 @@ test("successful retrieval can legitimately return no matching questions", async
   const { result, events } = await executeDiscovery({ elements: [], results: [] });
   assert.equal(result, 0);
   assert.equal(events.some((event) => event.type === "problem"), false);
+});
+
+test("provider diagnostics identify failed retrieval without returning response bodies or queries", async () => {
+  const model = new MockLanguageModelV3({ doStream: [toolResult(), outputResult([])] });
+  const diagnostics = [];
+  const { runDiscovery } = loadDiscovery({ model, fetch: async () => new Response("secret provider body", { status: 429 }) });
+  await assert.rejects(runDiscovery({
+    query: "private query", apiKey: "test-key", openaiKey: "test-key", signal: new AbortController().signal,
+    onStatus: () => {}, onSource: () => {}, onProblem: () => {}, onDiagnostic: (event) => diagnostics.push(event),
+  }));
+  assert.equal(diagnostics[0].event, "provider_failed");
+  assert.equal(diagnostics[0].stage, "retrieval");
+  assert.equal(diagnostics[0].reason, "rate_limit");
+  assert.equal(diagnostics[0].http_status, 429);
+  assert.doesNotMatch(JSON.stringify(diagnostics), /secret|private|test-key/);
 });

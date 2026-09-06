@@ -3,16 +3,20 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import ts from "typescript";
 
+const diagnosticsSource = await readFile(new URL("../src/lib/search-diagnostics.ts", import.meta.url), "utf8");
+const diagnosticsJs = ts.transpileModule(diagnosticsSource, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText;
+const searchDiagnostics = await import(`data:text/javascript;base64,${Buffer.from(diagnosticsJs).toString("base64")}`);
 const source = await readFile(new URL("../src/lib/analytics.ts", import.meta.url), "utf8");
 const { outputText } = ts.transpileModule(source, {
   compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
 });
-function load({ enabled, browser = true, storage, track = () => {} } = {}) {
+function load({ enabled, browser = true, storage, track = () => {}, fetch = () => assert.fail("Unexpected telemetry request") } = {}) {
   const testModule = { exports: {} };
-  new Function("require", "module", "exports", "process", "window", outputText)((name) => {
+  new Function("require", "module", "exports", "process", "window", "fetch", outputText)((name) => {
+    if (name === "@/lib/search-diagnostics") return searchDiagnostics;
     assert.equal(name, "@vercel/analytics");
     return { track };
-  }, testModule, testModule.exports, { env: { NEXT_PUBLIC_ANALYTICS_ENABLED: enabled } }, browser ? { sessionStorage: storage } : undefined);
+  }, testModule, testModule.exports, { env: { NEXT_PUBLIC_ANALYTICS_ENABLED: enabled } }, browser ? { sessionStorage: storage } : undefined, fetch);
   return testModule.exports;
 }
 
@@ -21,6 +25,25 @@ test("analytics stays disabled unless explicitly enabled, including self-hosted 
     load({ enabled, track() { assert.fail("Unexpected tracking"); } }).trackEvent("atlas_browsed");
   }
   load({ enabled: "true", browser: false, track() { assert.fail("Server tracking"); } }).trackEvent("atlas_browsed");
+});
+
+test("failure reports are opt-in, sanitized, bounded and never retried", async () => {
+  const failure = { reason: "incomplete_stream", request_id: "11111111-1111-4111-8111-111111111111", http_status: 200, duration_ms: 1234, source_count: 2, problem_count: 0, online: true };
+  const sent = [];
+  const requests = [];
+  for (const enabled of [undefined, "false"]) load({ enabled }).reportSearchFailure(failure);
+  const analytics = load({ enabled: "true", track: (...args) => sent.push(args), fetch: async (...args) => { requests.push(args); throw new Error("offline"); } });
+  analytics.reportSearchFailure({ ...failure, query: "private question", email: "private@example.org", message: "secret", stack: "private stack" });
+  await Promise.resolve();
+  assert.equal(requests.length, 1);
+  assert.equal(requests[0][0], "/api/search/failure");
+  assert.equal(requests[0][1].credentials, "omit");
+  assert.equal(requests[0][1].keepalive, true);
+  assert.deepEqual(JSON.parse(requests[0][1].body), failure);
+  assert.equal(sent[0][1].request_id, undefined);
+  assert.equal(sent[0][1].reason, "incomplete_stream");
+  analytics.reportSearchFailure({ ...failure, reason: "private question" });
+  assert.equal(requests.length, 1);
 });
 
 test("custom events send only allowlisted values and cannot interrupt actions", () => {
