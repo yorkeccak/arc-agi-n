@@ -75,3 +75,10 @@ test("pageview integration uses the privacy filter and never exposes private ref
   assert.match(component, /analyticsUrl\(event.url\)/);
   assert.match(config, /"Referrer-Policy", value: "strict-origin"/);
 });
+
+test("both sign-in entry points record an attempt without sending their return URL", async () => {
+  const history = await readFile(new URL("../src/components/research-history.tsx", import.meta.url), "utf8");
+  const dialog = await readFile(new URL("../src/components/auth-dialog.tsx", import.meta.url), "utf8");
+  assert.match(history, /href="\/api\/oauth\/start\?returnTo=%2Fresearch" onClick=\{\(\) => trackEvent\("sign_in_started", \{ resumes_research: false \}\)\}/);
+  assert.match(dialog, /href=\{signInPath\} onClick=\{\(\) => trackEvent\("sign_in_started", \{ resumes_research: resumesResearch \}\)\}/);
+});
