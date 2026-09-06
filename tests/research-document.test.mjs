@@ -20,6 +20,7 @@ const loadComponent = async (path) => {
   }, testModule, testModule.exports);
   return testModule.exports;
 };
+dependencies["@/lib/analytics"] = { trackEvent() {} };
 dependencies["@/components/source-favicon"] = await loadComponent("../src/components/source-favicon.tsx");
 dependencies["@/components/citation-link"] = await loadComponent("../src/components/citation-link.tsx");
 const { ResearchDocument } = await loadComponent("../src/components/research-document.tsx");

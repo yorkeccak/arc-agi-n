@@ -9,6 +9,7 @@ import { ArcLogo } from "@/components/arc-logo";
 import { PromptHandoff } from "@/components/prompt-handoff";
 import { SourceFavicon, sourceHost } from "@/components/source-favicon";
 import { buildSolverBrief } from "@/lib/solver-brief";
+import { trackEvent } from "@/lib/analytics";
 import { researchEfforts, type ResearchEffort } from "@/lib/research-effort";
 import type { OpenProblem } from "@/lib/types";
 
@@ -46,6 +47,13 @@ export function ProblemDrawer({
   const resumedResearchRef = useRef(false);
   const researchInFlight = useRef(false);
   const mounted = useRef(false);
+  const trackedProblem = useRef<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (trackedProblem.current === problem.id) return;
+    trackedProblem.current = problem.id;
+    trackEvent("problem_opened", { field: problem.field, problem_type: problem.provisional ? "search" : "atlas" });
+  }, [problem.id, problem.field, problem.provisional]);
 
   useEffect(() => {
     mounted.current = true;
@@ -113,7 +121,9 @@ export function ProblemDrawer({
 
   const startResearch = async () => {
     if (researchInFlight.current || researchUncertain) return;
+    trackEvent("research_requested", { effort, signed_in: signedIn, field: problem.field, problem_type: problem.provisional ? "search" : "atlas" });
     if (isValyuMode && !signedIn) {
+      trackEvent("research_auth_required", { effort });
       onRequireAuth(effort);
       return;
     }
@@ -132,6 +142,7 @@ export function ProblemDrawer({
       if (!mounted.current) return;
       if (!response.ok) {
         if (response.status === 401) {
+          trackEvent("research_auth_required", { effort });
           setStartingResearch(false);
           onRequireAuth(effort);
           return;
@@ -150,10 +161,13 @@ export function ProblemDrawer({
           // The report still works without local display context.
         }
       }
+      trackEvent("research_created", { effort });
       router.push(data.reportPath || `/research/${data.taskId}`);
     } catch (researchError) {
       if (!mounted.current) return;
-      if (timeout.aborted || researchError instanceof TypeError || (researchError instanceof Error && /timed out/i.test(researchError.message))) {
+      const uncertain = timeout.aborted || researchError instanceof TypeError || (researchError instanceof Error && /timed out/i.test(researchError.message));
+      trackEvent("research_create_failed", { effort, uncertain });
+      if (uncertain) {
         setResearchUncertain(true);
         setError("We lost contact while creating your report. It may still be running. Check your Valyu research history or completion email before starting another report.");
       } else {
@@ -250,7 +264,7 @@ export function ProblemDrawer({
           <h3>Start reading here</h3>
           <div className="source-list">
             {problem.sources.map((source) => (
-              <a key={source.url} href={source.url} target="_blank" rel="noreferrer">
+              <a key={source.url} href={source.url} target="_blank" rel="noreferrer" onClick={() => trackEvent("source_opened", { surface: "problem" })}>
                 <SourceFavicon url={source.url} />
                 <div>
                   <b>{source.title}</b>
@@ -286,7 +300,7 @@ export function ProblemDrawer({
             <div className="research-effort-options">
               {researchEfforts.map((option, index) => (
                 <label key={option.value} title={option.description}>
-                  <input type="radio" name="research-effort" value={option.value} checked={effort === option.value} onChange={() => setEffort(option.value)} />
+                  <input type="radio" name="research-effort" value={option.value} checked={effort === option.value} onChange={() => { setEffort(option.value); trackEvent("research_effort_selected", { effort: option.value }); }} />
                   <span className="research-effort-option" data-level={index + 1}>
                     <span className="effort-bars" aria-hidden="true"><i /><i /><i /></span>
                     <b>{option.label}</b>

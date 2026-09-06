@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { ArcLogo } from "@/components/arc-logo";
 import { SourceFavicon, sourceHost } from "@/components/source-favicon";
 import { breakthroughs, type BreakthroughKind } from "@/lib/breakthroughs";
+import { trackEvent } from "@/lib/analytics";
 
 const chronologicalBreakthroughs = [...breakthroughs].sort((a, b) => b.date.localeCompare(a.date));
 const resultKinds = [...new Set(breakthroughs.map((item) => item.kind))].sort();
@@ -18,7 +19,7 @@ interface BreakthroughsPanelProps {
 
 function BreakthroughSourceLink({ title, url }: { title: string; url: string }) {
   return (
-    <a href={url} target="_blank" rel="noreferrer">
+    <a href={url} target="_blank" rel="noreferrer" onClick={() => trackEvent("source_opened", { surface: "breakthrough" })}>
       <SourceFavicon url={url} />
       <span>
         <small>{sourceHost(url)}</small>

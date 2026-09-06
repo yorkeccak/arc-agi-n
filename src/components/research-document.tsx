@@ -1,5 +1,7 @@
 "use client";
 
+import { trackEvent } from "@/lib/analytics";
+
 import { Children, isValidElement, type ReactNode, useMemo, useState } from "react";
 import { ArrowUpRight, Check, Copy, ImageIcon } from "lucide-react";
 import ReactMarkdown, { type Components } from "react-markdown";
@@ -232,7 +234,7 @@ export function ResearchDocument({ content, sources = [] }: { content: string; s
       }
 
       return (
-        <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noopener noreferrer" : undefined}>
+        <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noopener noreferrer" : undefined} onClick={() => { if (href.startsWith("http")) trackEvent("source_opened", { surface: "report" }); }}>
           {children}
         </a>
       );

@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { oauthConfigured } from "@/lib/oauth";
+import { trackEvent } from "@/lib/analytics";
 
 interface AuthDialogProps {
   open: boolean;
@@ -84,7 +85,7 @@ export function AuthDialog({ open, onClose, returnTo }: AuthDialogProps) {
             : "Search without an account. Sign in with Valyu for a research plan covering what is known, what has been tried and what to try next."}
         </span>
         {configured ? (
-          <a className="primary-action auth-action" href={signInPath}>
+          <a className="primary-action auth-action" href={signInPath} onClick={() => trackEvent("sign_in_started", { resumes_research: resumesResearch })}>
             Continue with Valyu <ArrowRight size={17} />
           </a>
         ) : (

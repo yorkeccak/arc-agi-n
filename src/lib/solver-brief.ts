@@ -25,9 +25,9 @@ export function buildAgentLinks(prompt: string) {
   const encoded = encodeURIComponent(prompt);
   const cursorUrl = `https://cursor.com/link/prompt?text=${encoded}`;
   return [
-    { name: "Claude Code", href: prompt.length <= 13000 ? `claude://code/new?q=${encoded}` : "claude://code/new", prefilled: prompt.length <= 13000 },
-    { name: "Codex", href: encoded.length <= 7900 ? `codex://new?prompt=${encoded}` : "codex://new", prefilled: encoded.length <= 7900 },
-    { name: "Cursor", href: cursorUrl.length <= 8000 ? cursorUrl : "https://cursor.com/link/prompt", prefilled: cursorUrl.length <= 8000 },
-    { name: "ChatGPT", href: "https://chatgpt.com/", prefilled: false },
+    { name: "Claude Code", analyticsId: "claude", href: prompt.length <= 13000 ? `claude://code/new?q=${encoded}` : "claude://code/new", prefilled: prompt.length <= 13000 },
+    { name: "Codex", analyticsId: "openai", href: encoded.length <= 7900 ? `codex://new?prompt=${encoded}` : "codex://new", prefilled: encoded.length <= 7900 },
+    { name: "Cursor", analyticsId: "cursor", href: cursorUrl.length <= 8000 ? cursorUrl : "https://cursor.com/link/prompt", prefilled: cursorUrl.length <= 8000 },
+    { name: "ChatGPT", analyticsId: "chatgpt", href: "https://chatgpt.com/", prefilled: false },
   ];
 }
