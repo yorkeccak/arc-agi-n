@@ -9,6 +9,7 @@ import { ResearchDocument, countUnresolvedCitations, extractReportSections } fro
 import { SourceFavicon, sourceHost } from "@/components/source-favicon";
 import { parseResearchEffort, researchEfforts, type ResearchEffort } from "@/lib/research-effort";
 import { rememberLocalResearch } from "@/lib/local-research-history";
+import { trackEvent } from "@/lib/analytics";
 import { ResearchActivity } from "@/components/research-activity";
 import type { ActivitySource, ResearchActivityStep } from "@/lib/research-activity";
 import { ReportContents, useReportOutline } from "@/components/report-contents";
@@ -71,6 +72,7 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
   const [authOpen, setAuthOpen] = useState(false);
   const [retryKey, setRetryKey] = useState(0);
   const statusRef = useRef("queued");
+  const viewedStatuses = useRef(new Set<string>());
   const reportRef = useRef<HTMLElement>(null);
   const outline = useReportOutline(reportRef, research.output);
   const localContextRaw = useSyncExternalStore(
@@ -137,6 +139,11 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
         polls += 1;
         statusRef.current = data.status;
         setResearch(data);
+        const statusKey = `${taskId}:${data.status}`;
+        if (!viewedStatuses.current.has(statusKey)) {
+          viewedStatuses.current.add(statusKey);
+          trackEvent("report_status_viewed", { status: data.status, effort: data.effort });
+        }
         if (selfHosted && access) {
           rememberLocalResearch({
             id: taskId,
@@ -186,6 +193,7 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
   const copyUrl = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
+      trackEvent("report_link_copied");
       setCopyError(undefined);
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1600);
@@ -266,7 +274,7 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
               </div>
               <ReportContents {...outline} />
               <div className="report-sidebar-actions">
-                {research.pdfUrl && <a href={`/api/deepresearch/${encodeURIComponent(taskId)}/pdf${access ? `?access=${encodeURIComponent(access)}` : ""}`} download><Download size={16} /> Download PDF</a>}
+                {research.pdfUrl && <a href={`/api/deepresearch/${encodeURIComponent(taskId)}/pdf${access ? `?access=${encodeURIComponent(access)}` : ""}`} download onClick={() => trackEvent("report_download_clicked")}><Download size={16} /> Download PDF</a>}
                 <button onClick={copyUrl} aria-live="polite">{copied ? <Check size={16} /> : <Copy size={16} />}{copied ? "Link copied" : "Copy report link"}</button>
               </div>
             </aside>
@@ -285,7 +293,7 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
             <h2>Sources used</h2>
             <div>
               {research.sources.map((source, index) => (
-                <a key={`${source.url}-${index}`} href={source.url} target="_blank" rel="noreferrer">
+                <a key={`${source.url}-${index}`} href={source.url} target="_blank" rel="noreferrer" onClick={() => trackEvent("source_opened", { surface: "report" })}>
                   <span className="report-source-index">{String(index + 1).padStart(2, "0")}</span>
                   <SourceFavicon url={source.url} />
                   <span className="report-source-copy">

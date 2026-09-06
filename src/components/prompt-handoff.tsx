@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Check, ChevronDown, Copy, X } from "lucide-react";
 import { siClaude, siCursor } from "simple-icons";
 import { buildAgentLinks } from "@/lib/solver-brief";
+import { trackEvent } from "@/lib/analytics";
 
 function AgentMark({ name }: { name: string }) {
   const icon = name === "Claude Code" ? siClaude : name === "Cursor" ? siCursor : undefined;
@@ -36,12 +37,14 @@ export function PromptHandoff({ prompt }: { prompt: string }) {
     optionsButtonRef.current?.focus();
   };
 
-  const copy = async () => {
+  const copy = async (method = "button") => {
     try {
       await navigator.clipboard.writeText(prompt);
+      trackEvent("prompt_copied", { method });
       setCopied(true);
       setError(false);
     } catch {
+      trackEvent("prompt_copy_failed");
       setError(true);
       setExpanded(true);
     }
@@ -57,12 +60,12 @@ export function PromptHandoff({ prompt }: { prompt: string }) {
     }}>
       <div className="prompt-handoff-heading"><strong>Take a stab at it.</strong><span>Copy into your agent</span></div>
       <div className="prompt-handoff-controls">
-        <button className="copy-prompt-button" onClick={copy}>
+        <button className="copy-prompt-button" onClick={() => void copy()}>
           <span className="agent-logo-stack" aria-hidden="true">{targets.slice(0, 3).map((target) => <span key={target.name}><AgentMark name={target.name} /></span>)}</span>
           <span>{copied ? "Prompt copied" : "Copy prompt"}</span>
           {copied ? <Check size={18} /> : <Copy size={18} />}
         </button>
-        <button ref={optionsButtonRef} className="prompt-options-button" aria-expanded={expanded} aria-controls="prompt-options" onClick={() => setExpanded(!expanded)}>
+        <button ref={optionsButtonRef} className="prompt-options-button" aria-expanded={expanded} aria-controls="prompt-options" onClick={() => { if (!expanded) trackEvent("prompt_preview_opened"); setExpanded(!expanded); }}>
           Preview & open in an app <ChevronDown size={15} />
         </button>
       </div>
@@ -76,7 +79,7 @@ export function PromptHandoff({ prompt }: { prompt: string }) {
         <textarea ref={previewRef} aria-label="Starting prompt" readOnly value={prompt} onFocus={(event) => event.target.select()} />
         <p>Desktop apps must be installed. Nothing is submitted automatically. If an app does not open, paste the copied prompt yourself.</p>
         <div className="agent-launch-links">{targets.map((target) => (
-          <a key={target.name} href={target.href} target={target.href.startsWith("https:") ? "_blank" : undefined} rel="noreferrer" onClick={() => { void copy(); }}>
+          <a key={target.name} href={target.href} target={target.href.startsWith("https:") ? "_blank" : undefined} rel="noreferrer" onClick={() => { trackEvent("agent_open_clicked", { target: target.analyticsId, prefilled: target.prefilled }); void copy("app_link"); }}>
             <AgentMark name={target.name} /><span><b>Open in {target.name}</b><small>{target.prefilled ? "Prompt prefilled" : target.name === "ChatGPT" ? "Paste your copied prompt" : "Long prompt: paste after opening"}</small></span><ArrowUpRight size={16} />
           </a>
         ))}</div>

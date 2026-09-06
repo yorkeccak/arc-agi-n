@@ -1,6 +1,7 @@
 "use client";
 
 import { Children, isValidElement, memo, type ReactNode, useMemo, useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 import { ArrowUpRight, Check, Copy, ImageIcon } from "lucide-react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import rehypeKatex from "rehype-katex";
@@ -232,7 +233,7 @@ export const ResearchDocument = memo(function ResearchDocument({ content, source
       }
 
       return (
-        <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noopener noreferrer" : undefined}>
+        <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noopener noreferrer" : undefined} onClick={() => { if (href.startsWith("http")) trackEvent("source_opened", { surface: "report" }); }}>
           {children}
         </a>
       );

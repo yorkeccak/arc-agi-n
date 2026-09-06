@@ -95,6 +95,8 @@ The optional OAuth mode also keeps search public and bills it to the deployment'
 
 ## Development
 
+Optional [Vercel Web Analytics](docs/ANALYTICS.md) measures visits and product actions without recording search text, prompts or private report links. It is off by default for self-hosting.
+
 ```bash
 pnpm lint
 pnpm exec tsc --noEmit

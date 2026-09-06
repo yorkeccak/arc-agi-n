@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { LoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { safeReturnPath } from "@/lib/oauth";
+import { rememberSignIn, trackEvent } from "@/lib/analytics";
 
 export default function OAuthCallbackPage() {
   const [error, setError] = useState<string>();
@@ -17,7 +18,7 @@ export default function OAuthCallbackPage() {
         const state = params.get("state");
 
         if (!code || !state) {
-          if (active) setError("This sign-in link is invalid or expired.");
+          if (active) { trackEvent("sign_in_failed"); setError("This sign-in link is invalid or expired."); }
           return;
         }
 
@@ -27,13 +28,15 @@ export default function OAuthCallbackPage() {
           body: JSON.stringify({ code, state }),
         });
         if (!response.ok) {
-          if (active) setError("Valyu sign-in could not be completed.");
+          if (active) { trackEvent("sign_in_failed"); setError("Valyu sign-in could not be completed."); }
           return;
         }
         const data = await response.json() as { returnTo?: string };
+        if (!active) return;
+        rememberSignIn();
         window.location.replace(safeReturnPath(data.returnTo, window.location.origin));
       } catch {
-        if (active) setError("Valyu sign-in could not be completed.");
+        if (active) { trackEvent("sign_in_failed"); setError("Valyu sign-in could not be completed."); }
       }
     };
     void finish();

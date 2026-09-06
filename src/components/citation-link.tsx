@@ -4,6 +4,7 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { ArrowUpRight } from "lucide-react";
 import { SourceFavicon, sourceHost } from "@/components/source-favicon";
+import { trackEvent } from "@/lib/analytics";
 
 interface CitationLinkProps {
   href: string;
@@ -83,7 +84,7 @@ export function CitationLink({ href, label, title, snippet }: CitationLinkProps)
         onMouseLeave={() => { hovered.current = false; closeSoon(); }}
         onFocus={open}
         onBlur={closeSoon}
-        onClick={dismiss}
+        onClick={() => { trackEvent("source_opened", { surface: "report" }); dismiss(); }}
       >
         <SourceFavicon url={href} />
         <span>{label}</span>
