@@ -445,7 +445,9 @@ export function AtlasApp() {
               <p className="sr-only" role="status" aria-live="polite">
                 {loading
                   ? `${searchPhase}. ${leads.length} sources found.`
-                  : `${visibleDiscoveredProblems.length} questions found in sources and ${visibleProblems.length} matches from our collection.`}
+                  : visibleDiscoveredProblems.length
+                    ? `${visibleDiscoveredProblems.length} new ${visibleDiscoveredProblems.length === 1 ? "question" : "questions"} · ${visibleProblems.length} from the atlas`
+                    : `${visibleProblems.length} ${visibleProblems.length === 1 ? "problem" : "problems"} from the atlas`}
               </p>
               {!browsing && <section className="live-results" aria-label="Live search results">
                 <header>
