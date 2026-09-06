@@ -1,0 +1,48 @@
+{
+  "id": "neutron-lifetime-discrepancy",
+  "title": "Why do neutron lifetime measurements disagree?",
+  "field": "Physics",
+  "subfield": "Precision measurement",
+  "summary": "Different ways of counting neutron decays still give incompatible lifetimes.",
+  "statement": "Explain the disagreement between proton-counting beam measurements and trapped-neutron lifetime measurements with a quantitatively tested uncertainty model or independently verified new physics.",
+  "whyOpen": "The January 2026 experimental review still reports a substantial discrepancy. A newer electron-counting beam result agrees with bottle measurements, so a simple division between every beam and every bottle experiment is already inadequate.",
+  "smallestStep": "Build a measurement-level dataset with separate detector, flux, storage-loss, and shared-calibration uncertainties; compare experiment-family and method-independent hierarchical fits.",
+  "agentFit": 86,
+  "scale": "foothold",
+  "location": {
+    "name": "Villigen, Switzerland (PSI lifetime workshop)",
+    "longitude": 8.23,
+    "latitude": 47.54
+  },
+  "tags": [
+    "neutron",
+    "measurement discrepancy",
+    "systematic errors"
+  ],
+  "tools": [
+    "Python",
+    "Stan",
+    "uncertainty propagation"
+  ],
+  "sources": [
+    {
+      "title": "A new results of neutron lifetime measurement with cold neutron beam at J-PARC",
+      "url": "https://indico.psi.ch/event/17167/contributions/57991/",
+      "kind": "primary",
+      "publishedAt": "2025-09-13",
+      "sourceType": "experimental workshop presentation"
+    },
+    {
+      "title": "The beam-bottle debate at PSI",
+      "url": "https://cerncourier.com/a/the-beam-bottle-debate-at-psi/",
+      "kind": "survey",
+      "publishedAt": "2026-01-14",
+      "passage": "a longstanding tension between two measurement techniques continues"
+    }
+  ],
+  "agentReadiness": "hybrid",
+  "executionResources": "Published measurement budgets support a statistical audit. Testing a proposed detector bias requires apparatus data or a new controlled measurement.",
+  "successCriterion": "Reproduce the reported measurement-family averages and show which plausible shared uncertainties can or cannot explain the discrepancy without silently inflating all errors.",
+  "verified": "2026-09-06",
+  "starterPrompt": "Investigate: Why do neutron lifetime measurements disagree?.\n\nQuestion: Explain the disagreement between proton-counting beam measurements and trapped-neutron lifetime measurements with a quantitatively tested uncertainty model or independently verified new physics.\nBegin with this bounded task: Build a measurement-level dataset with separate detector, flux, storage-loss, and shared-calibration uncertainties; compare experiment-family and method-independent hierarchical fits.\nAvailable resources and limits: Published measurement budgets support a statistical audit. Testing a proposed detector bias requires apparatus data or a new controlled measurement.\nCompletion criterion: Reproduce the reported measurement-family averages and show which plausible shared uncertainties can or cannot explain the discrepancy without silently inflating all errors.\n\nRead the cited papers and check for later results before beginning. Reproduce the relevant baseline, preserve data provenance, and reserve an independent test set. Separate measured facts, model assumptions, and new hypotheses. Report uncertainty and failed checks. A successful first step is not a solution to the whole problem. Return reproducible code, results, and a short research log."
+}

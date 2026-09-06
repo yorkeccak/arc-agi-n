@@ -1,0 +1,37 @@
+{
+  "id": "unique-games",
+  "title": "Unique Games conjecture",
+  "field": "Computer science",
+  "subfield": "Approximation complexity",
+  "summary": "Is it computationally hard to distinguish almost-satisfiable unique constraint systems from highly unsatisfiable ones?",
+  "statement": "For every ε, δ > 0, is there an alphabet size for which distinguishing Unique Games instances of value at least 1 - ε from value at most δ is NP-hard?",
+  "whyOpen": "The conjecture explains optimal approximation thresholds for many problems, but powerful algorithms and partial hardness results have not settled the full parameter regime.",
+  "smallestStep": "Map one restricted constraint graph family, reproduce the best relaxation gap, and search for either a certified hard instance or an algorithm that breaks the predicted threshold.",
+  "agentFit": 87,
+  "scale": "frontier",
+  "introduced": 2002,
+  "location": {
+    "name": "Princeton, New Jersey",
+    "longitude": -74.6672,
+    "latitude": 40.3573
+  },
+  "tags": [
+    "approximation",
+    "semidefinite programming",
+    "hardness"
+  ],
+  "tools": [
+    "SDP solvers",
+    "SAT",
+    "Lean"
+  ],
+  "sources": [
+    {
+      "title": "The Unique Games Conjecture, integrality gap for cut problems and embeddability of negative type metrics",
+      "url": "https://arxiv.org/abs/1001.4596",
+      "kind": "survey"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: the Unique Games conjecture.\n\nYour first objective is not to claim a proof. It is to choose one restricted instance family and reproduce its best algorithmic and integrality-gap thresholds before searching for a certified separation.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

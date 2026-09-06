@@ -1,0 +1,20 @@
+{
+  "id": "generated-molecules-became-six-antibacterial-leads",
+  "date": "2024-03-22",
+  "displayDate": "22 Mar 2024",
+  "title": "Generated molecules became six antibacterial leads",
+  "field": "Drug discovery",
+  "kind": "Experiment",
+  "result": "SyntheMol generated candidate molecules together with synthesis routes. Chemists made 58 of 70 selected designs, and six showed activity against a resistant strain of Acinetobacter baumannii in laboratory testing.",
+  "context": "The reported antibacterial efficacy was in vitro. Two soluble candidates underwent mouse toxicity testing; infection efficacy in living animals was still a next step in the university's account. These were leads, not approved drugs.",
+  "verificationLevel": "Peer reviewed with synthesis and in-vitro validation",
+  "aiRole": "Generative search constrained by chemical building blocks and reaction rules, guided by learned antibacterial predictions",
+  "sourceTitle": "Generative AI for designing and validating easily synthesizable and structurally novel antibiotics",
+  "sourceUrl": "https://www.nature.com/articles/s42256-024-00809-7",
+  "additionalSources": [
+    {
+      "title": "Stanford Medicine: synthesis counts and validation limits",
+      "url": "https://med.stanford.edu/news/all-news/2024/03/ai-drug-development.html"
+    }
+  ]
+}

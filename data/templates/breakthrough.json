@@ -1,0 +1,14 @@
+{
+  "id": "replace-with-result-id",
+  "date": "REPLACE_WITH_YYYY-MM-DD",
+  "title": "REPLACE_WITH_A_SPECIFIC_RESULT",
+  "field": "REPLACE_WITH_RESEARCH_FIELD",
+  "kind": "Bound",
+  "result": "REPLACE_WITH_EXACTLY_WHAT_CHANGED",
+  "context": "REPLACE_WITH_PRIOR_WORK_LIMITATIONS_AND_WHAT_REMAINS_OPEN",
+  "verificationLevel": "REPLACE_WITH_WHAT_WAS_ACTUALLY_CHECKED_AND_BY_WHOM",
+  "aiRole": "REPLACE_WITH_THE_SPECIFIC_CONTRIBUTION_AND_HUMAN_INVOLVEMENT",
+  "sourceTitle": "REPLACE_WITH_PRIMARY_SOURCE_TITLE",
+  "sourceUrl": "https://example.com/replace-with-primary-source",
+  "additionalSources": []
+}

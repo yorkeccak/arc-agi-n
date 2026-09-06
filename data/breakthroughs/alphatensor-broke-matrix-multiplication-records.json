@@ -1,0 +1,14 @@
+{
+  "id": "alphatensor-broke-matrix-multiplication-records",
+  "date": "2022-10-05",
+  "displayDate": "05 Oct 2022",
+  "title": "AlphaTensor broke matrix-multiplication records",
+  "field": "Computational algebra",
+  "kind": "Algorithm",
+  "result": "AlphaTensor found exact matrix-multiplication algorithms that improved the best-known multiplication counts for several matrix sizes, including 4x4 matrices over a finite field.",
+  "context": "Each candidate could be verified mechanically. The result established an early pattern: frontier discovery accelerates when a problem can be expressed as a search space with an exact evaluator.",
+  "verificationLevel": "Peer reviewed and mechanically checked",
+  "aiRole": "Reinforcement-learning algorithm discovery",
+  "sourceTitle": "Discovering faster matrix multiplication algorithms",
+  "sourceUrl": "https://www.nature.com/articles/s41586-022-05172-4"
+}

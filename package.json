@@ -6,6 +6,12 @@
     "node": ">=22"
   },
   "scripts": {
+    "catalogue:check": "node scripts/catalogue.mjs check",
+    "catalogue:build": "node scripts/catalogue.mjs build",
+    "postinstall": "pnpm catalogue:build",
+    "predev": "pnpm catalogue:build",
+    "prebuild": "pnpm catalogue:build",
+    "pretest": "pnpm catalogue:build",
     "dev": "next dev --port 3100",
     "build": "next build",
     "start": "next start --port 3100",

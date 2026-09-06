@@ -1,0 +1,43 @@
+{
+  "id": "low-cloud-feedback",
+  "title": "Low-cloud feedback on climate sensitivity",
+  "field": "Physics",
+  "subfield": "Climate physics",
+  "summary": "How strongly will tropical low clouds amplify or damp future climate change?",
+  "statement": "Determine the sign, magnitude and physical controls of tropical marine low-cloud feedback under sustained warming well enough to materially narrow equilibrium climate-sensitivity estimates.",
+  "whyOpen": "Global models and cloud-resolving simulations still disagree about how parameterized versus resolved convection changes cloud amount near the trade inversion, while the observational record is too short and entangled with meteorological variability to isolate the forced response cleanly.",
+  "smallestStep": "Apply the same process-oriented diagnostic to public satellite observations and a matched ensemble of high-resolution simulations, then test which cloud-controlling factors remain stable across temporal and spatial scales.",
+  "agentFit": 93,
+  "scale": "foothold",
+  "introduced": 1979,
+  "location": {
+    "name": "Hamburg, Germany",
+    "longitude": 9.9937,
+    "latitude": 53.5511
+  },
+  "tags": [
+    "climate change",
+    "cloud feedback",
+    "climate sensitivity",
+    "public observations"
+  ],
+  "tools": [
+    "xarray",
+    "Earth observation",
+    "causal inference"
+  ],
+  "sources": [
+    {
+      "title": "Mechanisms and model diversity of trade-wind shallow cumulus cloud feedbacks",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5717165/",
+      "kind": "survey"
+    },
+    {
+      "title": "Perturbing parameters to understand cloud contributions to climate change",
+      "url": "https://arxiv.org/abs/2310.08665",
+      "kind": "primary"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: low-cloud feedback on climate sensitivity.\n\nYour first objective is not to claim a proof. It is to reproduce one process-oriented cloud-feedback diagnostic across matched public observations and high-resolution simulations, then identify a discriminating result that could rule out one mechanism.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

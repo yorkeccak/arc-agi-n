@@ -1,0 +1,41 @@
+{
+  "id": "polynomial-graph-isomorphism",
+  "title": "Polynomial-time graph isomorphism",
+  "field": "Computer science",
+  "subfield": "Algorithms",
+  "summary": "Can we always test efficiently whether two graphs differ only in their vertex names?",
+  "statement": "Is there a deterministic algorithm that decides isomorphism of every pair of finite simple n-vertex graphs in n^O(1) time?",
+  "whyOpen": "Quasipolynomial worst-case algorithms and efficient methods for typical or perturbed graphs leave the polynomial worst-case question unresolved. Strong performance on benchmarks does not establish that complexity bound.",
+  "smallestStep": "Reproduce color refinement on a published hard graph family and the cited perturbed-graph examples; isolate a structural parameter that explains the failure cases.",
+  "successCriterion": "A reproducible family of failures and a proved runtime or distinguishing guarantee under an explicit additional hypothesis.",
+  "agentFit": 74,
+  "scale": "frontier",
+  "location": {
+    "name": "Klosterneuburg, Austria (ISTA's smoothed-analysis research)",
+    "longitude": 16.3253,
+    "latitude": 48.3052
+  },
+  "tags": [
+    "graph algorithms",
+    "complexity",
+    "color refinement"
+  ],
+  "tools": [
+    "nauty",
+    "SageMath",
+    "Rust"
+  ],
+  "sources": [
+    {
+      "title": "Smoothed analysis for graph isomorphism",
+      "url": "https://arxiv.org/abs/2410.06095",
+      "kind": "primary",
+      "passage": "There is no known polynomial-time algorithm for graph isomorphism testing",
+      "publishedAt": "2025-10-16"
+    }
+  ],
+  "verified": "2026-09-06",
+  "agentReadiness": "agent-ready",
+  "executionResources": "A local computer and the cited literature are sufficient for the first step. Larger exhaustive searches may require additional compute.",
+  "starterPrompt": "Investigate Polynomial-time graph isomorphism. First check the current status of the exact statement against primary literature, including corrections and recent solution claims. The research question is: Is there a deterministic algorithm that decides isomorphism of every pair of finite simple n-vertex graphs in n^O(1) time?\n\nBegin with this bounded task: Reproduce color refinement on a published hard graph family and the cited perturbed-graph examples; isolate a structural parameter that explains the failure cases.\n\nSuccess for this first task means: A reproducible family of failures and a proved runtime or distinguishing guarantee under an explicit additional hypothesis.\n\nUse exact arithmetic or independently checkable proof certificates where applicable. State every assumption and search bound. Separate proved statements, numerical observations and conjectures. Compare any proposed result with the literature before calling it new. Return reproducible artifacts and an honest account of what remains unresolved."
+}

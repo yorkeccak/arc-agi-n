@@ -1,0 +1,20 @@
+{
+  "id": "a-riemann-related-bound-rose-from-41-6-to-67-2",
+  "date": "2026-08-10",
+  "displayDate": "10 Aug 2026",
+  "title": "A Riemann-related bound rose from 41.6% to 67.2%",
+  "field": "Number theory",
+  "kind": "Bound",
+  "result": "Anthropic reports that an unreleased Claude model raised the lower bound on the proportion of zeta zeros on the critical line to 67.2%.",
+  "context": "The starting prompt was 'Take a real stab at the Riemann hypothesis'. The hypothesis remains open. The result builds on decades of prior mathematics; Anthropic's mathematicians validated the argument, and the release reports a comparator-checked Lean formalization. We have not independently rerun it.",
+  "verificationLevel": "Reported expert validation and published Lean artifact",
+  "aiRole": "Model-led exploration with human encouragement, mathematical review and formalization support",
+  "sourceTitle": "Learning more about Claude's mathematical capabilities",
+  "sourceUrl": "https://www.anthropic.com/research/riemann-zeta",
+  "additionalSources": [
+    {
+      "title": "Zeta proof and verification instructions",
+      "url": "https://github.com/anthropics/zeta-23-lean"
+    }
+  ]
+}

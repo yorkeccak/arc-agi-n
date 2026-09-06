@@ -1,0 +1,39 @@
+{
+  "id": "protein-dynamics",
+  "title": "Sequence-to-dynamics prediction",
+  "field": "Biology",
+  "subfield": "Structural biology",
+  "summary": "Can we predict a protein’s full functional motion, not only a likely static structure, from sequence?",
+  "statement": "Predict conformational ensembles, transition rates and environment-dependent functional dynamics from amino-acid sequence with experimentally calibrated uncertainty.",
+  "whyOpen": "Structure and equilibrium-ensemble prediction have advanced, but predicting rare states, transition rates and responses to cellular conditions remains difficult.",
+  "smallestStep": "Benchmark one dynamics model against a leakage-audited set of NMR or single-molecule measurements and locate its sharpest failure mode.",
+  "agentFit": 93,
+  "scale": "foothold",
+  "introduced": 1970,
+  "location": {
+    "name": "Cambridge, Massachusetts",
+    "longitude": -71.0942,
+    "latitude": 42.3601
+  },
+  "tags": [
+    "proteins",
+    "benchmark",
+    "molecular dynamics"
+  ],
+  "tools": [
+    "OpenMM",
+    "JAX",
+    "NMR datasets"
+  ],
+  "sources": [
+    {
+      "title": "Protein Dynamics Beyond Structure Prediction",
+      "url": "https://arxiv.org/abs/2606.08647",
+      "kind": "survey",
+      "publishedAt": "2026-06-07",
+      "sourceType": "roadmap preprint"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: sequence-to-protein-dynamics prediction.\n\nYour first objective is not to claim a proof. It is to build a leakage-audited benchmark for one measurable dynamic property and expose the strongest current model failure.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "matrix-multiplication",
+  "title": "Matrix multiplication exponent",
+  "field": "Computer science",
+  "subfield": "Algorithms",
+  "summary": "Can two n by n matrices be multiplied in essentially quadratic time?",
+  "statement": "Is the exponent of square matrix multiplication ω equal to 2?",
+  "whyOpen": "Successive algebraic constructions lower the upper bound, but no known framework reaches two and meaningful lower bounds remain extremely weak.",
+  "smallestStep": "Implement one current tensor construction exactly, audit its asymptotics, and search a constrained family for a better degeneration with machine-checkable certificates.",
+  "agentFit": 91,
+  "scale": "frontier",
+  "introduced": 1969,
+  "location": {
+    "name": "Zürich, Switzerland",
+    "longitude": 8.5417,
+    "latitude": 47.3769
+  },
+  "tags": [
+    "algorithms",
+    "tensor rank",
+    "algebraic complexity"
+  ],
+  "tools": [
+    "SageMath",
+    "Julia",
+    "symbolic optimization"
+  ],
+  "sources": [
+    {
+      "title": "Which groups are amenable to proving exponent two for matrix multiplication?",
+      "url": "https://arxiv.org/abs/1712.02302",
+      "kind": "primary"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: whether the matrix multiplication exponent equals two.\n\nYour first objective is not to claim a proof. It is to reproduce one modern tensor construction and run a certificate-producing search over a bounded extension of its parameter family.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

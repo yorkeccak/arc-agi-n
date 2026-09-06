@@ -1,0 +1,14 @@
+{
+  "id": "gnome-expanded-the-stable-crystal-catalogue",
+  "date": "2023-11-29",
+  "displayDate": "29 Nov 2023",
+  "title": "GNoME expanded the stable-crystal catalogue",
+  "field": "Materials science",
+  "kind": "Prediction",
+  "result": "Graph networks identified 2.2 million candidate stable crystal structures, including 381,000 entries on the updated convex hull; 736 matched structures independently realized experimentally.",
+  "context": "Computational stability is not the same as successful synthesis or a useful material. The result radically expanded the search space and supplied experimentally grounded validation for a subset.",
+  "verificationLevel": "Peer reviewed with experimental matches",
+  "aiRole": "Large-scale predictive materials search",
+  "sourceTitle": "Scaling deep learning for materials discovery",
+  "sourceUrl": "https://www.nature.com/articles/s41586-023-06735-9"
+}

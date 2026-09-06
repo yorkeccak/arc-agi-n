@@ -1,0 +1,37 @@
+{
+  "id": "navier-stokes",
+  "title": "Navier-Stokes regularity",
+  "field": "Physics",
+  "subfield": "Fluid mechanics",
+  "summary": "Can a smooth three-dimensional fluid develop a singularity in finite time?",
+  "statement": "For incompressible 3D Navier-Stokes flow with smooth initial data, do smooth solutions exist for all time, or can blow-up occur?",
+  "whyOpen": "Energy estimates control average behaviour but not the multiscale concentration needed to rule out singularities.",
+  "smallestStep": "Reproduce a regularity criterion or probe a carefully defined family of initial conditions with validated numerics and error bounds.",
+  "agentFit": 58,
+  "scale": "monument",
+  "introduced": 1934,
+  "location": {
+    "name": "St Petersburg, Russia",
+    "longitude": 30.3351,
+    "latitude": 59.9343
+  },
+  "tags": [
+    "PDE",
+    "fluid",
+    "Clay Prize"
+  ],
+  "tools": [
+    "Dedalus",
+    "interval numerics",
+    "Lean"
+  ],
+  "sources": [
+    {
+      "title": "Clay Mathematics Institute: Navier-Stokes Equation",
+      "url": "https://www.claymath.org/millennium/navier-stokes-equation/",
+      "kind": "primary"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: 3D Navier-Stokes existence and smoothness.\n\nYour first objective is not to claim a proof. It is to reproduce a precise regularity criterion and design a validated numerical test on a bounded family of initial data.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

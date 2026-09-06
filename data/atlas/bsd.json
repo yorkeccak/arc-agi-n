@@ -1,0 +1,37 @@
+{
+  "id": "bsd",
+  "title": "Birch and Swinnerton-Dyer conjecture",
+  "field": "Mathematics",
+  "subfield": "Arithmetic geometry",
+  "summary": "Can the rational solutions of an elliptic curve be read from its L-function?",
+  "statement": "For an elliptic curve E over the rationals, is the rank of E(Q) equal to the order of vanishing of L(E, s) at s = 1?",
+  "whyOpen": "Major cases are known, but the conjecture links analytic behavior and rational points through arithmetic invariants that remain uncontrolled in general.",
+  "smallestStep": "Choose a computationally accessible family, reproduce known ranks and analytic orders, then locate cases where existing descent or Heegner-point machinery leaves a precise gap.",
+  "agentFit": 63,
+  "scale": "monument",
+  "introduced": 1965,
+  "location": {
+    "name": "Cambridge, United Kingdom",
+    "longitude": 0.1218,
+    "latitude": 52.2053
+  },
+  "tags": [
+    "elliptic curves",
+    "L-functions",
+    "Clay Prize"
+  ],
+  "tools": [
+    "SageMath",
+    "PARI/GP",
+    "Lean"
+  ],
+  "sources": [
+    {
+      "title": "Clay Mathematics Institute: Birch and Swinnerton-Dyer",
+      "url": "https://www.claymath.org/millennium/birch-and-swinnerton-dyer-conjecture/",
+      "kind": "primary"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: the Birch and Swinnerton-Dyer conjecture.\n\nYour first objective is not to claim a proof. It is to map one explicit elliptic-curve family where analytic and algebraic rank computations can be independently reproduced and a residual case isolated.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

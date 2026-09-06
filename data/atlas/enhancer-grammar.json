@@ -1,0 +1,37 @@
+{
+  "id": "enhancer-grammar",
+  "title": "Predictive enhancer grammar",
+  "field": "Biology",
+  "subfield": "Gene regulation",
+  "summary": "Can regulatory DNA sequence predict when, where and how strongly a gene is expressed?",
+  "statement": "Learn a causal, transferable mapping from enhancer sequence and cellular context to quantitative gene expression, including motif syntax and long-range interactions.",
+  "whyOpen": "High-throughput assays measure fragments outside native context, while combinatorial syntax, chromatin state and three-dimensional contacts confound sequence-only models.",
+  "smallestStep": "Build a held-out perturbation benchmark that separates motif recognition from causal syntax and test whether one model transfers across cell types.",
+  "agentFit": 96,
+  "scale": "foothold",
+  "introduced": 1981,
+  "location": {
+    "name": "Berkeley, California",
+    "longitude": -122.2585,
+    "latitude": 37.8719
+  },
+  "tags": [
+    "enhancers",
+    "gene expression",
+    "causal sequence models"
+  ],
+  "tools": [
+    "PyTorch",
+    "MPRA data",
+    "genome browsers"
+  ],
+  "sources": [
+    {
+      "title": "Decoding enhancer complexity with machine learning and high-throughput discovery",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10176946/",
+      "kind": "survey"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: predictive enhancer grammar.\n\nYour first objective is not to claim a proof. It is to construct a cell-type transfer benchmark that distinguishes motif detection from causal regulatory syntax using held-out perturbations.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

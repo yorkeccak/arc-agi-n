@@ -1,0 +1,14 @@
+{
+  "id": "alphafold-reached-near-experimental-structure-accuracy",
+  "date": "2021-07-15",
+  "displayDate": "15 Jul 2021",
+  "title": "AlphaFold reached near-experimental structure accuracy",
+  "field": "Structural biology",
+  "kind": "Prediction",
+  "result": "AlphaFold became the first computational method to predict protein structures to near-experimental accuracy in a majority of the CASP14 targets.",
+  "context": "It transformed structure prediction from amino-acid sequence. It does not fully solve protein dynamics, interactions, folding pathways or every protein structure.",
+  "verificationLevel": "Peer reviewed and blind benchmarked",
+  "aiRole": "Deep-learning structure prediction",
+  "sourceTitle": "Highly accurate protein structure prediction with AlphaFold",
+  "sourceUrl": "https://www.nature.com/articles/s41586-021-03819-2"
+}

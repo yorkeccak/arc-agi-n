@@ -1,0 +1,48 @@
+{
+  "id": "fast-radio-burst-populations",
+  "title": "Do all fast radio bursts repeat?",
+  "field": "Physics",
+  "subfield": "Radio astronomy",
+  "summary": "Are apparently one-off radio flashes a different population, or repeaters we have barely observed?",
+  "statement": "Determine whether one physical population with a distribution of burst rates explains repeating and apparently one-off fast radio bursts, or whether a genuinely non-repeating component is required.",
+  "whyOpen": "The 2026 CHIME analysis finds that models with 50-100% of sources repeating fit the observations comparably well. Limited observing time, changing sensitivity, and overlapping burst shapes leave the underlying populations unresolved.",
+  "smallestStep": "Reproduce the CHIME repeating-source rate model with its observing-window and detection-threshold assumptions, then use simulated catalogs to test whether a non-repeating fraction is identifiable.",
+  "agentFit": 94,
+  "scale": "foothold",
+  "location": {
+    "name": "Penticton, Canada (CHIME telescope)",
+    "longitude": -119.62,
+    "latitude": 49.32
+  },
+  "tags": [
+    "fast radio bursts",
+    "selection effects",
+    "population inference"
+  ],
+  "tools": [
+    "Astropy",
+    "survival analysis",
+    "simulation-based calibration"
+  ],
+  "sources": [
+    {
+      "title": "Discovery of 30 Repeating Fast Radio Burst Sources and Uniform Population Statistics of 80 Repeating Sources from CHIME/FRB",
+      "url": "https://arxiv.org/abs/2605.08410",
+      "kind": "primary",
+      "publishedAt": "2026-05-08",
+      "sourceType": "preprint"
+    },
+    {
+      "title": "Semi-supervised morphological classification of fast radio bursts from the second CHIME/FRB catalogue",
+      "url": "https://arxiv.org/abs/2607.13148",
+      "kind": "primary",
+      "publishedAt": "2026-07-14",
+      "sourceType": "preprint"
+    }
+  ],
+  "agentReadiness": "hybrid",
+  "executionResources": "Public catalogs and released selection information support population modeling. Missing exposure information must be treated explicitly; longer telescope follow-up is needed to turn some one-offs into confirmed repeaters.",
+  "successCriterion": "Recover the paper's broad allowed repeating fraction and report simulation-calibrated limits on what the available sample can distinguish.",
+  "verified": "2026-09-06",
+  "starterPrompt": "Investigate: Do all fast radio bursts repeat?.\n\nQuestion: Determine whether one physical population with a distribution of burst rates explains repeating and apparently one-off fast radio bursts, or whether a genuinely non-repeating component is required.\nBegin with this bounded task: Reproduce the CHIME repeating-source rate model with its observing-window and detection-threshold assumptions, then use simulated catalogs to test whether a non-repeating fraction is identifiable.\nAvailable resources and limits: Public catalogs and released selection information support population modeling. Missing exposure information must be treated explicitly; longer telescope follow-up is needed to turn some one-offs into confirmed repeaters.\nCompletion criterion: Recover the paper's broad allowed repeating fraction and report simulation-calibrated limits on what the available sample can distinguish.\n\nRead the cited papers and check for later results before beginning. Reproduce the relevant baseline, preserve data provenance, and reserve an independent test set. Separate measured facts, model assumptions, and new hypotheses. Report uncertainty and failed checks. A successful first step is not a solution to the whole problem. Return reproducible code, results, and a short research log."
+}

@@ -1,0 +1,37 @@
+{
+  "id": "yang-mills",
+  "title": "Yang-Mills mass gap",
+  "field": "Physics",
+  "subfield": "Quantum field theory",
+  "summary": "Why do quantum gauge fields produce particles with positive mass despite massless classical waves?",
+  "statement": "Construct a rigorous quantum Yang-Mills theory on ℝ⁴ for a compact simple gauge group and prove that it has a positive mass gap.",
+  "whyOpen": "Physicists have overwhelming numerical and experimental evidence, but a mathematically rigorous non-perturbative construction in four dimensions is missing.",
+  "smallestStep": "Formalize or computationally reproduce a lower-dimensional analogue, making every limit and assumption explicit.",
+  "agentFit": 31,
+  "scale": "monument",
+  "introduced": 1954,
+  "location": {
+    "name": "Upton, New York",
+    "longitude": -72.8868,
+    "latitude": 40.8682
+  },
+  "tags": [
+    "gauge theory",
+    "QFT",
+    "Clay Prize"
+  ],
+  "tools": [
+    "lattice simulation",
+    "Lean",
+    "symbolic algebra"
+  ],
+  "sources": [
+    {
+      "title": "Clay Mathematics Institute: Yang-Mills and Mass Gap",
+      "url": "https://www.claymath.org/millennium/yang-mills-the-maths-gap/",
+      "kind": "primary"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: the Yang-Mills existence and mass gap problem.\n\nYour first objective is not to claim a proof. It is to select a lower-dimensional or lattice subproblem and make one rigorous, reproducible bridge toward the continuum theory.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

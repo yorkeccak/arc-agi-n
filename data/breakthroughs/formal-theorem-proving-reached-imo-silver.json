@@ -1,0 +1,14 @@
+{
+  "id": "formal-theorem-proving-reached-imo-silver",
+  "date": "2024-07-25",
+  "displayDate": "25 Jul 2024",
+  "title": "Formal theorem proving reached IMO silver",
+  "field": "Olympiad mathematics",
+  "kind": "Benchmark",
+  "result": "AlphaProof and AlphaGeometry 2 solved four of six 2024 IMO problems for 28 of 42 points, the equivalent of a silver medal.",
+  "context": "Experts first translated the statements into formal language, and some searches ran for days. The milestone showed the value of machine-checkable reasoning without removing the formulation bottleneck.",
+  "verificationLevel": "Official Olympiad grading",
+  "aiRole": "Formal proof search after human translation",
+  "sourceTitle": "AI solves IMO problems at silver-medal level",
+  "sourceUrl": "https://deepmind.google/discover/blog/ai-solves-imo-problems-at-silver-medal-level/"
+}

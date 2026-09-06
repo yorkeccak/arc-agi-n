@@ -1,0 +1,14 @@
+{
+  "id": "qed-produced-three-original-proofs",
+  "date": "2026-04-28",
+  "displayDate": "28 Apr 2026",
+  "title": "QED produced three original proofs",
+  "field": "Applied analysis and PDEs",
+  "kind": "Proof",
+  "result": "The QED system solved three of five expert-contributed open problems in its initial evaluation.",
+  "context": "The contributing domain experts judged all three proofs correct, original and nontrivial. The paper is a preprint and the initial sample is small.",
+  "verificationLevel": "Expert-checked preprint evaluation",
+  "aiRole": "Fully automated proof generation",
+  "sourceTitle": "QED: Generating mathematical proofs on open problems",
+  "sourceUrl": "https://arxiv.org/abs/2604.24021"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "a-model-repurposed-halicin-as-an-antibiotic-lead",
+  "date": "2020-02-20",
+  "displayDate": "20 Feb 2020",
+  "title": "A model repurposed halicin as an antibiotic lead",
+  "field": "Drug discovery",
+  "kind": "Experiment",
+  "result": "A neural model surfaced halicin from a repurposing library; laboratory tests showed broad-spectrum antibacterial activity and efficacy in mouse infection models.",
+  "context": "This was a validated lead-discovery result, not an approved medicine. Safety, dosing, resistance and clinical efficacy still required the normal development process.",
+  "verificationLevel": "Peer reviewed and laboratory validated",
+  "aiRole": "Predictive screening followed by experiments",
+  "sourceTitle": "A deep learning approach to antibiotic discovery",
+  "sourceUrl": "https://www.cell.com/cell/fulltext/S0092-8674(20)30102-1"
+}

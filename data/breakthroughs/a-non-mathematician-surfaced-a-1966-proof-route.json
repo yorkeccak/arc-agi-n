@@ -1,0 +1,14 @@
+{
+  "id": "a-non-mathematician-surfaced-a-1966-proof-route",
+  "date": "2026-05-01",
+  "displayDate": "01 May 2026",
+  "title": "A non-mathematician surfaced a 1966 proof route",
+  "field": "Analytic number theory",
+  "kind": "Proof",
+  "result": "A prompt from 23-year-old non-specialist Liam Price surfaced a von Mangoldt weighted Markov-chain idea that Price, Tao, Lichtman and five coauthors developed into proofs of Erdős problems 1196 and 1217.",
+  "context": "This was not a one-shot autonomous proof. The raw output needed expert interpretation and the eight-author paper substantially developed and generalized the method.",
+  "verificationLevel": "Public research preprint with expert development",
+  "aiRole": "Idea generation followed by an eight-author proof",
+  "sourceTitle": "Primitive sets and von Mangoldt chains",
+  "sourceUrl": "https://arxiv.org/abs/2605.00301"
+}

@@ -1,0 +1,47 @@
+{
+  "id": "hadwiger-graph-minors",
+  "title": "Hadwiger's graph coloring conjecture",
+  "field": "Mathematics",
+  "subfield": "Graph theory",
+  "summary": "Must a graph needing k colors contain a complete k-vertex graph as a minor?",
+  "statement": "Does every finite simple graph G with chromatic number k contain Kₖ as a minor, obtained by deleting vertices or edges and contracting edges?",
+  "whyOpen": "Known small cases and asymptotic coloring bounds do not prove the exact relationship for arbitrary k. Current work still restricts the structure of a possible minimal counterexample.",
+  "smallestStep": "Encode color-critical graphs and clique-minor witnesses for a small restricted class, then test one connectivity reduction from the current minimal-counterexample literature.",
+  "successCriterion": "An independently checked minor witness or a formally justified reduction for the declared graph class.",
+  "agentFit": 69,
+  "scale": "frontier",
+  "introduced": 1943,
+  "location": {
+    "name": "Bern, Switzerland (Hadwiger's research base)",
+    "longitude": 7.4474,
+    "latitude": 46.948
+  },
+  "tags": [
+    "graph coloring",
+    "minors",
+    "structural graph theory"
+  ],
+  "tools": [
+    "SageMath",
+    "SAT",
+    "Lean"
+  ],
+  "sources": [
+    {
+      "title": "Connectivities for k-knitted graphs and for minimal counterexamples to Hadwiger's Conjecture",
+      "url": "https://arxiv.org/abs/2606.01586",
+      "kind": "primary",
+      "publishedAt": "2026-06-04"
+    },
+    {
+      "title": "Hadwiger's conjecture for hypergraphs",
+      "url": "https://arxiv.org/abs/2607.27243",
+      "kind": "primary",
+      "publishedAt": "2026-08-13"
+    }
+  ],
+  "verified": "2026-09-06",
+  "agentReadiness": "agent-ready",
+  "executionResources": "A local computer and the cited literature are sufficient for the first step. Larger exhaustive searches may require additional compute.",
+  "starterPrompt": "Investigate Hadwiger's graph coloring conjecture. First check the current status of the exact statement against primary literature, including corrections and recent solution claims. The research question is: Does every finite simple graph G with chromatic number k contain Kₖ as a minor, obtained by deleting vertices or edges and contracting edges?\n\nBegin with this bounded task: Encode color-critical graphs and clique-minor witnesses for a small restricted class, then test one connectivity reduction from the current minimal-counterexample literature.\n\nSuccess for this first task means: An independently checked minor witness or a formally justified reduction for the declared graph class.\n\nUse exact arithmetic or independently checkable proof certificates where applicable. State every assumption and search bound. Separate proved statements, numerical observations and conjectures. Compare any proposed result with the literature before calling it new. Return reproducible artifacts and an honest account of what remains unresolved."
+}

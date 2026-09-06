@@ -1,0 +1,37 @@
+{
+  "id": "collatz",
+  "title": "Collatz conjecture",
+  "field": "Mathematics",
+  "subfield": "Dynamical systems",
+  "summary": "Does repeatedly applying one simple parity rule eventually send every positive integer to 1?",
+  "statement": "Starting from n, replace even n by n/2 and odd n by 3n+1. Does every positive integer eventually reach 1?",
+  "whyOpen": "The orbit mixes multiplication and division according to parity in a way that resists global control. Vast computation cannot cover infinitely many starting values.",
+  "smallestStep": "Reproduce a modern density result or search for a new invariant on a restricted family. Do not confuse verification with proof.",
+  "agentFit": 67,
+  "scale": "frontier",
+  "introduced": 1937,
+  "location": {
+    "name": "Hamburg, Germany",
+    "longitude": 9.9937,
+    "latitude": 53.5511
+  },
+  "tags": [
+    "iteration",
+    "density",
+    "computation"
+  ],
+  "tools": [
+    "C++",
+    "Lean",
+    "symbolic dynamics"
+  ],
+  "sources": [
+    {
+      "title": "Almost all Collatz orbits attain almost bounded values",
+      "url": "https://arxiv.org/abs/1909.03562",
+      "kind": "primary"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: the Collatz conjecture.\n\nYour first objective is not to claim a proof. It is to select a bounded structural subproblem, reproduce the strongest relevant result, and search for an invariant rather than merely extending verification.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

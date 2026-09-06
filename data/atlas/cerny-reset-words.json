@@ -1,0 +1,47 @@
+{
+  "id": "cerny-reset-words",
+  "title": "Černý's reset-word conjecture",
+  "field": "Computer science",
+  "subfield": "Automata theory",
+  "summary": "How long a word is needed to send every state of a machine to the same state?",
+  "statement": "Does every synchronizing complete deterministic finite automaton with n ≥ 2 states admit a reset word of length at most (n − 1)²? A reset word sends every starting state to a single state.",
+  "whyOpen": "The bound is attained by a known family and proved for many classes, but the general upper bounds and structural reductions do not establish it for every synchronizing automaton.",
+  "smallestStep": "Implement exact shortest-reset-word search on the subset automaton, reproduce the Černý family, and test one unresolved subclass identified in Volkov's survey.",
+  "successCriterion": "Checked shortest-word certificates for a declared finite class and either a proved extension lemma or an explicit obstruction to it.",
+  "agentFit": 90,
+  "scale": "foothold",
+  "introduced": 1964,
+  "location": {
+    "name": "Milan, Italy (Rodaro and Venturi's automata research)",
+    "longitude": 9.19,
+    "latitude": 45.4642
+  },
+  "tags": [
+    "automata",
+    "synchronization",
+    "shortest paths"
+  ],
+  "tools": [
+    "Rust",
+    "SAT",
+    "Lean"
+  ],
+  "sources": [
+    {
+      "title": "List of Results on the Černý Conjecture and Reset Thresholds for Synchronizing Automata",
+      "url": "https://arxiv.org/abs/2508.15655",
+      "kind": "survey",
+      "publishedAt": "2026-01-13"
+    },
+    {
+      "title": "The hereditariness problem for the Černý conjecture",
+      "url": "https://arxiv.org/abs/2509.17992",
+      "kind": "primary",
+      "publishedAt": "2026-02-10"
+    }
+  ],
+  "verified": "2026-09-06",
+  "agentReadiness": "agent-ready",
+  "executionResources": "A local computer and the cited literature are sufficient for the first step. Larger exhaustive searches may require additional compute.",
+  "starterPrompt": "Investigate Černý's reset-word conjecture. First check the current status of the exact statement against primary literature, including corrections and recent solution claims. The research question is: Does every synchronizing complete deterministic finite automaton with n ≥ 2 states admit a reset word of length at most (n − 1)²? A reset word sends every starting state to a single state.\n\nBegin with this bounded task: Implement exact shortest-reset-word search on the subset automaton, reproduce the Černý family, and test one unresolved subclass identified in Volkov's survey.\n\nSuccess for this first task means: Checked shortest-word certificates for a declared finite class and either a proved extension lemma or an explicit obstruction to it.\n\nUse exact arithmetic or independently checkable proof certificates where applicable. State every assumption and search bound. Separate proved statements, numerical observations and conjectures. Compare any proposed result with the literature before calling it new. Return reproducible artifacts and an honest account of what remains unresolved."
+}

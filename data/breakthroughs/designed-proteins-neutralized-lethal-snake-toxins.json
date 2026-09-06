@@ -1,0 +1,20 @@
+{
+  "id": "designed-proteins-neutralized-lethal-snake-toxins",
+  "date": "2025-01-15",
+  "displayDate": "15 Jan 2025",
+  "title": "Designed proteins neutralized lethal snake toxins",
+  "field": "Protein therapeutics",
+  "kind": "Experiment",
+  "result": "De novo designed binding proteins neutralized several three-finger snake toxins and protected mice from lethal neurotoxin exposure, with survival of 80-100% across the reported toxin-antitoxin combinations.",
+  "context": "The experiments targeted particular toxins produced by elapid snakes. They do not establish a universal antivenom, protection against every component of whole venom, or efficacy in humans.",
+  "verificationLevel": "Peer reviewed with biochemical and mouse validation",
+  "aiRole": "Generative protein design followed by laboratory selection and animal experiments",
+  "sourceTitle": "De novo designed proteins neutralize lethal snake venom toxins",
+  "sourceUrl": "https://www.nature.com/articles/s41586-024-08393-x",
+  "additionalSources": [
+    {
+      "title": "Baker Lab: neutralizing deadly snake toxins",
+      "url": "https://www.bakerlab.org/2025/01/15/neutralizing-deadly-snake-toxins/"
+    }
+  ]
+}

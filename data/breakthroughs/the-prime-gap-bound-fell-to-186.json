@@ -1,0 +1,20 @@
+{
+  "id": "the-prime-gap-bound-fell-to-186",
+  "date": "2026-09-04",
+  "displayDate": "04 Sep 2026",
+  "title": "The prime-gap bound fell to 186",
+  "field": "Number theory",
+  "kind": "Bound",
+  "result": "Astra helped improve the unconditional result on bounded gaps between consecutive primes from 240 to 186, with a conditional Lean development and reproducible numerical certificate.",
+  "context": "This means infinitely many consecutive prime pairs differ by at most 186. Three high-level analytic and numerical inputs remain explicit Lean axioms, and this does not prove the twin-prime conjecture, where the target gap is 2.",
+  "verificationLevel": "Conditional formalization and reproducible certificate",
+  "aiRole": "Human-directed proof search, computation and formalization",
+  "sourceTitle": "GPT-6 Astra: short prime gaps",
+  "sourceUrl": "https://openai.com/index/gpt-6-astra/",
+  "additionalSources": [
+    {
+      "title": "PrimeGaps186 proof repository",
+      "url": "https://github.com/openai/PrimeGaps186"
+    }
+  ]
+}

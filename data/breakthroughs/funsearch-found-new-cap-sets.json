@@ -1,0 +1,14 @@
+{
+  "id": "funsearch-found-new-cap-sets",
+  "date": "2023-12-14",
+  "displayDate": "14 Dec 2023",
+  "title": "FunSearch found new cap sets",
+  "field": "Extremal combinatorics",
+  "kind": "Construction",
+  "result": "FunSearch produced previously unknown cap-set constructions and the largest improvement in 20 years to the asymptotic lower bound.",
+  "context": "The Nature paper also reports online bin-packing heuristics that beat established baselines. Executable evaluators discarded invalid candidates before they entered the search loop.",
+  "verificationLevel": "Peer reviewed with executable evaluation",
+  "aiRole": "Language-model-guided program search",
+  "sourceTitle": "Mathematical discoveries from program search",
+  "sourceUrl": "https://www.nature.com/articles/s41586-023-06924-6"
+}

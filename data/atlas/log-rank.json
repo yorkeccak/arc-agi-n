@@ -1,0 +1,42 @@
+{
+  "id": "log-rank",
+  "title": "Log-rank conjecture",
+  "field": "Computer science",
+  "subfield": "Communication complexity",
+  "summary": "Does the rank of a Boolean matrix control how much two people must communicate?",
+  "statement": "Is there a universal constant C such that every Boolean communication matrix M satisfies D(M) ≤ O((1 + log₂ rankℝ(M))^C), where D is deterministic two-party communication complexity? Treat the all-zero matrix separately.",
+  "whyOpen": "General upper bounds grow much faster than a polynomial in log rank. Recent equivalent formulations reduce the question to decompositions of matrices, but do not prove the required bound.",
+  "smallestStep": "For a small family of Boolean matrices, compute exact real rank and minimum monochromatic rectangle partitions; reproduce a known separation before testing a restricted decomposition lemma.",
+  "successCriterion": "An exact partition certificate and a verified rank calculation, plus a proved restricted lemma or explicit counterexample to it.",
+  "agentFit": 68,
+  "scale": "frontier",
+  "introduced": 1988,
+  "location": {
+    "name": "Victoria, Canada (Hambardzumyan and Shirley's formulations)",
+    "longitude": -123.3656,
+    "latitude": 48.4284
+  },
+  "tags": [
+    "communication complexity",
+    "matrix rank",
+    "rectangle partitions"
+  ],
+  "tools": [
+    "ILP",
+    "SageMath",
+    "Lean"
+  ],
+  "sources": [
+    {
+      "title": "The Log-Rank Conjecture: New Equivalent Formulations",
+      "url": "https://arxiv.org/abs/2510.02583",
+      "kind": "primary",
+      "passage": "The log-rank conjecture is a longstanding open problem",
+      "publishedAt": "2026-08-14"
+    }
+  ],
+  "verified": "2026-09-06",
+  "agentReadiness": "agent-ready",
+  "executionResources": "A local computer and the cited literature are sufficient for the first step. Larger exhaustive searches may require additional compute.",
+  "starterPrompt": "Investigate Log-rank conjecture. First check the current status of the exact statement against primary literature, including corrections and recent solution claims. The research question is: Is there a universal constant C such that every Boolean communication matrix M satisfies D(M) ≤ O((1 + log₂ rankℝ(M))^C), where D is deterministic two-party communication complexity? Treat the all-zero matrix separately.\n\nBegin with this bounded task: For a small family of Boolean matrices, compute exact real rank and minimum monochromatic rectangle partitions; reproduce a known separation before testing a restricted decomposition lemma.\n\nSuccess for this first task means: An exact partition certificate and a verified rank calculation, plus a proved restricted lemma or explicit counterexample to it.\n\nUse exact arithmetic or independently checkable proof certificates where applicable. State every assumption and search bound. Separate proved statements, numerical observations and conjectures. Compare any proposed result with the literature before calling it new. Return reproducible artifacts and an honest account of what remains unresolved."
+}

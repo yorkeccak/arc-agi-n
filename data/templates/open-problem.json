@@ -1,0 +1,28 @@
+{
+  "id": "replace-with-problem-id",
+  "title": "REPLACE_WITH_PROBLEM_NAME",
+  "field": "Mathematics",
+  "subfield": "REPLACE_WITH_SUBFIELD",
+  "summary": "REPLACE_WITH_ONE_PLAIN_LANGUAGE_SENTENCE",
+  "statement": "REPLACE_WITH_THE_EXACT_QUESTION_AND_ASSUMPTIONS",
+  "whyOpen": "REPLACE_WITH_WHAT_IS_KNOWN_AND_WHAT_REMAINS_UNRESOLVED",
+  "smallestStep": "REPLACE_WITH_ONE_SMALL_REPRODUCIBLE_STARTING_TASK",
+  "location": {
+    "name": "REPLACE_WITH_A_PLACE_CONNECTED_TO_THE_PROBLEM",
+    "longitude": 0,
+    "latitude": 0
+  },
+  "tags": ["REPLACE_WITH_TOPIC"],
+  "tools": ["REPLACE_WITH_USEFUL_TOOL_OR_METHOD"],
+  "sources": [
+    {
+      "title": "REPLACE_WITH_SOURCE_TITLE",
+      "url": "https://example.com/replace-with-primary-source",
+      "kind": "primary"
+    }
+  ],
+  "verified": "REPLACE_WITH_YYYY-MM-DD",
+  "agentReadiness": "agent-ready",
+  "executionResources": "REPLACE_WITH_REQUIRED_DATA_COMPUTE_OR_LAB_ACCESS",
+  "successCriterion": "REPLACE_WITH_WHAT_COUNTS_AS_USEFUL_PROGRESS"
+}

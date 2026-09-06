@@ -1,0 +1,20 @@
+{
+  "id": "a-neurosurgeon-entered-the-crouzeix-problem",
+  "date": "2026-07-27",
+  "displayDate": "27 Jul 2026",
+  "title": "A neurosurgeon entered the Crouzeix problem",
+  "field": "Operator theory",
+  "kind": "Proof",
+  "result": "Neurosurgery resident Jin Shanmu reported using a 16-hour agent run to produce a proof of Crouzeix's conjecture; an independent paper now proves the same conjecture and cites Jin's manuscript.",
+  "context": "Townsend, Greenbaum and Crouzeix checked Jin's manuscript, and an independent proof followed on 4 August. The exact autonomy story is author-reported rather than established by peer review.",
+  "verificationLevel": "Expert checked, then independently proved",
+  "aiRole": "A reported 16-hour unattended research run",
+  "sourceTitle": "SIAM News account by Townsend and Greenbaum",
+  "sourceUrl": "https://alextownsend.net/essays/SIAMNews_CrouzeixConjecture.pdf",
+  "additionalSources": [
+    {
+      "title": "Independent proof of Crouzeix's conjecture",
+      "url": "https://arxiv.org/abs/2608.03841"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "neural-search-helped-refute-graph-conjectures",
+  "date": "2021-04-29",
+  "displayDate": "29 Apr 2021",
+  "title": "Neural search helped refute graph conjectures",
+  "field": "Graph theory",
+  "kind": "Counterexample",
+  "result": "Adam Zsolt Wagner used reinforcement learning to find counterexamples and construction patterns for open combinatorial questions, including Collins's conjecture about peaks of two polynomial coefficient sequences of trees.",
+  "context": "For the Collins problem, learned examples guided a human theorem proving an infinite family of counterexamples. Another illustrative conjecture in the same paper had already been disproved, so the whole collection should not be counted as previously open problems solved autonomously.",
+  "verificationLevel": "Research preprint with explicit examples and mathematical proofs",
+  "aiRole": "Deep cross-entropy search for finite structures, with human interpretation and proof",
+  "sourceTitle": "Constructions in combinatorics via neural networks",
+  "sourceUrl": "https://arxiv.org/abs/2104.14516",
+  "additionalSources": [
+    {
+      "title": "Full paper: Collins conjecture and Theorem 2.5",
+      "url": "https://arxiv.org/html/2104.14516v1"
+    }
+  ]
+}

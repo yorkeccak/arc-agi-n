@@ -1,0 +1,43 @@
+{
+  "id": "dark-energy-evolution",
+  "title": "Does dark energy change with time?",
+  "field": "Physics",
+  "subfield": "Cosmology",
+  "summary": "Is cosmic acceleration driven by a constant energy density or something that evolves?",
+  "statement": "Determine whether the dark-energy equation of state differs from the cosmological-constant value w = -1 over cosmic history, after accounting for calibration, dataset choice, and model flexibility.",
+  "whyOpen": "DESI DR2 combined with other measurements favors some evolving models, but the strength depends on the supernova sample and cosmological assumptions. A better fit in one parameterization does not identify a new physical component.",
+  "smallestStep": "Reproduce the public DESI DR2 distance-likelihood fit, then repeat the same model comparison across supernova samples while keeping priors and nuisance treatment fixed.",
+  "agentFit": 91,
+  "scale": "frontier",
+  "introduced": 1998,
+  "location": {
+    "name": "Kitt Peak, Arizona (DESI telescope)",
+    "longitude": -111.6,
+    "latitude": 31.96
+  },
+  "tags": [
+    "dark energy",
+    "cosmic expansion",
+    "model comparison",
+    "DESI"
+  ],
+  "tools": [
+    "Cobaya",
+    "CLASS",
+    "public likelihoods"
+  ],
+  "sources": [
+    {
+      "title": "DESI DR2 Results II: Measurements of Baryon Acoustic Oscillations and Cosmological Constraints",
+      "url": "https://arxiv.org/abs/2503.14738",
+      "kind": "primary",
+      "publishedAt": "2025-03-18",
+      "passage": "depending on which SNe sample is used"
+    }
+  ],
+  "agentReadiness": "hybrid",
+  "executionResources": "Public cosmological likelihoods and a workstation or small compute cluster. Independent survey calibration and additional observations remain outside a software-only result.",
+  "successCriterion": "Reproduce the baseline constraints and report how the evidence changes with dataset and prior choices, including a posterior-predictive check on held-out distances.",
+  "verified": "2026-09-06",
+  "starterPrompt": "Investigate: Does dark energy change with time?.\n\nQuestion: Determine whether the dark-energy equation of state differs from the cosmological-constant value w = -1 over cosmic history, after accounting for calibration, dataset choice, and model flexibility.\nBegin with this bounded task: Reproduce the public DESI DR2 distance-likelihood fit, then repeat the same model comparison across supernova samples while keeping priors and nuisance treatment fixed.\nAvailable resources and limits: Public cosmological likelihoods and a workstation or small compute cluster. Independent survey calibration and additional observations remain outside a software-only result.\nCompletion criterion: Reproduce the baseline constraints and report how the evidence changes with dataset and prior choices, including a posterior-predictive check on held-out distances.\n\nRead the cited papers and check for later results before beginning. Reproduce the relevant baseline, preserve data provenance, and reserve an independent test set. Separate measured facts, model assumptions, and new hypotheses. Report uncertainty and failed checks. A successful first step is not a solution to the whole problem. Return reproducible code, results, and a short research log."
+}

@@ -1,0 +1,47 @@
+{
+  "id": "ramsey-five-five",
+  "title": "The exact value of R(5,5)",
+  "field": "Mathematics",
+  "subfield": "Ramsey theory",
+  "summary": "How many vertices force a five-vertex clique or independent set?",
+  "statement": "Determine the smallest n such that every simple graph on n vertices contains either five pairwise adjacent vertices or five pairwise nonadjacent vertices.",
+  "whyOpen": "The cited computer-assisted result proves the upper bound 46, while a 42-vertex construction gives the lower bound 43. These bounds do not determine the exact value.",
+  "smallestStep": "Reproduce a known 42-vertex witness and a small case of the upper-bound computation; then select a symmetry-restricted 43-vertex search with independently checkable certificates.",
+  "successCriterion": "A verified witness or an exhaustive exclusion for the explicitly declared symmetry class, with no claim about omitted graphs.",
+  "agentFit": 87,
+  "scale": "foothold",
+  "location": {
+    "name": "Canberra, Australia (Angeltveit and McKay's bound)",
+    "longitude": 149.13,
+    "latitude": -35.28
+  },
+  "tags": [
+    "Ramsey numbers",
+    "SAT",
+    "proof certificates"
+  ],
+  "tools": [
+    "nauty",
+    "SAT",
+    "linear programming"
+  ],
+  "sources": [
+    {
+      "title": "R(5,5) ≤ 46",
+      "url": "https://arxiv.org/abs/2409.15709",
+      "kind": "primary",
+      "passage": "All of the computations were independently implemented by both authors, with consistent results.",
+      "publishedAt": "2025-09-01"
+    },
+    {
+      "title": "R(5,5) ≤ 46, Journal of Graph Theory",
+      "url": "https://onlinelibrary.wiley.com/doi/10.1002/jgt.70029",
+      "kind": "primary",
+      "doi": "10.1002/jgt.70029"
+    }
+  ],
+  "verified": "2026-09-06",
+  "agentReadiness": "agent-ready",
+  "executionResources": "A local computer and the cited literature are sufficient for the first step. Larger exhaustive searches may require additional compute.",
+  "starterPrompt": "Investigate The exact value of R(5,5). First check the current status of the exact statement against primary literature, including corrections and recent solution claims. The research question is: Determine the smallest n such that every simple graph on n vertices contains either five pairwise adjacent vertices or five pairwise nonadjacent vertices.\n\nBegin with this bounded task: Reproduce a known 42-vertex witness and a small case of the upper-bound computation; then select a symmetry-restricted 43-vertex search with independently checkable certificates.\n\nSuccess for this first task means: A verified witness or an exhaustive exclusion for the explicitly declared symmetry class, with no claim about omitted graphs.\n\nUse exact arithmetic or independently checkable proof certificates where applicable. State every assumption and search bound. Separate proved statements, numerical observations and conjectures. Compare any proposed result with the literature before calling it new. Return reproducible artifacts and an honest account of what remains unresolved."
+}

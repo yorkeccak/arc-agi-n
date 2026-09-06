@@ -1,0 +1,43 @@
+{
+  "id": "majorana-neutrino",
+  "title": "Is the neutrino its own antiparticle?",
+  "field": "Physics",
+  "subfield": "Particle physics",
+  "summary": "Neutrinos may have a kind of mass that makes matter and antimatter versions identical.",
+  "statement": "Establish whether neutrinos are Majorana particles, including whether neutrinoless double beta decay occurs and which physical mechanism would account for an observed rate.",
+  "whyOpen": "Searches continue to set limits rather than detect the decay. Turning a decay limit into a neutrino-mass limit depends on nuclear calculations and on the assumed decay mechanism; a null result does not establish that neutrinos are Dirac particles.",
+  "smallestStep": "Reproduce the LEGEND-200 published half-life constraint and propagate several published nuclear matrix-element calculations into an explicitly assumption-dependent mass bound.",
+  "agentFit": 75,
+  "scale": "frontier",
+  "introduced": 1937,
+  "location": {
+    "name": "Gran Sasso, Italy (LEGEND experiment)",
+    "longitude": 13.57,
+    "latitude": 42.45
+  },
+  "tags": [
+    "neutrinos",
+    "antimatter",
+    "rare decays",
+    "nuclear uncertainty"
+  ],
+  "tools": [
+    "Python",
+    "likelihood analysis",
+    "nuclear data tables"
+  ],
+  "sources": [
+    {
+      "title": "First Results on the Search for Lepton Number Violating Neutrinoless Double Beta Decay with the LEGEND-200 Experiment",
+      "url": "https://arxiv.org/abs/2505.10440",
+      "kind": "primary",
+      "publishedAt": "2025-05-15",
+      "passage": "reveals no evidence for a signal"
+    }
+  ],
+  "agentReadiness": "hybrid",
+  "executionResources": "Published spectra and nuclear calculations permit a reproducible analysis. Discovery requires a sufficiently sensitive underground experiment and independent background checks.",
+  "successCriterion": "Match the published limit and report the spread from nuclear and statistical assumptions separately, including the limits of reconstructing a likelihood from published figures.",
+  "verified": "2026-09-06",
+  "starterPrompt": "Investigate: Is the neutrino its own antiparticle?.\n\nQuestion: Establish whether neutrinos are Majorana particles, including whether neutrinoless double beta decay occurs and which physical mechanism would account for an observed rate.\nBegin with this bounded task: Reproduce the LEGEND-200 published half-life constraint and propagate several published nuclear matrix-element calculations into an explicitly assumption-dependent mass bound.\nAvailable resources and limits: Published spectra and nuclear calculations permit a reproducible analysis. Discovery requires a sufficiently sensitive underground experiment and independent background checks.\nCompletion criterion: Match the published limit and report the spread from nuclear and statistical assumptions separately, including the limits of reconstructing a likelihood from published figures.\n\nRead the cited papers and check for later results before beginning. Reproduce the relevant baseline, preserve data provenance, and reserve an independent test set. Separate measured facts, model assumptions, and new hypotheses. Report uncertainty and failed checks. A successful first step is not a solution to the whole problem. Return reproducible code, results, and a short research log."
+}

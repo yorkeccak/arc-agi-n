@@ -1,0 +1,14 @@
+{
+  "id": "alphaevolve-improved-20-of-its-open-problem-set",
+  "date": "2025-05-14",
+  "displayDate": "14 May 2025",
+  "title": "AlphaEvolve improved 20% of its open-problem set",
+  "field": "Algorithmic mathematics",
+  "kind": "Algorithm",
+  "result": "Across more than 50 open problems, AlphaEvolve reported new best results in roughly one fifth, including 593 touching spheres in 11 dimensions.",
+  "context": "It also found a 48-multiplication algorithm for 4x4 complex matrices. These are evaluator-friendly constructions, not general natural-language theorem proofs.",
+  "verificationLevel": "Announced constructions with exact evaluators",
+  "aiRole": "Evolutionary code search",
+  "sourceTitle": "AlphaEvolve: designing advanced algorithms",
+  "sourceUrl": "https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/"
+}

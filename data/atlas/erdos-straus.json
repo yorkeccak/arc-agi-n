@@ -1,0 +1,42 @@
+{
+  "id": "erdos-straus",
+  "title": "Erdős-Straus conjecture",
+  "field": "Mathematics",
+  "subfield": "Number theory",
+  "summary": "Can every fraction 4/n be written as the sum of three positive unit fractions?",
+  "statement": "For every integer n ≥ 2, do positive integers x, y and z exist such that 4/n = 1/x + 1/y + 1/z?",
+  "whyOpen": "The conjecture has survived enormous computational verification and many congruence-class arguments, but no finite family of identities is known to cover every integer.",
+  "smallestStep": "Search systematically for new parametric identities that eliminate a previously uncovered residue class, then formally verify the identity and its domain.",
+  "agentFit": 92,
+  "scale": "foothold",
+  "introduced": 1948,
+  "location": {
+    "name": "Budapest, Hungary",
+    "longitude": 19.0402,
+    "latitude": 47.4979
+  },
+  "tags": [
+    "Diophantine",
+    "symbolic search",
+    "formal proof"
+  ],
+  "tools": [
+    "Lean",
+    "SageMath",
+    "SAT/SMT"
+  ],
+  "sources": [
+    {
+      "title": "The On-Line Encyclopedia of Integer Sequences: Erdős-Straus",
+      "url": "https://oeis.org/wiki/Erd%C5%91s-Straus_conjecture",
+      "kind": "index"
+    },
+    {
+      "title": "An Introduction to the Erdős-Straus Conjecture",
+      "url": "https://arxiv.org/abs/1204.1104",
+      "kind": "survey"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: the Erdős-Straus conjecture.\n\nYour first objective is not to claim a proof. It is to discover and verify a useful new parametric identity or residue-class reduction.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "erdos-hajnal",
+  "title": "Erdős-Hajnal conjecture",
+  "field": "Mathematics",
+  "subfield": "Extremal graph theory",
+  "summary": "Does forbidding one induced pattern force a much larger clique or independent set?",
+  "statement": "For every finite graph H, does there exist ε(H) > 0 such that every n-vertex graph with no induced copy of H has a clique or independent set of size at least n^ε(H)?",
+  "whyOpen": "The general conjecture remains open despite recent progress on small forbidden graphs. Verifying finitely many graph sizes cannot establish the polynomial-size guarantee for all n.",
+  "smallestStep": "Use the current list of settled forbidden patterns to select an unresolved case, then enumerate small H-free graphs and test one structural lemma required by an iterative sparsification approach.",
+  "successCriterion": "A precisely stated lemma with a proof in the restricted case, or a certified minimal counterexample showing why that lemma needs revision.",
+  "agentFit": 71,
+  "scale": "frontier",
+  "introduced": 1989,
+  "location": {
+    "name": "Tianjin, China (Nankai's six-vertex research)",
+    "longitude": 117.2,
+    "latitude": 39.1333
+  },
+  "tags": [
+    "induced subgraphs",
+    "Ramsey theory",
+    "structural lemmas"
+  ],
+  "tools": [
+    "nauty",
+    "SAT",
+    "Lean"
+  ],
+  "sources": [
+    {
+      "title": "Erdős-Hajnal conjecture beyond five-vertex graphs",
+      "url": "https://arxiv.org/abs/2606.06258",
+      "kind": "primary",
+      "passage": "This conjecture, known as the Erdős-Hajnal conjecture, is a central open problem in combinatorics",
+      "publishedAt": "2026-08-31"
+    }
+  ],
+  "verified": "2026-09-06",
+  "agentReadiness": "agent-ready",
+  "executionResources": "A local computer and the cited literature are sufficient for the first step. Larger exhaustive searches may require additional compute.",
+  "starterPrompt": "Investigate Erdős-Hajnal conjecture. First check the current status of the exact statement against primary literature, including corrections and recent solution claims. The research question is: For every finite graph H, does there exist ε(H) > 0 such that every n-vertex graph with no induced copy of H has a clique or independent set of size at least n^ε(H)?\n\nBegin with this bounded task: Use the current list of settled forbidden patterns to select an unresolved case, then enumerate small H-free graphs and test one structural lemma required by an iterative sparsification approach.\n\nSuccess for this first task means: A precisely stated lemma with a proof in the restricted case, or a certified minimal counterexample showing why that lemma needs revision.\n\nUse exact arithmetic or independently checkable proof certificates where applicable. State every assumption and search bound. Separate proved statements, numerical observations and conjectures. Compare any proposed result with the literature before calling it new. Return reproducible artifacts and an honest account of what remains unresolved."
+}

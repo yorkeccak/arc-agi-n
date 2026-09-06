@@ -1,0 +1,48 @@
+{
+  "id": "single-cell-fate-prediction",
+  "title": "Can a cell snapshot reveal its future?",
+  "field": "Biology",
+  "subfield": "Single-cell biology",
+  "summary": "Can gene-expression measurements reliably predict which type of cell a progenitor will become?",
+  "statement": "Predict a progenitor cell's later fate distribution from an earlier molecular measurement, with calibrated uncertainty that holds across independent lineage-tracing datasets and sampling conditions.",
+  "whyOpen": "Measuring RNA usually destroys the cell, so apparent trajectories often rely on assumptions rather than direct tracking. New RNA-velocity and transport methods improve selected benchmarks, but agreement with a known cell-type ordering is weaker evidence than out-of-sample lineage prediction.",
+  "smallestStep": "Compare cell2fate and MultistageOT on a public lineage-tracing dataset, separating whole clones and collection batches between training and evaluation.",
+  "agentFit": 94,
+  "scale": "foothold",
+  "location": {
+    "name": "Hinxton, United Kingdom (Wellcome Sanger Institute)",
+    "longitude": 0.19,
+    "latitude": 52.08
+  },
+  "tags": [
+    "cell fate",
+    "RNA velocity",
+    "lineage tracing",
+    "calibration"
+  ],
+  "tools": [
+    "Scanpy",
+    "cell2fate",
+    "optimal transport"
+  ],
+  "sources": [
+    {
+      "title": "Cell2fate infers RNA velocity modules to improve cell fate prediction",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11978503/",
+      "kind": "primary",
+      "publishedAt": "2025-03-03"
+    },
+    {
+      "title": "MultistageOT: Multistage optimal transport infers trajectories from a snapshot of single-cell data",
+      "url": "https://arxiv.org/abs/2502.05241",
+      "kind": "primary",
+      "publishedAt": "2025-02-07",
+      "sourceType": "preprint"
+    }
+  ],
+  "agentReadiness": "agent-ready",
+  "executionResources": "Public expression matrices and clone labels permit the benchmark on a workstation. The target is prediction from existing data; validating a new biological intervention would need an experiment.",
+  "successCriterion": "Report clone-held-out fate prediction and probability calibration, and show whether gains survive batch shifts and reduced RNA counts.",
+  "verified": "2026-09-06",
+  "starterPrompt": "Investigate: Can a cell snapshot reveal its future?.\n\nQuestion: Predict a progenitor cell's later fate distribution from an earlier molecular measurement, with calibrated uncertainty that holds across independent lineage-tracing datasets and sampling conditions.\nBegin with this bounded task: Compare cell2fate and MultistageOT on a public lineage-tracing dataset, separating whole clones and collection batches between training and evaluation.\nAvailable resources and limits: Public expression matrices and clone labels permit the benchmark on a workstation. The target is prediction from existing data; validating a new biological intervention would need an experiment.\nCompletion criterion: Report clone-held-out fate prediction and probability calibration, and show whether gains survive batch shifts and reduced RNA counts.\n\nRead the cited papers and check for later results before beginning. Reproduce the relevant baseline, preserve data provenance, and reserve an independent test set. Separate measured facts, model assumptions, and new hypotheses. Report uncertainty and failed checks. A successful first step is not a solution to the whole problem. Return reproducible code, results, and a short research log."
+}

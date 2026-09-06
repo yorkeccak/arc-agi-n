@@ -1,0 +1,14 @@
+{
+  "id": "an-autonomous-lab-made-36-new-compounds",
+  "date": "2023-11-29",
+  "displayDate": "29 Nov 2023",
+  "title": "An autonomous lab made 36 new compounds",
+  "field": "Materials science",
+  "kind": "Experiment",
+  "result": "A-Lab planned and executed solid-state synthesis experiments continuously for 17 days, realizing 36 of 57 computationally proposed inorganic compounds.",
+  "context": "Language models proposed recipes, active learning refined them, and robotics ran the experiments. This is a closed-loop laboratory result, not evidence that autonomous systems can conduct every kind of experiment.",
+  "verificationLevel": "Peer reviewed and experimentally realized",
+  "aiRole": "Closed-loop planning, active learning and robotics",
+  "sourceTitle": "An autonomous laboratory for accelerated materials synthesis",
+  "sourceUrl": "https://www.nature.com/articles/s41586-023-06734-w"
+}

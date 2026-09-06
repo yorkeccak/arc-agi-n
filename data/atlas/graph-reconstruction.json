@@ -1,0 +1,46 @@
+{
+  "id": "graph-reconstruction",
+  "title": "Graph reconstruction conjecture",
+  "field": "Mathematics",
+  "subfield": "Graph theory",
+  "summary": "Can a graph always be recovered from all its vertex-deleted views?",
+  "statement": "Are any two finite simple graphs on at least three vertices isomorphic whenever their multisets of unlabeled vertex-deleted subgraphs are equal?",
+  "whyOpen": "Many invariants and graph classes are reconstructible, including interval graphs in recent work. These results do not prove that every deck identifies a unique graph.",
+  "smallestStep": "Build a canonical deck calculator for small graphs, reproduce reconstruction of edge counts and degree sequences, and test a specific proposed deck invariant on all graphs within a declared order bound.",
+  "successCriterion": "An exhaustively checked invariant implication or a pair of explicit graphs disproving the proposed implication.",
+  "agentFit": 86,
+  "scale": "foothold",
+  "location": {
+    "name": "York, United Kingdom (Dufresne's invariant-theory research)",
+    "longitude": -1.0827,
+    "latitude": 53.9583
+  },
+  "tags": [
+    "graph invariants",
+    "reconstruction",
+    "exact enumeration"
+  ],
+  "tools": [
+    "nauty",
+    "SageMath",
+    "Lean"
+  ],
+  "sources": [
+    {
+      "title": "Shuffling the Deck: Invariant Theory and the Graph Reconstruction Conjecture",
+      "url": "https://arxiv.org/abs/2604.16567",
+      "kind": "survey",
+      "publishedAt": "2026-04-17"
+    },
+    {
+      "title": "Interval Graphs are Reconstructible",
+      "url": "https://arxiv.org/abs/2504.02353",
+      "kind": "primary",
+      "publishedAt": "2026-05-12"
+    }
+  ],
+  "verified": "2026-09-06",
+  "agentReadiness": "agent-ready",
+  "executionResources": "A local computer and the cited literature are sufficient for the first step. Larger exhaustive searches may require additional compute.",
+  "starterPrompt": "Investigate Graph reconstruction conjecture. First check the current status of the exact statement against primary literature, including corrections and recent solution claims. The research question is: Are any two finite simple graphs on at least three vertices isomorphic whenever their multisets of unlabeled vertex-deleted subgraphs are equal?\n\nBegin with this bounded task: Build a canonical deck calculator for small graphs, reproduce reconstruction of edge counts and degree sequences, and test a specific proposed deck invariant on all graphs within a declared order bound.\n\nSuccess for this first task means: An exhaustively checked invariant implication or a pair of explicit graphs disproving the proposed implication.\n\nUse exact arithmetic or independently checkable proof certificates where applicable. State every assumption and search bound. Separate proved statements, numerical observations and conjectures. Compare any proposed result with the literature before calling it new. Return reproducible artifacts and an honest account of what remains unresolved."
+}

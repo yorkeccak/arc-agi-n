@@ -1,0 +1,49 @@
+{
+  "id": "copper-catalyst-reconstruction",
+  "title": "Which copper surface makes which carbon product?",
+  "field": "Chemistry",
+  "subfield": "Electrocatalysis",
+  "summary": "Copper changes shape and chemistry while converting carbon dioxide, obscuring its active sites.",
+  "statement": "Predict how the evolving surface of a copper catalyst controls product selectivity during carbon-dioxide electroreduction under specified potential, electrolyte, and transport conditions.",
+  "whyOpen": "The starting structure can dissolve, redeposit, or change oxidation state during operation. Several reaction pathways compete, and measurements that average over a changing surface can mistake a correlated structure for the actual active site.",
+  "smallestStep": "Assemble one condition-matched dataset of operando structural measurements and product distributions, then test whether a time-dependent surface-state model predicts selectivity better than the starting catalyst structure.",
+  "agentFit": 86,
+  "scale": "foothold",
+  "location": {
+    "name": "Chiba, Japan (early copper CO2-reduction research)",
+    "longitude": 140.12,
+    "latitude": 35.61
+  },
+  "tags": [
+    "carbon dioxide",
+    "catalysis",
+    "active sites",
+    "surface reconstruction"
+  ],
+  "tools": [
+    "DFT",
+    "microkinetic models",
+    "spectral analysis"
+  ],
+  "sources": [
+    {
+      "title": "Advancements in Understanding Catalyst Reconstruction During Electrochemical CO2 Reduction",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12380069/",
+      "kind": "survey",
+      "publishedAt": "2025-04-22",
+      "passage": "makes it difficult to understand how actual active sites contribute"
+    },
+    {
+      "title": "Laser-Synthesized Ligand-Free Cu Nanocatalysts in Electrochemical CO2 Reduction to Methane",
+      "url": "https://arxiv.org/abs/2504.13634",
+      "kind": "primary",
+      "publishedAt": "2025-04-21",
+      "sourceType": "preprint"
+    }
+  ],
+  "agentReadiness": "hybrid",
+  "executionResources": "Published spectra, product tables, and computational models permit hypothesis testing. Sparse synchronized measurements may block identification; new conclusions about active sites need operando experiments.",
+  "successCriterion": "Beat the static-structure baseline on held-out operating conditions and state which alternative mechanisms remain observationally indistinguishable.",
+  "verified": "2026-09-06",
+  "starterPrompt": "Investigate: Which copper surface makes which carbon product?.\n\nQuestion: Predict how the evolving surface of a copper catalyst controls product selectivity during carbon-dioxide electroreduction under specified potential, electrolyte, and transport conditions.\nBegin with this bounded task: Assemble one condition-matched dataset of operando structural measurements and product distributions, then test whether a time-dependent surface-state model predicts selectivity better than the starting catalyst structure.\nAvailable resources and limits: Published spectra, product tables, and computational models permit hypothesis testing. Sparse synchronized measurements may block identification; new conclusions about active sites need operando experiments.\nCompletion criterion: Beat the static-structure baseline on held-out operating conditions and state which alternative mechanisms remain observationally indistinguishable.\n\nRead the cited papers and check for later results before beginning. Reproduce the relevant baseline, preserve data provenance, and reserve an independent test set. Separate measured facts, model assumptions, and new hypotheses. Report uncertainty and failed checks. A successful first step is not a solution to the whole problem. Return reproducible code, results, and a short research log."
+}

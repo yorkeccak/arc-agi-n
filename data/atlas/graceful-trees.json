@@ -1,0 +1,48 @@
+{
+  "id": "graceful-trees",
+  "title": "Graceful tree conjecture",
+  "field": "Mathematics",
+  "subfield": "Graph theory",
+  "summary": "Can every tree be numbered so that its edge differences are all distinct?",
+  "statement": "For every tree T with n vertices, is there a bijection f: V(T) → {0, …, n − 1} whose absolute differences |f(u) − f(v)| over edges uv are exactly {1, …, n − 1}?",
+  "whyOpen": "Many tree families admit explicit labelings, and recent work obtains asymptotically almost all distinct differences. Almost graceful does not imply an exact labeling for every tree.",
+  "smallestStep": "Build a certificate-producing labeling solver, validate it on paths and caterpillars, then study one family outside the hypotheses of the cited spider results.",
+  "successCriterion": "Checked labelings for a declared family and a symbolic construction or minimal obstruction to a proposed extension rule.",
+  "agentFit": 88,
+  "scale": "foothold",
+  "introduced": 1967,
+  "location": {
+    "name": "London, United Kingdom (UCL gracesize research)",
+    "longitude": -0.1276,
+    "latitude": 51.5072
+  },
+  "tags": [
+    "graph labeling",
+    "trees",
+    "constraint solving"
+  ],
+  "tools": [
+    "CP-SAT",
+    "nauty",
+    "Lean"
+  ],
+  "sources": [
+    {
+      "title": "On the gracesize of trees",
+      "url": "https://arxiv.org/abs/2511.11331",
+      "kind": "primary",
+      "passage": "every sufficiently large tree admits an almost graceful labelling",
+      "publishedAt": "2026-07-31"
+    },
+    {
+      "title": "Graceful Labeling of Two Families of Spiders",
+      "url": "https://arxiv.org/abs/2605.14295",
+      "kind": "primary",
+      "publishedAt": "2026-05-15"
+    }
+  ],
+  "verified": "2026-09-06",
+  "agentReadiness": "agent-ready",
+  "executionResources": "A local computer and the cited literature are sufficient for the first step. Larger exhaustive searches may require additional compute.",
+  "starterPrompt": "Investigate Graceful tree conjecture. First check the current status of the exact statement against primary literature, including corrections and recent solution claims. The research question is: For every tree T with n vertices, is there a bijection f: V(T) → {0, …, n − 1} whose absolute differences |f(u) − f(v)| over edges uv are exactly {1, …, n − 1}?\n\nBegin with this bounded task: Build a certificate-producing labeling solver, validate it on paths and caterpillars, then study one family outside the hypotheses of the cited spider results.\n\nSuccess for this first task means: Checked labelings for a declared family and a symbolic construction or minimal obstruction to a proposed extension rule.\n\nUse exact arithmetic or independently checkable proof certificates where applicable. State every assumption and search bound. Separate proved statements, numerical observations and conjectures. Compare any proposed result with the literature before calling it new. Return reproducible artifacts and an honest account of what remains unresolved."
+}

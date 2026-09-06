@@ -1,0 +1,20 @@
+{
+  "id": "a-controller-steered-plasma-away-from-tearing",
+  "date": "2024-02-21",
+  "displayDate": "21 Feb 2024",
+  "title": "A controller steered plasma away from tearing",
+  "field": "Fusion physics",
+  "kind": "Control",
+  "result": "A reinforcement-learning controller on the DIII-D tokamak kept predicted tearing-instability likelihood below a chosen threshold while maintaining high-confinement plasma performance.",
+  "context": "This goes beyond controlling the plasma boundary: the controller adjusted operation to avoid a core instability, including under low-torque and low-safety-factor conditions. The authors describe a proof of concept needing further tuning, not a solution to fusion energy.",
+  "verificationLevel": "Peer reviewed and tested on DIII-D hardware",
+  "aiRole": "Learned real-time control using plasma-state predictions and actuator adjustments",
+  "sourceTitle": "Avoiding fusion plasma tearing instability with deep reinforcement learning",
+  "sourceUrl": "https://www.nature.com/articles/s41586-024-07024-9",
+  "additionalSources": [
+    {
+      "title": "US Department of Energy: experiment and scope",
+      "url": "https://science.osti.gov/fes/Highlights/2024/12a"
+    }
+  ]
+}

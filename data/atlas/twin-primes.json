@@ -1,0 +1,48 @@
+{
+  "id": "twin-primes",
+  "title": "Twin prime conjecture",
+  "field": "Mathematics",
+  "subfield": "Number theory",
+  "summary": "Are there infinitely many pairs of primes separated by two?",
+  "statement": "Are there infinitely many primes p such that p + 2 is also prime?",
+  "whyOpen": "Bounded-gap theorems guarantee infinitely many close prime pairs, but do not force the gap to equal two. The parity barrier explains why the established sieve methods alone do not reach this conclusion.",
+  "smallestStep": "Reproduce one finite-dimensional sieve optimization from the Polymath bounded-gap paper using rational arithmetic, and identify exactly where the argument stops distinguishing primes from almost primes.",
+  "successCriterion": "An independently checked optimization certificate and a precise account of which additional estimate would improve its conclusion.",
+  "agentFit": 46,
+  "scale": "monument",
+  "introduced": 1849,
+  "location": {
+    "name": "Paris, France (de Polignac's conjecture)",
+    "longitude": 2.3522,
+    "latitude": 48.8566
+  },
+  "tags": [
+    "primes",
+    "sieve methods",
+    "certified bounds"
+  ],
+  "tools": [
+    "SageMath",
+    "rational optimization",
+    "Lean"
+  ],
+  "sources": [
+    {
+      "title": "Variants of the Selberg sieve, and bounded intervals containing many primes",
+      "url": "https://arxiv.org/abs/1407.4897",
+      "kind": "primary",
+      "passage": "We modify the \"parity problem\" argument of Selberg",
+      "publishedAt": "2014-12-22"
+    },
+    {
+      "title": "Weakening the Legendre Conjecture",
+      "url": "https://arxiv.org/html/2602.22502v1",
+      "kind": "survey",
+      "publishedAt": "2026-02-25"
+    }
+  ],
+  "verified": "2026-09-06",
+  "agentReadiness": "agent-ready",
+  "executionResources": "A local computer and the cited literature are sufficient for the first step. Larger exhaustive searches may require additional compute.",
+  "starterPrompt": "Investigate Twin prime conjecture. First check the current status of the exact statement against primary literature, including corrections and recent solution claims. The research question is: Are there infinitely many primes p such that p + 2 is also prime?\n\nBegin with this bounded task: Reproduce one finite-dimensional sieve optimization from the Polymath bounded-gap paper using rational arithmetic, and identify exactly where the argument stops distinguishing primes from almost primes.\n\nSuccess for this first task means: An independently checked optimization certificate and a precise account of which additional estimate would improve its conclusion.\n\nUse exact arithmetic or independently checkable proof certificates where applicable. State every assumption and search bound. Separate proved statements, numerical observations and conjectures. Compare any proposed result with the literature before calling it new. Return reproducible artifacts and an honest account of what remains unresolved."
+}

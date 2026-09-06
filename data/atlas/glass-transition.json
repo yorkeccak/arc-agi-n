@@ -1,0 +1,37 @@
+{
+  "id": "glass-transition",
+  "title": "Microscopic theory of the glass transition",
+  "field": "Chemistry",
+  "subfield": "Physical chemistry",
+  "summary": "Why do some liquids become rigid without crystallizing?",
+  "statement": "Derive a predictive microscopic account of the dramatic slowing, dynamic heterogeneity and possible thermodynamic transition in supercooled liquids.",
+  "whyOpen": "Competing kinetic and thermodynamic theories reproduce overlapping observations, and accessible timescales are far shorter than experimental relaxation near the glass transition.",
+  "smallestStep": "Benchmark two competing theories on the same open molecular-dynamics trajectories and identify one observable where their predictions provably diverge.",
+  "agentFit": 89,
+  "scale": "foothold",
+  "introduced": 1948,
+  "location": {
+    "name": "Paris, France",
+    "longitude": 2.3376,
+    "latitude": 48.8607
+  },
+  "tags": [
+    "supercooled liquids",
+    "statistical mechanics",
+    "simulation"
+  ],
+  "tools": [
+    "LAMMPS",
+    "JAX",
+    "Bayesian model comparison"
+  ],
+  "sources": [
+    {
+      "title": "Theoretical perspective on the glass transition and amorphous materials",
+      "url": "https://arxiv.org/abs/1007.4762",
+      "kind": "survey"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: the microscopic origin of the glass transition.\n\nYour first objective is not to claim a proof. It is to choose two explicit theories and design a leakage-resistant simulation benchmark around one observable on which they make different predictions.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

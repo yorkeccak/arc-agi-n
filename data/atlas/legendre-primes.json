@@ -1,0 +1,46 @@
+{
+  "id": "legendre-primes",
+  "title": "Primes between consecutive squares",
+  "field": "Mathematics",
+  "subfield": "Number theory",
+  "summary": "Is there always a prime between n² and the next square?",
+  "statement": "For every integer n ≥ 1, does a prime p exist with n² < p < (n + 1)²?",
+  "whyOpen": "Results for wider intervals and for numbers with several prime factors do not establish a prime in every square interval. Even assuming the Riemann hypothesis does not settle this exact statement.",
+  "smallestStep": "Reproduce the explicit sieve inequalities in the four-prime-factor result, with interval bounds on numerical constants, and test whether one estimate can be sharpened.",
+  "successCriterion": "A reproducible certificate for a published explicit bound, or a rigorously improved bound with all finite checks recorded.",
+  "agentFit": 62,
+  "scale": "frontier",
+  "location": {
+    "name": "Canberra, Australia (Johnston's explicit sieve research)",
+    "longitude": 149.13,
+    "latitude": -35.28
+  },
+  "tags": [
+    "prime gaps",
+    "explicit estimates",
+    "sieves"
+  ],
+  "tools": [
+    "Arb",
+    "SageMath",
+    "interval arithmetic"
+  ],
+  "sources": [
+    {
+      "title": "Almost primes between all squares",
+      "url": "https://arxiv.org/html/2501.18048",
+      "kind": "primary",
+      "passage": "Even under the Riemann hypothesis, Legendre’s conjecture is still open"
+    },
+    {
+      "title": "Weakening the Legendre Conjecture",
+      "url": "https://arxiv.org/html/2602.22502v1",
+      "kind": "survey",
+      "publishedAt": "2026-02-25"
+    }
+  ],
+  "verified": "2026-09-06",
+  "agentReadiness": "agent-ready",
+  "executionResources": "A local computer and the cited literature are sufficient for the first step. Larger exhaustive searches may require additional compute.",
+  "starterPrompt": "Investigate Primes between consecutive squares. First check the current status of the exact statement against primary literature, including corrections and recent solution claims. The research question is: For every integer n ≥ 1, does a prime p exist with n² < p < (n + 1)²?\n\nBegin with this bounded task: Reproduce the explicit sieve inequalities in the four-prime-factor result, with interval bounds on numerical constants, and test whether one estimate can be sharpened.\n\nSuccess for this first task means: A reproducible certificate for a published explicit bound, or a rigorously improved bound with all finite checks recorded.\n\nUse exact arithmetic or independently checkable proof certificates where applicable. State every assumption and search bound. Separate proved statements, numerical observations and conjectures. Compare any proposed result with the literature before calling it new. Return reproducible artifacts and an honest account of what remains unresolved."
+}

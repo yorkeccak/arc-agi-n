@@ -1,0 +1,49 @@
+{
+  "id": "electrode-ion-transferability",
+  "title": "Can simulations predict ions at a charged surface?",
+  "field": "Chemistry",
+  "subfield": "Electrochemical interfaces",
+  "summary": "Common molecular models can disagree even on whether an ion sticks to an electrode.",
+  "statement": "Predict ion adsorption free energies at electrified metal-water interfaces across applied potentials and electrolyte compositions, using models that transfer beyond the conditions on which they were fitted.",
+  "whyOpen": "Standard force-field mixing rules can give qualitatively wrong adsorption. Electronic screening, solvent organization, and applied potential interact, while accurate electronic-structure calculations are too costly to sample every relevant interface configuration.",
+  "smallestStep": "Reproduce the published Au(111)-water adsorption free-energy comparison, then hold out one ion or potential to test whether fitted electrode-ion parameters genuinely transfer.",
+  "agentFit": 92,
+  "scale": "foothold",
+  "location": {
+    "name": "Berkeley, California (electrochemical modeling research)",
+    "longitude": -122.27,
+    "latitude": 37.87
+  },
+  "tags": [
+    "electrochemistry",
+    "solvation",
+    "free energy",
+    "model transfer"
+  ],
+  "tools": [
+    "LAMMPS",
+    "PLUMED",
+    "electronic-structure calculations"
+  ],
+  "sources": [
+    {
+      "title": "Deriving effective electrode-ion interactions from free-energy profiles at electrochemical interfaces",
+      "url": "https://arxiv.org/abs/2507.23031",
+      "kind": "primary",
+      "publishedAt": "2025-07-30",
+      "sourceType": "preprint",
+      "passage": "standard mixing rules can lead to qualitatively incorrect descriptions"
+    },
+    {
+      "title": "Ion and Solvent Modulation of Ferrocene and Decamethylferrocene Oxidation Potentials in Organic Electrolytes as Predicted by Molecular Dynamics Simulations",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11848929/",
+      "kind": "primary",
+      "publishedAt": "2025-02-11"
+    }
+  ],
+  "agentReadiness": "hybrid",
+  "executionResources": "Released simulation inputs and a GPU or compute cluster. Electronic-structure agreement is an intermediate benchmark; experimental interface observables are needed for physical validation.",
+  "successCriterion": "Report converged free energies with sampling errors and a held-out transfer error, distinguishing parameter-fit accuracy from agreement with independent physics.",
+  "verified": "2026-09-06",
+  "starterPrompt": "Investigate: Can simulations predict ions at a charged surface?.\n\nQuestion: Predict ion adsorption free energies at electrified metal-water interfaces across applied potentials and electrolyte compositions, using models that transfer beyond the conditions on which they were fitted.\nBegin with this bounded task: Reproduce the published Au(111)-water adsorption free-energy comparison, then hold out one ion or potential to test whether fitted electrode-ion parameters genuinely transfer.\nAvailable resources and limits: Released simulation inputs and a GPU or compute cluster. Electronic-structure agreement is an intermediate benchmark; experimental interface observables are needed for physical validation.\nCompletion criterion: Report converged free energies with sampling errors and a held-out transfer error, distinguishing parameter-fit accuracy from agreement with independent physics.\n\nRead the cited papers and check for later results before beginning. Reproduce the relevant baseline, preserve data provenance, and reserve an independent test set. Separate measured facts, model assumptions, and new hypotheses. Report uncertainty and failed checks. A successful first step is not a solution to the whole problem. Return reproducible code, results, and a short research log."
+}

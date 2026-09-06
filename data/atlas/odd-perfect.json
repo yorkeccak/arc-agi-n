@@ -1,0 +1,37 @@
+{
+  "id": "odd-perfect",
+  "title": "Odd perfect numbers",
+  "field": "Mathematics",
+  "subfield": "Number theory",
+  "summary": "Does any odd integer equal the sum of its proper divisors?",
+  "statement": "Does there exist an odd positive integer n such that σ(n) = 2n?",
+  "whyOpen": "Any example must obey severe structural restrictions and be astronomically large, yet no contradiction rules out every possible factorization pattern.",
+  "smallestStep": "Encode current structural constraints into a verified constraint solver and seek either contradictions or missing cases in published bounds.",
+  "agentFit": 84,
+  "scale": "frontier",
+  "introduced": 300,
+  "location": {
+    "name": "Alexandria, Egypt",
+    "longitude": 29.9187,
+    "latitude": 31.2001
+  },
+  "tags": [
+    "divisors",
+    "constraint solving",
+    "ancient"
+  ],
+  "tools": [
+    "SageMath",
+    "Z3",
+    "Lean"
+  ],
+  "sources": [
+    {
+      "title": "Odd perfect numbers: old and new results",
+      "url": "https://arxiv.org/abs/1204.1450",
+      "kind": "survey"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: the existence of odd perfect numbers.\n\nYour first objective is not to claim a proof. It is to construct a machine-checkable map of known constraints and test one bounded factor-pattern family.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

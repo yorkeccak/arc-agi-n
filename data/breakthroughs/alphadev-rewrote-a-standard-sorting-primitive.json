@@ -1,0 +1,14 @@
+{
+  "id": "alphadev-rewrote-a-standard-sorting-primitive",
+  "date": "2023-06-07",
+  "displayDate": "07 Jun 2023",
+  "title": "AlphaDev rewrote a standard sorting primitive",
+  "field": "Computer science",
+  "kind": "Algorithm",
+  "result": "AlphaDev discovered shorter, lower-latency sorting routines that were incorporated into the LLVM standard C++ library.",
+  "context": "The gains concern small sorting routines at assembly level, where correctness and latency can be measured exactly. They do not replace general-purpose sorting theory.",
+  "verificationLevel": "Peer reviewed and deployed in LLVM",
+  "aiRole": "Reinforcement-learning algorithm discovery",
+  "sourceTitle": "Faster sorting algorithms discovered using deep reinforcement learning",
+  "sourceUrl": "https://www.nature.com/articles/s41586-023-06004-9"
+}

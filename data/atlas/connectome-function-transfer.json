@@ -1,0 +1,48 @@
+{
+  "id": "connectome-function-transfer",
+  "title": "How much brain activity can wiring predict?",
+  "field": "Biology",
+  "subfield": "Computational neuroscience",
+  "summary": "A wiring diagram constrains a brain, but does it predict responses to unfamiliar inputs?",
+  "statement": "Determine which neural responses and perturbation effects can be predicted from measured connectivity and limited physiology across tasks, rather than only within the task used to fit a model.",
+  "whyOpen": "Connectome-constrained models already predict responses in the fly visual system. Wiring does not uniquely fix cellular dynamics, and later studies still debate which predictions require exact connectivity rather than coarse network statistics.",
+  "smallestStep": "Reproduce the published fly visual-system model and compare its predictions on held-out stimuli with degree-preserving rewired models, keeping parameter count and training data matched.",
+  "agentFit": 92,
+  "scale": "foothold",
+  "location": {
+    "name": "Ashburn, Virginia (Janelia Research Campus)",
+    "longitude": -77.48,
+    "latitude": 39.07
+  },
+  "tags": [
+    "connectome",
+    "neural dynamics",
+    "identifiability",
+    "model comparison"
+  ],
+  "tools": [
+    "PyTorch",
+    "flyvis",
+    "network analysis"
+  ],
+  "sources": [
+    {
+      "title": "Connectome-constrained networks predict neural activity across the fly visual system",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11525180/",
+      "kind": "primary",
+      "publishedAt": "2024-09-11"
+    },
+    {
+      "title": "Separating wiring-specific from statistical control of dynamics in a complete connectome",
+      "url": "https://arxiv.org/abs/2606.17745",
+      "kind": "primary",
+      "publishedAt": "2026-06-16",
+      "sourceType": "preprint"
+    }
+  ],
+  "agentReadiness": "hybrid",
+  "executionResources": "The paper's public flyvis repository includes data, trained models, and notebooks. A GPU supports the benchmark. New causal tests require physiology or behavioral experiments.",
+  "successCriterion": "Measure the held-out prediction gain from exact wiring over matched null models, with uncertainty across training seeds and no reuse of test responses during fitting.",
+  "verified": "2026-09-06",
+  "starterPrompt": "Investigate: How much brain activity can wiring predict?.\n\nQuestion: Determine which neural responses and perturbation effects can be predicted from measured connectivity and limited physiology across tasks, rather than only within the task used to fit a model.\nBegin with this bounded task: Reproduce the published fly visual-system model and compare its predictions on held-out stimuli with degree-preserving rewired models, keeping parameter count and training data matched.\nAvailable resources and limits: The paper's public flyvis repository includes data, trained models, and notebooks. A GPU supports the benchmark. New causal tests require physiology or behavioral experiments.\nCompletion criterion: Measure the held-out prediction gain from exact wiring over matched null models, with uncertainty across training seeds and no reuse of test responses during fitting.\n\nRead the cited papers and check for later results before beginning. Reproduce the relevant baseline, preserve data provenance, and reserve an independent test set. Separate measured facts, model assumptions, and new hypotheses. Report uncertainty and failed checks. A successful first step is not a solution to the whole problem. Return reproducible code, results, and a short research log."
+}

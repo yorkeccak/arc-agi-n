@@ -1,0 +1,37 @@
+{
+  "id": "matter-antimatter",
+  "title": "Matter-antimatter asymmetry",
+  "field": "Physics",
+  "subfield": "Particle cosmology",
+  "summary": "Why did the early universe leave matter behind instead of annihilating everything?",
+  "statement": "Explain the observed baryon asymmetry with a quantitatively viable mechanism consistent with laboratory and cosmological constraints.",
+  "whyOpen": "Known Standard Model CP violation appears insufficient, while proposed mechanisms span inaccessible energy scales and tightly constrained new physics.",
+  "smallestStep": "Build a living constraint map for one baryogenesis mechanism and identify a parameter region newly testable by a current experiment.",
+  "agentFit": 78,
+  "scale": "frontier",
+  "introduced": 1967,
+  "location": {
+    "name": "Moscow, Russia",
+    "longitude": 37.6173,
+    "latitude": 55.7558
+  },
+  "tags": [
+    "baryogenesis",
+    "CP violation",
+    "constraints"
+  ],
+  "tools": [
+    "symbolic algebra",
+    "global fitting",
+    "literature graph"
+  ],
+  "sources": [
+    {
+      "title": "The origin of the matter-antimatter asymmetry",
+      "url": "https://arxiv.org/abs/1206.2942",
+      "kind": "survey"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: the cosmic matter-antimatter asymmetry.\n\nYour first objective is not to claim a proof. It is to construct a sourced constraint map for one baryogenesis mechanism and identify one parameter region testable with existing data.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

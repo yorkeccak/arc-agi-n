@@ -1,0 +1,39 @@
+{
+  "id": "random-permanent-zero",
+  "title": "How often is a random permanent zero?",
+  "field": "Computer science",
+  "subfield": "Algebraic complexity",
+  "summary": "For a random square matrix over a fixed odd finite field, does its permanent vanish with probability approaching 1/q?",
+  "statement": "For each fixed odd prime power q and a uniformly random matrix A in Fq^(n×n), does Pr[per(A) = 0] → 1/q as n → ∞? The permanent sums products over permutations without determinant signs.",
+  "whyOpen": "The cited paper distinguishes permanental and ordinary rank for sufficiently thin rectangular matrices. It explicitly leaves the square-matrix zero probability unresolved.",
+  "smallestStep": "Compute exact permanent distributions for small n and q with a subset-dynamic-programming implementation, cross-check by direct permutation sums, and seek a recurrence for a restricted matrix family.",
+  "successCriterion": "Exact distributions with independent checks, and a proved recurrence or conditional bound for the stated restricted family.",
+  "agentFit": 89,
+  "scale": "foothold",
+  "location": {
+    "name": "Toronto, Canada (Ghasemi, Gross and Kopparty's research)",
+    "longitude": -79.3832,
+    "latitude": 43.6532
+  },
+  "tags": [
+    "permanent",
+    "finite fields",
+    "random matrices"
+  ],
+  "tools": [
+    "SageMath",
+    "Rust",
+    "exact enumeration"
+  ],
+  "sources": [
+    {
+      "title": "Permanental rank versus determinantal rank of random matrices over finite fields",
+      "url": "https://arxiv.org/html/2512.03221v1",
+      "kind": "primary"
+    }
+  ],
+  "verified": "2026-09-06",
+  "agentReadiness": "agent-ready",
+  "executionResources": "A local computer and the cited literature are sufficient for the first step. Larger exhaustive searches may require additional compute.",
+  "starterPrompt": "Investigate How often is a random permanent zero?. First check the current status of the exact statement against primary literature, including corrections and recent solution claims. The research question is: For each fixed odd prime power q and a uniformly random matrix A in Fq^(n×n), does Pr[per(A) = 0] → 1/q as n → ∞? The permanent sums products over permutations without determinant signs.\n\nBegin with this bounded task: Compute exact permanent distributions for small n and q with a subset-dynamic-programming implementation, cross-check by direct permutation sums, and seek a recurrence for a restricted matrix family.\n\nSuccess for this first task means: Exact distributions with independent checks, and a proved recurrence or conditional bound for the stated restricted family.\n\nUse exact arithmetic or independently checkable proof certificates where applicable. State every assumption and search bound. Separate proved statements, numerical observations and conjectures. Compare any proposed result with the literature before calling it new. Return reproducible artifacts and an honest account of what remains unresolved."
+}

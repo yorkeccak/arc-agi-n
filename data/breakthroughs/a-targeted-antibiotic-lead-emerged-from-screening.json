@@ -1,0 +1,20 @@
+{
+  "id": "a-targeted-antibiotic-lead-emerged-from-screening",
+  "date": "2023-05-25",
+  "displayDate": "25 May 2023",
+  "title": "A targeted antibiotic lead emerged from screening",
+  "field": "Drug discovery",
+  "kind": "Experiment",
+  "result": "A neural-network-guided screen identified abaucin, a compound with narrow-spectrum activity against Acinetobacter baumannii. Follow-up work showed activity in a mouse wound-infection model and a mechanism involving lipoprotein trafficking.",
+  "context": "The compound was identified through screening rather than generated from scratch. The result complements broad-spectrum discovery by targeting a particular pathogen; it is preclinical evidence, not an approved treatment.",
+  "verificationLevel": "Peer reviewed with mechanism studies and mouse validation",
+  "aiRole": "Predictive screening trained on measured bacterial growth inhibition",
+  "sourceTitle": "Deep learning-guided discovery of an antibiotic targeting Acinetobacter baumannii",
+  "sourceUrl": "https://www.nature.com/articles/s41589-023-01349-8",
+  "additionalSources": [
+    {
+      "title": "MIT Jameel Clinic: original study abstract",
+      "url": "https://jclinic.mit.edu/research-project/deep-learning-guided-discovery-of-an-antibiotic-targeting-acinetobacter-baumannii/"
+    }
+  ]
+}

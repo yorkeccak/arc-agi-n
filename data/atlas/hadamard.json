@@ -1,0 +1,37 @@
+{
+  "id": "hadamard",
+  "title": "Hadamard matrix conjecture",
+  "field": "Mathematics",
+  "subfield": "Combinatorics",
+  "summary": "Does a perfectly orthogonal ±1 matrix exist in every order divisible by four?",
+  "statement": "For every positive integer n divisible by 4, does an n × n matrix H with entries ±1 exist such that HHᵀ = nI?",
+  "whyOpen": "Many infinite construction families and extensive tables exist, but the gap between them has not been closed for all multiples of four.",
+  "smallestStep": "Target a specific unknown order with symmetry reduction, SAT search and independently checkable certificates.",
+  "agentFit": 96,
+  "scale": "foothold",
+  "introduced": 1893,
+  "location": {
+    "name": "Paris, France",
+    "longitude": 2.3522,
+    "latitude": 48.8566
+  },
+  "tags": [
+    "matrix",
+    "SAT",
+    "certificate"
+  ],
+  "tools": [
+    "CaDiCaL",
+    "Python",
+    "proof certificates"
+  ],
+  "sources": [
+    {
+      "title": "A database of constructions of Hadamard matrices",
+      "url": "https://arxiv.org/abs/2411.18897",
+      "kind": "primary"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: the Hadamard matrix conjecture.\n\nYour first objective is not to claim a proof. It is to identify a high-value unresolved order and produce a reproducible symmetry-reduced search plan with verifiable certificates.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

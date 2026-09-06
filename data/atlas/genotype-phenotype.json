@@ -1,0 +1,37 @@
+{
+  "id": "genotype-phenotype",
+  "title": "General genotype-to-phenotype prediction",
+  "field": "Biology",
+  "subfield": "Quantitative genetics",
+  "summary": "Can an organism's traits be predicted from its genome across populations and environments?",
+  "statement": "Predict complex quantitative phenotypes from genotype with calibrated uncertainty that transfers across ancestry, environment and measurement context.",
+  "whyOpen": "Polygenicity, epistasis, gene-environment interactions, population structure and phenotype definition create severe transfer and identifiability failures.",
+  "smallestStep": "Choose one open cohort and phenotype, establish a leakage-audited cross-population baseline, and isolate the largest reproducible source of transfer failure.",
+  "agentFit": 95,
+  "scale": "foothold",
+  "introduced": 1909,
+  "location": {
+    "name": "Cambridge, Massachusetts",
+    "longitude": -71.1056,
+    "latitude": 42.3751
+  },
+  "tags": [
+    "genetics",
+    "causal inference",
+    "generalization"
+  ],
+  "tools": [
+    "Hail",
+    "PyTorch",
+    "polygenic scores"
+  ],
+  "sources": [
+    {
+      "title": "Open Problems in Human Trait Genetics",
+      "url": "https://arxiv.org/abs/2108.06684",
+      "kind": "survey"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: general genotype-to-phenotype prediction.\n\nYour first objective is not to claim a proof. It is to build a leakage-audited cross-population benchmark for one quantitative trait and identify the strongest reproducible generalization failure.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

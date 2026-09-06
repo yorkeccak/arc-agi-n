@@ -1,0 +1,49 @@
+{
+  "id": "amoc-stability-observability",
+  "title": "How close is Atlantic overturning to a tipping point?",
+  "field": "Physics",
+  "subfield": "Ocean circulation",
+  "summary": "A weakening ocean circulation is not automatically evidence that its collapse threshold is near.",
+  "statement": "Determine whether observations can distinguish ordinary weakening of the Atlantic overturning circulation from a loss of stability, and constrain any transition threshold without relying on an untested single-variable model.",
+  "whyOpen": "Ocean-temperature proxies are imperfect measures of overturning, and estimates depend strongly on model structure and data processing. A 2026 robustness study finds that plausible uncertainties greatly broaden inferred tipping times; simulations also differ in abruptness and reversibility.",
+  "smallestStep": "Reproduce a published early-warning estimator on synthetic circulation series with known stability, then test its false-positive rate under changing noise, proxy bias, and observational coverage.",
+  "agentFit": 94,
+  "scale": "frontier",
+  "introduced": 1961,
+  "location": {
+    "name": "Woods Hole, Massachusetts (Stommel's circulation research)",
+    "longitude": -70.67,
+    "latitude": 41.52
+  },
+  "tags": [
+    "climate change",
+    "AMOC",
+    "tipping points",
+    "identifiability"
+  ],
+  "tools": [
+    "xarray",
+    "stochastic models",
+    "simulation-based calibration"
+  ],
+  "sources": [
+    {
+      "title": "Extrapolation from historical data cannot reliably predict the time of a potential AMOC collapse",
+      "url": "https://arxiv.org/abs/2604.20341",
+      "kind": "primary",
+      "publishedAt": "2026-04-22",
+      "sourceType": "preprint"
+    },
+    {
+      "title": "Limited impact of Greenland meltwater on abruptness and reversibility of future Atlantic overturning changes",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13281800/",
+      "kind": "primary",
+      "publishedAt": "2026-04-15"
+    }
+  ],
+  "agentReadiness": "agent-ready",
+  "executionResources": "Public climate-model output, proxy records, and synthetic data support estimator testing. A calibrated collapse date may remain unidentifiable from current observations.",
+  "successCriterion": "Report coverage and false-warning rates against known simulated outcomes, and identify which extra observation would materially distinguish weakening from stability loss.",
+  "verified": "2026-09-06",
+  "starterPrompt": "Investigate: How close is Atlantic overturning to a tipping point?.\n\nQuestion: Determine whether observations can distinguish ordinary weakening of the Atlantic overturning circulation from a loss of stability, and constrain any transition threshold without relying on an untested single-variable model.\nBegin with this bounded task: Reproduce a published early-warning estimator on synthetic circulation series with known stability, then test its false-positive rate under changing noise, proxy bias, and observational coverage.\nAvailable resources and limits: Public climate-model output, proxy records, and synthetic data support estimator testing. A calibrated collapse date may remain unidentifiable from current observations.\nCompletion criterion: Report coverage and false-warning rates against known simulated outcomes, and identify which extra observation would materially distinguish weakening from stability loss.\n\nRead the cited papers and check for later results before beginning. Reproduce the relevant baseline, preserve data provenance, and reserve an independent test set. Separate measured facts, model assumptions, and new hypotheses. Report uncertainty and failed checks. A successful first step is not a solution to the whole problem. Return reproducible code, results, and a short research log."
+}

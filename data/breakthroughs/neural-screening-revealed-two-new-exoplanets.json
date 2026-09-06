@@ -1,0 +1,20 @@
+{
+  "id": "neural-screening-revealed-two-new-exoplanets",
+  "date": "2017-12-13",
+  "displayDate": "13 Dec 2017",
+  "title": "Neural screening revealed two new exoplanets",
+  "field": "Astronomy",
+  "kind": "Prediction",
+  "result": "A convolutional neural network ranked weak transit signals in Kepler data, helping researchers discover and statistically validate Kepler-80g and Kepler-90i. The latter became the eighth known planet in its system.",
+  "context": "This date is the paper's first preprint, already accepted by the Astronomical Journal. Astronomers conducted the candidate search and statistical validation; model confidence alone did not establish that a signal was a planet.",
+  "verificationLevel": "Peer reviewed with statistical validation of observational signals",
+  "aiRole": "Neural classification of transit candidates followed by astronomical validation",
+  "sourceTitle": "Identifying Exoplanets with Deep Learning",
+  "sourceUrl": "https://arxiv.org/abs/1712.05044",
+  "additionalSources": [
+    {
+      "title": "Astronomical Journal publication",
+      "url": "https://doi.org/10.3847/1538-3881/aa9e09"
+    }
+  ]
+}

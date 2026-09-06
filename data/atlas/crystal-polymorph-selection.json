@@ -1,0 +1,49 @@
+{
+  "id": "crystal-polymorph-selection",
+  "title": "Which crystal form will actually grow?",
+  "field": "Chemistry",
+  "subfield": "Crystallization",
+  "summary": "The most stable crystal structure is not always the one that first appears.",
+  "statement": "Predict which molecular-crystal polymorph nucleates under specified solution conditions, accounting for competing formation rates as well as thermodynamic stability.",
+  "whyOpen": "Crystal-structure searches rank possible structures, but kinetics, solvent interactions, and surface properties affect which structures are accessible. A 2026 surface-descriptor study explicitly finds its descriptor insufficient as a standalone predictor.",
+  "smallestStep": "Select one openly documented polymorphic family and test whether adding surface descriptors to lattice-energy rankings improves held-out prediction of experimentally observed forms.",
+  "agentFit": 88,
+  "scale": "foothold",
+  "location": {
+    "name": "Leipzig, Germany (Ostwald's work on crystallization)",
+    "longitude": 12.37,
+    "latitude": 51.34
+  },
+  "tags": [
+    "polymorphism",
+    "nucleation",
+    "crystal structure",
+    "kinetics"
+  ],
+  "tools": [
+    "ASE",
+    "molecular simulation",
+    "crystal structure databases"
+  ],
+  "sources": [
+    {
+      "title": "Assessing crystallisation behaviour in molecular crystals through particle rugosities",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13346652/",
+      "kind": "primary",
+      "publishedAt": "2026-06-29",
+      "passage": "it should not be considered a standalone predictor of crystallisation behaviour"
+    },
+    {
+      "title": "Polymorph Selection in Charged Colloids in the Second Nucleation Step",
+      "url": "https://arxiv.org/abs/2601.03419",
+      "kind": "primary",
+      "publishedAt": "2026-01-06",
+      "sourceType": "preprint"
+    }
+  ],
+  "agentReadiness": "hybrid",
+  "executionResources": "Use open structures and reported crystallization conditions; some CSD collections require a license. New polymorph validation needs synthesis and diffraction measurements.",
+  "successCriterion": "Demonstrate improvement over an energy-only ranking on held-out conditions, with unobserved forms treated as untested rather than impossible.",
+  "verified": "2026-09-06",
+  "starterPrompt": "Investigate: Which crystal form will actually grow?.\n\nQuestion: Predict which molecular-crystal polymorph nucleates under specified solution conditions, accounting for competing formation rates as well as thermodynamic stability.\nBegin with this bounded task: Select one openly documented polymorphic family and test whether adding surface descriptors to lattice-energy rankings improves held-out prediction of experimentally observed forms.\nAvailable resources and limits: Use open structures and reported crystallization conditions; some CSD collections require a license. New polymorph validation needs synthesis and diffraction measurements.\nCompletion criterion: Demonstrate improvement over an energy-only ranking on held-out conditions, with unobserved forms treated as untested rather than impossible.\n\nRead the cited papers and check for later results before beginning. Reproduce the relevant baseline, preserve data provenance, and reserve an independent test set. Separate measured facts, model assumptions, and new hypotheses. Report uncertainty and failed checks. A successful first step is not a solution to the whole problem. Return reproducible code, results, and a short research log."
+}

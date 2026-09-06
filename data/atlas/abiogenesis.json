@@ -1,0 +1,37 @@
+{
+  "id": "abiogenesis",
+  "title": "Chemical origin of life",
+  "field": "Chemistry",
+  "subfield": "Prebiotic chemistry",
+  "summary": "How did non-living chemistry cross into self-sustaining Darwinian evolution?",
+  "statement": "Find a plausible, experimentally supported pathway from geochemical feedstocks to a compartmentalized, self-replicating and evolvable chemical system.",
+  "whyOpen": "Individual building blocks and reaction networks are known, but no end-to-end pathway works under one compatible set of early-Earth conditions.",
+  "smallestStep": "Build a reaction-condition compatibility graph from primary literature and identify one experimentally testable missing bridge.",
+  "agentFit": 91,
+  "scale": "foothold",
+  "introduced": 1924,
+  "location": {
+    "name": "Cambridge, United Kingdom",
+    "longitude": 0.1218,
+    "latitude": 52.2053
+  },
+  "tags": [
+    "reaction network",
+    "literature mining",
+    "experiment design"
+  ],
+  "tools": [
+    "RDKit",
+    "knowledge graph",
+    "lab automation"
+  ],
+  "sources": [
+    {
+      "title": "The origins of life",
+      "url": "https://www.nature.com/collections/efjgcahcgh",
+      "kind": "index"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: the chemical origin of life.\n\nYour first objective is not to claim a proof. It is to construct a primary-source reaction compatibility graph and identify one missing bridge that can be tested under coherent conditions.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

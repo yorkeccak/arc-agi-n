@@ -1,0 +1,14 @@
+{
+  "id": "arc-agi-3-reached-99-9",
+  "date": "2026-09-03",
+  "displayDate": "03 Sep 2026",
+  "title": "ARC-AGI-3 reached 99.9%",
+  "field": "General reasoning",
+  "kind": "Benchmark",
+  "result": "GPT-6 Astra scored 99.9% on the semi-private set with ARC Prize's Provider Adapter harness.",
+  "context": "The provider-neutral Standard harness scored 62.7%. ARC Prize explicitly says saturation is not proof of AGI, but it does mark the benchmark as a rapidly moving target.",
+  "verificationLevel": "Official benchmark evaluation",
+  "aiRole": "Autonomous task execution in two evaluation harnesses",
+  "sourceTitle": "OpenAI's GPT-6 Astra on ARC-AGI-3",
+  "sourceUrl": "https://arcprize.org/blog/astra"
+}
