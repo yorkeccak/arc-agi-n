@@ -9,12 +9,17 @@ import { ResearchDocument, countUnresolvedCitations, extractReportSections } fro
 import { SourceFavicon, sourceHost } from "@/components/source-favicon";
 import { parseResearchEffort, researchEfforts, type ResearchEffort } from "@/lib/research-effort";
 import { rememberLocalResearch } from "@/lib/local-research-history";
+import { ResearchActivity } from "@/components/research-activity";
+import type { ActivitySource, ResearchActivityStep } from "@/lib/research-activity";
+import { ReportContents, useReportOutline } from "@/components/report-contents";
 
 interface ResearchResult {
   taskId: string;
   effort?: ResearchEffort;
   status: string;
   progress?: { currentStep: number; totalSteps: number };
+  activity?: ResearchActivityStep[];
+  activitySources?: ActivitySource[];
   output?: string;
   sources?: Array<{ title: string; url: string; sourceId?: number; snippet?: string }>;
   pdfUrl?: string;
@@ -66,6 +71,8 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
   const [authOpen, setAuthOpen] = useState(false);
   const [retryKey, setRetryKey] = useState(0);
   const statusRef = useRef("queued");
+  const reportRef = useRef<HTMLElement>(null);
+  const outline = useReportOutline(reportRef, research.output);
   const localContextRaw = useSyncExternalStore(
     subscribeToLocalReportContext,
     () => readLocalReportContext(taskId),
@@ -172,8 +179,8 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
   const progress = useMemo(() => {
     const current = research.progress?.currentStep;
     const total = research.progress?.totalSteps;
-    if (!current || !total) return undefined;
-    return Math.min(100, Math.max(1, Math.round((current / total) * 100)));
+    if (current === undefined || !total) return undefined;
+    return Math.min(100, Math.max(0, Math.round((current / total) * 100)));
   }, [research.progress]);
 
   const copyUrl = async () => {
@@ -231,6 +238,8 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
             {progress === undefined && !isComplete && !hasStopped && !isPaused && !authRequired && <div className="report-progress is-indeterminate" role="progressbar" aria-label="DeepResearch report in progress"><i /></div>}
           </div>
 
+          {!authRequired && <ResearchActivity steps={research.activity || []} sources={research.activitySources || []} status={research.status} progress={research.progress} />}
+
           {!isComplete && !hasStopped && !authRequired && (
             <div className="report-return-note">
               <p>{localContext.notified
@@ -255,33 +264,16 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
                 <span>{sections.length} sections · {research.sources?.length || 0} sources</span>
                 {unresolvedCitations > 0 && <span className="report-citation-warning">{unresolvedCitations} unlinked citation {unresolvedCitations === 1 ? "group" : "groups"} marked †</span>}
               </div>
-              {sections.length > 0 && (
-                <nav className="report-contents" aria-label="Report contents">
-                  <p>On this page</p>
-                  {sections.map((section, index) => (
-                    <a key={section.id} href={`#${section.id}`}>
-                      <span>{String(index + 1).padStart(2, "0")}</span>
-                      {section.title}
-                    </a>
-                  ))}
-                </nav>
-              )}
+              <ReportContents {...outline} />
               <div className="report-sidebar-actions">
                 {research.pdfUrl && <a href={`/api/deepresearch/${encodeURIComponent(taskId)}/pdf${access ? `?access=${encodeURIComponent(access)}` : ""}`} download><Download size={16} /> Download PDF</a>}
                 <button onClick={copyUrl} aria-live="polite">{copied ? <Check size={16} /> : <Copy size={16} />}{copied ? "Link copied" : "Copy report link"}</button>
               </div>
             </aside>
-            <article className="report-markdown markdown">
+            <ReportContents {...outline} mobile />
+            <article ref={reportRef} className="report-markdown markdown">
               {unresolvedCitations > 0 && (
                 <p className="report-citation-note" id="citation-integrity"><b>Missing source links</b> {unresolvedCitations} citation {unresolvedCitations === 1 ? "group has" : "groups have"} no source link. Look for † in the report.</p>
-              )}
-              {sections.length > 0 && (
-                <details className="report-mobile-contents">
-                  <summary>Contents <span>{sections.length} sections</span></summary>
-                  <nav aria-label="Report contents">
-                    {sections.map((section, index) => <a key={section.id} href={`#${section.id}`}><span>{String(index + 1).padStart(2, "0")}</span>{section.title}</a>)}
-                  </nav>
-                </details>
               )}
               <ResearchDocument content={research.output} sources={research.sources} />
             </article>
