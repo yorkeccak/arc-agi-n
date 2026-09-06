@@ -28,7 +28,7 @@ export interface OpenProblem {
   smallestStep: string;
   agentFit: number;
   scale: ProblemScale;
-  introduced: number;
+  introduced?: number;
   location: { name: string; longitude: number; latitude: number };
   tags: string[];
   tools: string[];

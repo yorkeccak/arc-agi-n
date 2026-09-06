@@ -144,6 +144,7 @@ test("report metadata does not trust spoofable query titles", async () => {
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /<title>DeepResearch report \| ARC-AGI-N<\/title>/);
+  assert.match(html, /<meta name="robots" content="noindex, nofollow"/);
   assert.match(html, /<h1>Your DeepResearch report<\/h1>/);
   assert.doesNotMatch(html, /<h1>(?:Spoofed Claim|P versus NP)<\/h1>/);
 });
@@ -152,4 +153,19 @@ test("app icon is served as SVG", async () => {
   const response = await fetch(`${baseUrl}/icon.svg`);
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") || "", /image\/svg\+xml/);
+});
+
+test("share metadata and crawler files reference public launch assets only", async () => {
+  const html = await (await fetch(baseUrl)).text();
+  assert.match(html, /<link rel="canonical" href="https:\/\/arc-agi-n.com"/);
+  assert.match(html, /property="og:image" content="https:\/\/arc-agi-n.com\/share-card.png"/);
+  assert.match(html, /name="twitter:card" content="summary_large_image"/);
+  const image = await fetch(`${baseUrl}/share-card.png`);
+  assert.equal(image.status, 200);
+  assert.match(image.headers.get("content-type"), /image\/png/);
+  const robots = await (await fetch(`${baseUrl}/robots.txt`)).text();
+  assert.match(robots, /Sitemap: https:\/\/arc-agi-n.com\/sitemap.xml/);
+  const sitemap = await (await fetch(`${baseUrl}/sitemap.xml`)).text();
+  assert.match(sitemap, /<loc>https:\/\/arc-agi-n.com<\/loc>/);
+  assert.doesNotMatch(sitemap, /\/research|\/api|\/auth/);
 });

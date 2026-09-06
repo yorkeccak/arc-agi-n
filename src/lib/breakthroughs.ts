@@ -1,3 +1,5 @@
+import { additionalBreakthroughs } from "@/lib/breakthroughs-additional";
+
 export type BreakthroughKind =
   | "Benchmark"
   | "Algorithm"
@@ -381,4 +383,5 @@ export const breakthroughs: Breakthrough[] = [
     sourceTitle: "A deep learning approach to antibiotic discovery",
     sourceUrl: "https://www.cell.com/cell/fulltext/S0092-8674(20)30102-1",
   },
+  ...additionalBreakthroughs,
 ];

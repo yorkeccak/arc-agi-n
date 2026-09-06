@@ -17,20 +17,21 @@ export async function generateMetadata({ params }: ResearchPageProps): Promise<M
   return {
     title: `${reportTitle} | ARC-AGI-N`,
     description,
+    robots: { index: false, follow: false },
     alternates: { canonical },
     openGraph: {
       title: reportTitle,
       description,
       url: canonical,
       siteName: "ARC-AGI-N",
-      images: [{ url: "/arc-agi-n.png", width: 1600, height: 1000 }],
+      images: [{ url: "/share-card.png", width: 1730, height: 909, alt: "ARC-AGI-N: Find open problems. Take a stab at them." }],
       type: "article",
     },
     twitter: {
       card: "summary_large_image",
       title: reportTitle,
       description,
-      images: ["/arc-agi-n.png"],
+      images: ["/share-card.png"],
     },
   };
 }
