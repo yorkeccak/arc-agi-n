@@ -3,6 +3,22 @@ import test from "node:test";
 
 const baseUrl = process.env.TEST_BASE_URL || "http://localhost:3100";
 
+test("launch page renders directly with its own share identity", async () => {
+  const response = await fetch(`${baseUrl}/launch`, {
+    redirect: "manual",
+    headers: { "User-Agent": "Twitterbot/1.0" },
+  });
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get("location"), null);
+  const head = (await response.text()).split("</head>")[0];
+  assert.match(head, /rel="canonical" href="https:\/\/arc-agi-n\.com\/launch"/);
+  assert.match(head, /property="og:url" content="https:\/\/arc-agi-n\.com\/launch"/);
+  assert.match(head, /name="twitter:card" content="summary_large_image"/);
+  for (const tag of ["property=\"og:image\"", "name=\"twitter:image\""]) {
+    assert.ok(head.includes(`${tag} content="https://arc-agi-n.com/share-card.png"`));
+  }
+});
+
 test("history page is reachable and anonymous requests cannot list private reports", async () => {
   const page = await fetch(`${baseUrl}/research`);
   assert.equal(page.status, 200);
