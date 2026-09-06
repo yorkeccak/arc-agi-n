@@ -90,16 +90,16 @@ export function ResearchHistory({ selfHosted }: { selfHosted: boolean }) {
       </header>
       <div className="history-body">
         <section className="history-intro">
-          <p className="history-eyebrow">Your workspace</p>
+          <p className="history-eyebrow">DeepResearch</p>
           <h1>Research history<span>.</span></h1>
-          <p>Pick up a promising idea. Follow work in progress. Return to the groundwork.</p>
+          <p>Read your reports and check on research still running.</p>
           {selfHosted && <p className="history-privacy">Saved on this browser only. Open a private report link to add it here. Status updates when you open a report.</p>}
         </section>
 
         {authRequired ? (
           <section className="history-empty">
             <BookOpen size={28} strokeWidth={1.4} />
-            <h2>Your research, in one place.</h2>
+            <h2>Sign in to see your reports.</h2>
             <p>Sign in with the Valyu account you use for DeepResearch to see your reports and running jobs. Problem search stays free to use without signing in.</p>
             <a className="history-primary" href="/api/oauth/start?returnTo=%2Fresearch">Continue with Valyu <ArrowRight size={17} /></a>
           </section>
@@ -120,8 +120,8 @@ export function ResearchHistory({ selfHosted }: { selfHosted: boolean }) {
             ) : !error && filtered.length === 0 ? (
               <section className="history-empty">
                 <BookOpen size={28} strokeWidth={1.4} />
-                <h2>{jobs.length ? "No matching reports." : "Your next idea starts here."}</h2>
-                <p>{jobs.length ? "Try another title or show all research." : "Choose an open problem, then build a DeepResearch plan. Its history, foundations and possible next steps will be waiting here."}</p>
+                <h2>{jobs.length ? "No matching reports." : "No reports yet."}</h2>
+                <p>{jobs.length ? "Try another title or show all research." : "Open a problem and choose Build a DeepResearch plan. You can check its progress and read the finished report here."}</p>
                 {jobs.length ? <button className="history-primary" onClick={() => { setQuery(""); setFilter("all"); }}>Show all research <ArrowRight size={17} /></button> : <Link className="history-primary" href="/">Find an open problem <ArrowRight size={17} /></Link>}
               </section>
             ) : (

@@ -211,14 +211,14 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
         <section className="report-intro">
           <p className="report-route">DeepResearch / {taskId.slice(0, 8)}</p>
           <h1>{title}</h1>
-          {isComplete && <p className="report-subtitle">Your starting plan: foundations, prior work, promising avenues and next steps, with sources.</p>}
+          {isComplete && <p className="report-subtitle">What is known, what has been tried, and what to try next.</p>}
           <div className="report-state">
             <div className="report-state-title" role="status" aria-live="polite">
               {isComplete ? <Check size={19} /> : isPaused ? <CirclePause size={19} /> : authRequired ? <LogIn size={19} /> : <LoaderCircle className={hasStopped ? "" : "spin"} size={19} />}
               <b>{statusLabel(research.status)}</b>
             </div>
             {!isComplete && !hasStopped && !isPaused && !authRequired && (
-              <p>DeepResearch is reading the literature to map the history, foundations and strongest prior attempts. Your report will identify promising avenues and lay out a 72-hour starting plan you can give to your agent. {effortDetails ? `${effortDetails.label} effort: ${effortDetails.estimate}.` : "Duration depends on the selected effort."}</p>
+              <p>DeepResearch is reading papers and reviewing previous attempts. Your report will cover the background, approaches to try, and a plan for your first 72 hours. {effortDetails ? `${effortDetails.label} effort: ${effortDetails.estimate}.` : "The time needed depends on the effort you selected."}</p>
             )}
             {isPaused && <p>Your research is paused. Its progress is saved; this page will update when it resumes.</p>}
             {authRequired && <p>Sign in with your Valyu account to view this DeepResearch report.</p>}
@@ -273,7 +273,7 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
             </aside>
             <article className="report-markdown markdown">
               {unresolvedCitations > 0 && (
-                <p className="report-citation-note" id="citation-integrity"><b>Citation integrity</b> {unresolvedCitations} citation {unresolvedCitations === 1 ? "group has" : "groups have"} no returned source URL and {unresolvedCitations === 1 ? "is" : "are"} marked †.</p>
+                <p className="report-citation-note" id="citation-integrity"><b>Missing source links</b> {unresolvedCitations} citation {unresolvedCitations === 1 ? "group has" : "groups have"} no source link. Look for † in the report.</p>
               )}
               {sections.length > 0 && (
                 <details className="report-mobile-contents">

@@ -22,10 +22,10 @@ const FrontierMap = dynamic(
 );
 
 const fitDescription = (problem: OpenProblem) => {
-  if (problem.scale === "monument") return "Long-horizon programme";
-  if (problem.agentFit >= 90) return "Strong computational foothold";
-  if (problem.agentFit >= 82) return "Promising bounded route";
-  return "Exploratory research route";
+  if (problem.scale === "monument") return "Start with a smaller related question";
+  if (problem.agentFit >= 90) return "Try a computation";
+  if (problem.agentFit >= 82) return "Try a specific case";
+  return "Start by reading the papers";
 };
 
 const ignoredSearchTerms = new Set([
@@ -121,7 +121,7 @@ export function AtlasApp() {
   const [discoveredProblems, setDiscoveredProblems] = useState<DiscoveredProblem[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchStopped, setSearchStopped] = useState(false);
-  const [searchPhase, setSearchPhase] = useState("Opening research and web indexes");
+  const [searchPhase, setSearchPhase] = useState("Searching papers and the web…");
   const [searchError, setSearchError] = useState<string>();
   const [authOpen, setAuthOpen] = useState(false);
   const [authReturnTo, setAuthReturnTo] = useState<string>();
@@ -185,7 +185,7 @@ export function AtlasApp() {
     setSearchStopped(false);
     setNearbyProblems([]);
     resultsScroll.current?.scrollTo({ top: 0 });
-    setSearchPhase("Opening research and web indexes");
+    setSearchPhase("Searching papers and the web…");
     setSearchError(undefined);
     setLeads([]);
     setDiscoveredProblems([]);
@@ -355,8 +355,8 @@ export function AtlasApp() {
           >
             <div className="hero-copy-block">
               <h1>AI solved the benchmarks.<br /><span>Now find more problems to solve.</span></h1>
-              <p className="hero-copy">Search <span className="open-problems">open problems</span> across mathematics and science. See the evidence, find the first credible move, and hand it to your agent.</p>
-              <button className="hero-proof" onClick={openBreakthroughs}>Fermat, formalized in 11 days. <span>Explore the breakthroughs <ArrowRight size={13} /></span></button>
+              <p className="hero-copy">Find <span className="open-problems">open problems</span> in mathematics and science. Pick one, read the papers, and give your agent a place to start.</p>
+              <button className="hero-proof" onClick={openBreakthroughs}>Fermat, formalized in 11 days. <span>See what else <ArrowRight size={13} /></span></button>
             </div>
 
             <form className="arc-search" onSubmit={submitSearch}>
@@ -397,7 +397,7 @@ export function AtlasApp() {
           >
             <div className="console-head">
               <button className="back-button" onClick={resetSearch}><ArrowLeft size={17} /> Back to the globe</button>
-              <p>{browsing ? "Explore the atlas" : "Search the frontier"}</p>
+              <p>{browsing ? "Browse problems" : "Search problems"}</p>
               <h1>{browsing ? `${visibleProblems.length} open problems` : "Find your next problem."}</h1>
               <form className="results-search" onSubmit={submitSearch} role="search">
                 <input value={query} onChange={(event) => setQuery(event.target.value)} maxLength={500} aria-label="Search or refine open problems" placeholder="Open problems in…" />
@@ -410,11 +410,11 @@ export function AtlasApp() {
               <p className="sr-only" role="status" aria-live="polite">
                 {loading
                   ? `${searchPhase}. ${leads.length} sources found.`
-                  : `${visibleDiscoveredProblems.length} new source-backed questions and ${visibleProblems.length} open atlas matches.`}
+                  : `${visibleDiscoveredProblems.length} questions found in sources and ${visibleProblems.length} matches from our collection.`}
               </p>
               {!browsing && <section className="live-results" aria-label="Live search results">
                 <header>
-                  <h3>Live research scan</h3>
+                  <h3>Search results</h3>
                   <span>{loading
                     ? `${leads.length} ${leads.length === 1 ? "source" : "sources"}`
                     : visibleDiscoveredProblems.length === 0
@@ -461,16 +461,16 @@ export function AtlasApp() {
                     <div className="discovered-meta">
                       <span>{problem.field}</span>
                       <span>{problem.subfield}</span>
-                      <span className={`evidence-${problem.evidenceStrength || "provisional"}`}>{problem.evidenceStrength === "strong" ? "Multiple source leads" : "One source lead - verify status"}</span>
+                      <span className={`evidence-${problem.evidenceStrength || "provisional"}`}>{problem.evidenceStrength === "strong" ? "Found in multiple sources" : "One source - check for newer work"}</span>
                     </div>
                     <h4>{problem.title}</h4>
                     <p className="discovered-question">{problem.question}</p>
                     {problem.evidenceNote && <p className="evidence-note">{problem.evidenceNote}</p>}
                     <dl>
-                      <div><dt>Why open</dt><dd>{problem.whyOpen}</dd></div>
-                      <div><dt>First move</dt><dd>{problem.firstStep}</dd></div>
-                      <div><dt>Suggested run</dt><dd>{problem.executionResources}</dd></div>
-                      <div><dt>Success</dt><dd>{problem.successCriterion}</dd></div>
+                      <div><dt>What is still unknown</dt><dd>{problem.whyOpen}</dd></div>
+                      <div><dt>Try this first</dt><dd>{problem.firstStep}</dd></div>
+                      <div><dt>Tools and data</dt><dd>{problem.executionResources}</dd></div>
+                      <div><dt>What would count as progress</dt><dd>{problem.successCriterion}</dd></div>
                     </dl>
                     <div className="discovered-actions">
                       <div className="discovered-sources">
@@ -510,7 +510,7 @@ export function AtlasApp() {
                   <span>{visibleProblems.length} problems</span>
                 </header>
                 {visibleProblems.length === 0 && (
-                  <p className="empty-curated">No verified atlas record matches this query yet. Use the live sources above to identify a candidate, then verify that it remains open.</p>
+                  <p className="empty-curated">No problems in our collection match this search. Check the papers and web results above.</p>
                 )}
                 {visibleProblems.map((problem) => (
                   <button key={problem.id} onClick={() => setSelected(problem)}>

@@ -171,10 +171,10 @@ export function ProblemDrawer({
   const hasExactVerifier = problem.tools.some((tool) => exactTools.includes(tool));
   const repeatsSummary = problem.statement.trim().toLowerCase() === problem.summary.trim().toLowerCase();
   const researchHorizon = problem.scale === "foothold"
-    ? "A bounded result could be meaningful"
+    ? "Try a specific case or computation"
     : problem.scale === "frontier"
-      ? "Partial progress is the realistic target"
-      : "Treat as a long-horizon programme";
+      ? "Start with one part of the problem"
+      : "Start with a smaller related question";
 
   return (
     <aside
@@ -186,7 +186,7 @@ export function ProblemDrawer({
     >
       <div className="drawer-scroll">
         <header className="drawer-header">
-          <ArcLogo title="ARC-AGI-N problem dossier" />
+          <ArcLogo title="ARC-AGI-N problem details" />
           <button ref={closeButtonRef} onClick={onClose} aria-label="Return to previous view"><ArrowLeft size={15} /> Back</button>
           <button className="drawer-actions-jump" onClick={() => document.getElementById("problem-actions")?.scrollIntoView({ block: "start" })} aria-label="Jump to prompt and research actions">Start here</button>
         </header>
@@ -196,7 +196,7 @@ export function ProblemDrawer({
           <h2 id="problem-drawer-title">{problem.title}</h2>
           <p className="problem-summary">{problem.summary}</p>
           {problem.provisional ? (
-            <p className="problem-meta-row">Synthesized from current research sources<br />Status and novelty require independent verification</p>
+            <p className="problem-meta-row">Found in papers and web sources<br />Check that it is still open before starting</p>
           ) : (
             <p className="problem-meta-row">
               First posed {problem.introduced} · {problem.location.name}<br />
@@ -206,18 +206,18 @@ export function ProblemDrawer({
         </div>
 
         <section className="tractability-block">
-          <h3>Research fit</h3>
+          <h3>Before you start</h3>
           <dl>
-            <div><dt>Verification</dt><dd>{problem.provisional ? "Confirm the exact question remains open" : hasExactVerifier ? "An exact or formal checker is available" : "Independent review is still required"}</dd></div>
-            <div><dt>Research horizon</dt><dd>{researchHorizon}</dd></div>
+            <div><dt>Checking your work</dt><dd>{problem.provisional ? "Confirm the question is still open" : hasExactVerifier ? "Use a solver or proof checker" : "Have the result independently reviewed"}</dd></div>
+            <div><dt>Where to focus</dt><dd>{researchHorizon}</dd></div>
             <div><dt>Suggested methods</dt><dd>{problem.tools.slice(0, 3).join(", ")}</dd></div>
           </dl>
-          <p>{problem.provisional ? "This is a live discovery candidate, not a verified atlas record. The first research task is a primary-source status check." : "This describes the quality of the research loop, not the probability of solving the full problem."}</p>
+          <p>{problem.provisional ? "This result has not been reviewed. Read the original papers and check for newer work first." : "Check for newer papers before starting. Someone may have already tried your approach."}</p>
         </section>
 
         {!repeatsSummary && (
           <section className="drawer-section exact-question">
-            <h3>Exact question</h3>
+            <h3>The question</h3>
             <p>{problem.statement}</p>
           </section>
         )}
@@ -228,7 +228,7 @@ export function ProblemDrawer({
             <p>{problem.whyOpen}</p>
           </section>
           <section className="drawer-section credible-step">
-            <h3>Smallest credible step</h3>
+            <h3>Try this first</h3>
             <p>{problem.smallestStep}</p>
           </section>
         </div>
@@ -237,12 +237,12 @@ export function ProblemDrawer({
           <h3>What you need</h3>
           <dl className="tool-groups">
             <div><dt>Methods and tools</dt><dd>{problem.tools.join(" · ")}</dd></div>
-            <div><dt>Prerequisites and constraints</dt><dd>{problem.tags.join(" · ")}</dd></div>
+            <div><dt>Background</dt><dd>{problem.tags.join(" · ")}</dd></div>
           </dl>
         </section>
 
         <section className="drawer-section source-section">
-          <h3>Where to begin reading</h3>
+          <h3>Start reading here</h3>
           <div className="source-list">
             {problem.sources.map((source) => (
               <a key={source.url} href={source.url} target="_blank" rel="noreferrer">
@@ -264,7 +264,7 @@ export function ProblemDrawer({
         {error && <div className="drawer-action-error" role="alert">{error}</div>}
         <PromptHandoff key={problem.id} prompt={buildSolverBrief(problem)} />
         <div className="research-action-group">
-          <p>Get the groundwork done first.</p>
+          <p>Want a research plan first?</p>
           <fieldset className="research-effort" disabled={startingResearch || researchUncertain} aria-describedby="research-effort-note">
             <legend>Research effort</legend>
             <div className="research-effort-options">
@@ -285,7 +285,7 @@ export function ProblemDrawer({
             {startingResearch ? <LoaderCircle className="spin" size={19} /> : null}
             <span>
               <b>{startingResearch ? "Starting DeepResearch…" : "Build a DeepResearch plan"}</b>
-              <small>History, foundations, prior attempts and avenues to explore, with sources and a 72-hour starting plan.</small>
+              <small>What is known, what has been tried, and what to try next. Includes papers and a plan for your first 72 hours.</small>
             </span>
             {!startingResearch && <ArrowRight size={18} />}
           </button>

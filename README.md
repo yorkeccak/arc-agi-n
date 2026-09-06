@@ -2,7 +2,7 @@
 
 **A tool to find more open problems for AI to solve.**
 
-Search mathematics, physics, computer science and beyond. Find a question, see the evidence, then copy a starter prompt or build a research plan.
+Find open questions in mathematics, physics, computer science and more. Read the papers, copy a prompt, or get a research plan.
 
 Planned home: [arc-agi-n.com](https://arc-agi-n.com) · [MIT license](LICENSE) · [Contributing](CONTRIBUTING.md)
 
@@ -58,19 +58,19 @@ There is no shortage of open questions. They are scattered across papers, person
 
 That is ARC-AGI-N. The name is a joke about what comes after the benchmark. This is an independent project, not an official ARC Prize benchmark or an affiliated evaluation.
 
-## From question to starting point
+## How to use it
 
 1. **Search.** Try “Open problems in climate science” or “Open problems in number theory.” Web and paper sources appear as they arrive.
-2. **Explore.** Read the exact question, known obstacles, references and a bounded contribution worth attempting. Browse the globe or refine your search.
-3. **Take it to your tools.** Copy a source-backed starter prompt for Claude, ChatGPT, Cursor or any other agent.
-4. **Go deeper.** Request a DeepResearch plan covering foundations, history, prior attempts, potential avenues and a concrete starting plan.
-5. **Pick up where you left off.** Research history brings running jobs and finished reports together, with the same maths, citations and PDF exports. Self-hosted history stays on your browser; connected accounts retrieve their recent app research through Valyu.
+2. **Pick a problem.** Read the question, what makes it difficult, and a suggested first step. Browse the globe or refine your search.
+3. **Copy a prompt.** Give the question, sources and starting instructions to Claude, ChatGPT, Cursor or any other agent.
+4. **Get a research plan.** DeepResearch reads the papers, reviews previous attempts and suggests what to try in your first 72 hours.
+5. **Check your history.** Open finished reports or check on research still running. Self-hosted history stays on your browser; connected accounts retrieve their recent app research through Valyu.
 
 Reports have a return URL, live status, Markdown and LaTeX rendering, linked citations, copyable code and PDF download. The breakthrough log separates proofs, formalizations, experiments and benchmark results, with sources and verification notes.
 
-![Source-backed search results](public/search-results.png)
+![Search results with source links](public/search-results.png)
 
-![Research milestones and their supporting evidence](public/breakthrough-log.png)
+![Recent breakthroughs and sources](public/breakthrough-log.png)
 
 ### What powers it
 
@@ -82,7 +82,7 @@ Self-hosting uses your own server-side API key. No sign-in, separate model API k
 
 A sourced search result is not a proof that a problem remains open. Records can become stale, papers can be incomplete, and a plausible avenue may already have been tried. Check the primary literature before claiming novelty.
 
-The app describes verification options, research horizon and possible first steps. It does not estimate a probability of solving a conjecture. Globe locations indicate historical or intellectual connections, not ownership of a problem.
+The app suggests first steps and ways to check your work. It does not estimate a probability of solving a conjecture. Globe locations show places connected to a problem's history or research, not who owns it.
 
 ## Deploy your own instance
 

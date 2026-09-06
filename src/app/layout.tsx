@@ -5,11 +5,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "ARC-AGI-N - Find more problems to solve",
-  description: "AI solved the benchmarks. Search open problems across mathematics and science, copy a solver brief, or build a sourced DeepResearch plan.",
+  description: "AI solved the benchmarks. Find open problems in mathematics and science, copy a prompt, or get a DeepResearch plan.",
   metadataBase: new URL("https://arc-agi-n.com"),
   openGraph: {
     title: "ARC-AGI-N - AI solved the benchmarks. Now find more problems to solve.",
-    description: "Find an open problem worth your agents' time, understand the frontier, and start a credible attempt.",
+    description: "Find an open problem, read the papers, and give your agent a place to start.",
     url: "https://arc-agi-n.com",
     siteName: "ARC-AGI-N",
     images: [{ url: "/arc-agi-n.png", width: 1280, height: 720 }],

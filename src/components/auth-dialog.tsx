@@ -80,8 +80,8 @@ export function AuthDialog({ open, onClose, returnTo }: AuthDialogProps) {
         <h2 id="auth-dialog-title">{resumesResearch ? "Sign in to research this problem." : "Sign in for DeepResearch."}</h2>
         <span id="auth-dialog-description">
           {resumesResearch
-            ? "Valyu DeepResearch will build a sourced report on prior work, open gaps and a practical starting plan, then email you when it is ready."
-            : "Search is open to everyone. Sign in with Valyu to build reports on a problem's history, prior work and promising approaches."}
+            ? "DeepResearch will read the papers, review previous attempts and put together a plan for getting started. You will get an email when it is ready."
+            : "Search without an account. Sign in with Valyu for a research plan covering what is known, what has been tried and what to try next."}
         </span>
         {configured ? (
           <a className="primary-action auth-action" href={signInPath}>
