@@ -1,0 +1,31 @@
+name: Add a breakthrough
+description: Suggest a research result for the breakthrough log. No code needed.
+title: "[Breakthrough] "
+body:
+  - type: input
+    id: result
+    attributes:
+      label: Result and publication date
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: What changed, and what remains open?
+      description: Distinguish a proof, formalization, bound, construction, experiment or benchmark result. Credit prior work.
+    validations:
+      required: true
+  - type: textarea
+    id: roles
+    attributes:
+      label: Who and what contributed?
+      description: Describe the researchers' work and the system's specific role.
+    validations:
+      required: true
+  - type: textarea
+    id: verification
+    attributes:
+      label: Sources and verification
+      description: Link the paper, artifact or announcement. What has been independently checked, and what is only reported?
+    validations:
+      required: true

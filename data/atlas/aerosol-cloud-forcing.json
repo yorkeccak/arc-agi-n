@@ -1,0 +1,48 @@
+{
+  "id": "aerosol-cloud-forcing",
+  "title": "How much warming do aerosol-cloud changes conceal?",
+  "field": "Physics",
+  "subfield": "Climate physics",
+  "summary": "Airborne particles alter clouds, but the resulting global cooling remains uncertain.",
+  "statement": "Constrain the radiative forcing caused by human aerosol effects on cloud droplets, water content, and coverage, accounting for cloud regime, time of day, and the representativeness of observed perturbations.",
+  "whyOpen": "Cloud adjustments can oppose each other and vary over a cloud's lifetime. Recent ship-track and volcanic-eruption studies expose sampling and model errors, but a local perturbation does not automatically establish the global historical forcing.",
+  "smallestStep": "Reproduce one published ship-track adjustment diagnostic and reweight observations by track age and daylight coverage to quantify the forcing bias introduced by snapshot sampling.",
+  "agentFit": 93,
+  "scale": "foothold",
+  "location": {
+    "name": "Holuhraun, Iceland (natural aerosol experiment)",
+    "longitude": -16.84,
+    "latitude": 64.85
+  },
+  "tags": [
+    "climate change",
+    "aerosols",
+    "clouds",
+    "satellite observations"
+  ],
+  "tools": [
+    "xarray",
+    "satellite retrievals",
+    "causal inference"
+  ],
+  "sources": [
+    {
+      "title": "Substantial Diel Changes of Cloud Adjustments to Aerosols in Ship-tracks",
+      "url": "https://arxiv.org/abs/2504.07057",
+      "kind": "primary",
+      "publishedAt": "2025-04-09",
+      "sourceType": "preprint"
+    },
+    {
+      "title": "Challenges in global climate models to represent cloud response to aerosols: insights from volcanic eruptions",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12816603/",
+      "kind": "primary",
+      "publishedAt": "2025-12-18"
+    }
+  ],
+  "agentReadiness": "agent-ready",
+  "executionResources": "Open satellite products and published perturbation datasets. The first result concerns sampling bias in observed cases, not a complete reconstruction of preindustrial aerosols.",
+  "successCriterion": "Recover the reported local adjustment and quantify the change after sampling correction, with uncertainty from cloud regime and perturbation identification.",
+  "verified": "2026-09-06",
+  "starterPrompt": "Investigate: How much warming do aerosol-cloud changes conceal?.\n\nQuestion: Constrain the radiative forcing caused by human aerosol effects on cloud droplets, water content, and coverage, accounting for cloud regime, time of day, and the representativeness of observed perturbations.\nBegin with this bounded task: Reproduce one published ship-track adjustment diagnostic and reweight observations by track age and daylight coverage to quantify the forcing bias introduced by snapshot sampling.\nAvailable resources and limits: Open satellite products and published perturbation datasets. The first result concerns sampling bias in observed cases, not a complete reconstruction of preindustrial aerosols.\nCompletion criterion: Recover the reported local adjustment and quantify the change after sampling correction, with uncertainty from cloud regime and perturbation identification.\n\nRead the cited papers and check for later results before beginning. Reproduce the relevant baseline, preserve data provenance, and reserve an independent test set. Separate measured facts, model assumptions, and new hypotheses. Report uncertainty and failed checks. A successful first step is not a solution to the whole problem. Return reproducible code, results, and a short research log."
+}

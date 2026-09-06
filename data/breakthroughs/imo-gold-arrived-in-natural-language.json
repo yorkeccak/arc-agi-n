@@ -1,0 +1,14 @@
+{
+  "id": "imo-gold-arrived-in-natural-language",
+  "date": "2025-07-21",
+  "displayDate": "21 Jul 2025",
+  "title": "IMO gold arrived in natural language",
+  "field": "Olympiad mathematics",
+  "kind": "Benchmark",
+  "result": "An advanced Gemini Deep Think system earned 35 of 42 points on the 2025 International Mathematical Olympiad, reaching the gold-medal threshold.",
+  "context": "The model read and answered the official problems in natural language within the competition time limit. These were difficult new contest problems, not open research conjectures.",
+  "verificationLevel": "Official Olympiad grading",
+  "aiRole": "Natural-language contest problem solving",
+  "sourceTitle": "Gemini Deep Think achieves IMO gold-medal standard",
+  "sourceUrl": "https://deepmind.google/blog/advanced-version-of-gemini-with-deep-think-officially-achieves-gold-medal-standard-at-the-international-mathematical-olympiad/"
+}

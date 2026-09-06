@@ -1,0 +1,14 @@
+{
+  "id": "an-erdos-unit-distance-conjecture-fell",
+  "date": "2026-05-20",
+  "displayDate": "20 May 2026",
+  "title": "An Erdős unit-distance conjecture fell",
+  "field": "Discrete geometry",
+  "kind": "Counterexample",
+  "result": "An OpenAI research model constructed infinitely many point sets with at least n^(1+δ) unit-distance pairs for a fixed δ > 0.",
+  "context": "External mathematicians checked the proof. A later refinement by Will Sawin made the exponent explicit with δ = 0.014.",
+  "verificationLevel": "Externally checked proof and later refinement",
+  "aiRole": "Agent-generated construction with human verification",
+  "sourceTitle": "An OpenAI model disproved a central conjecture in discrete geometry",
+  "sourceUrl": "https://openai.com/index/model-disproves-discrete-geometry-conjecture/"
+}

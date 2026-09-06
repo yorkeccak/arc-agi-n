@@ -1,0 +1,20 @@
+{
+  "id": "learned-graph-search-raised-a-ramsey-lower-bound",
+  "date": "2024-03-29",
+  "displayDate": "29 Mar 2024",
+  "title": "Learned graph search raised a Ramsey lower bound",
+  "field": "Extremal combinatorics",
+  "kind": "Bound",
+  "result": "Reinforcement learning found a two-colouring of the edges of K13 proving R(W5, W7) >= 14, improving the previously reported lower bound of 13.",
+  "context": "The paper supplies the explicit adjacency matrix and three other small-Ramsey constructions. This is a finite lower-bound certificate, not an exact determination of the Ramsey number; Wn denotes a wheel on n vertices in this paper.",
+  "verificationLevel": "Research preprint with explicit finite certificates and public search code",
+  "aiRole": "Deep cross-entropy reinforcement learning for critical graph construction",
+  "sourceTitle": "Reinforcement learning for graph theory, II. Small Ramsey numbers",
+  "sourceUrl": "https://arxiv.org/abs/2403.20055",
+  "additionalSources": [
+    {
+      "title": "Full paper, including Theorem 3.1 and its colouring",
+      "url": "https://arxiv.org/html/2403.20055v1"
+    }
+  ]
+}

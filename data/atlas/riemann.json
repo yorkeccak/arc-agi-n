@@ -1,0 +1,37 @@
+{
+  "id": "riemann",
+  "title": "Riemann hypothesis",
+  "field": "Mathematics",
+  "subfield": "Analytic number theory",
+  "summary": "Do all non-trivial zeros of the zeta function lie on one vertical line?",
+  "statement": "Every non-trivial zero of ζ(s) has real part 1/2.",
+  "whyOpen": "It is equivalent to extremely precise control of prime-number irregularity and touches large parts of modern number theory.",
+  "smallestStep": "Pick one explicit equivalent criterion and improve a finite bound, numerical method, or formalized dependency with rigorous error control.",
+  "agentFit": 42,
+  "scale": "monument",
+  "introduced": 1859,
+  "location": {
+    "name": "Göttingen, Germany",
+    "longitude": 9.9352,
+    "latitude": 51.5328
+  },
+  "tags": [
+    "zeta function",
+    "primes",
+    "Clay Prize"
+  ],
+  "tools": [
+    "Arb",
+    "Lean",
+    "analytic estimates"
+  ],
+  "sources": [
+    {
+      "title": "Clay Mathematics Institute: Riemann Hypothesis",
+      "url": "https://www.claymath.org/millennium/riemann-hypothesis/",
+      "kind": "primary"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: the Riemann hypothesis.\n\nYour first objective is not to claim a proof. It is to choose one bounded equivalent criterion and improve its verified computational or formal frontier without claiming to attack the full hypothesis directly.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

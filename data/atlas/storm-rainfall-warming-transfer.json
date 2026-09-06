@@ -1,0 +1,48 @@
+{
+  "id": "storm-rainfall-warming-transfer",
+  "title": "How will individual storms change as climate warms?",
+  "field": "Physics",
+  "subfield": "Extreme rainfall",
+  "summary": "Rainfall-temperature relationships mix physical intensification with changes in which storms occur.",
+  "statement": "Predict how short-duration rainfall extremes respond to sustained warming across regions, separating changes within storm types from changes in their frequency, organization, and spatial extent.",
+  "whyOpen": "A 2025 European study explains unusually steep observed scaling largely through a shift between rain types. That does not establish how the mixture changes under future warming elsewhere, and idealized simulations show additional organization-dependent behavior.",
+  "smallestStep": "Reproduce the rain-type scaling curves from the paper's released source tables and code, then measure their sensitivity to classification uncertainty and temporal aggregation.",
+  "agentFit": 92,
+  "scale": "foothold",
+  "location": {
+    "name": "Central Europe (rainfall and lightning observations)",
+    "longitude": 10,
+    "latitude": 50
+  },
+  "tags": [
+    "climate change",
+    "extreme precipitation",
+    "storms",
+    "distribution shift"
+  ],
+  "tools": [
+    "xarray",
+    "radar analysis",
+    "extreme-value statistics"
+  ],
+  "sources": [
+    {
+      "title": "Super-Clausius-Clapeyron scaling of extreme precipitation explained by shift from stratiform to convective rain type",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12074990/",
+      "kind": "primary",
+      "publishedAt": "2025-04-28"
+    },
+    {
+      "title": "Periodic extreme rainfall in a warmer climate due to stronger convectively-coupled waves",
+      "url": "https://arxiv.org/abs/2511.19876",
+      "kind": "primary",
+      "publishedAt": "2025-11-25",
+      "sourceType": "preprint"
+    }
+  ],
+  "agentReadiness": "hybrid",
+  "executionResources": "The paper releases source data and analysis code; DWD weather and RADOLAN radar data are open. Raw BLIDS/EUCLID lightning data require a data-use agreement. Present-day temperature associations do not directly measure future climate response.",
+  "successCriterion": "Recover the reported within-type and mixed scaling, quantify sensitivity to classification error and aggregation, and specify the additional inputs needed for a held-out regional test.",
+  "verified": "2026-09-06",
+  "starterPrompt": "Investigate: How will individual storms change as climate warms?.\n\nQuestion: Predict how short-duration rainfall extremes respond to sustained warming across regions, separating changes within storm types from changes in their frequency, organization, and spatial extent.\nBegin with this bounded task: Reproduce the rain-type scaling curves from the paper's released source tables and code, then measure their sensitivity to classification uncertainty and temporal aggregation.\nAvailable resources and limits: The paper releases source data and analysis code; DWD weather and RADOLAN radar data are open. Raw BLIDS/EUCLID lightning data require a data-use agreement. Present-day temperature associations do not directly measure future climate response.\nCompletion criterion: Recover the reported within-type and mixed scaling, quantify sensitivity to classification error and aggregation, and specify the additional inputs needed for a held-out regional test.\n\nRead the cited papers and check for later results before beginning. Reproduce the relevant baseline, preserve data provenance, and reserve an independent test set. Separate measured facts, model assumptions, and new hypotheses. Report uncertainty and failed checks. A successful first step is not a solution to the whole problem. Return reproducible code, results, and a short research log."
+}

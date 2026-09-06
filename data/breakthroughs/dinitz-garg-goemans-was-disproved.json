@@ -1,0 +1,20 @@
+{
+  "id": "dinitz-garg-goemans-was-disproved",
+  "date": "2026-07-22",
+  "displayDate": "22 Jul 2026",
+  "title": "Dinitz-Garg-Goemans was disproved",
+  "field": "Combinatorial optimization",
+  "kind": "Counterexample",
+  "result": "Dmitry Rybin reported a concrete counterexample to a roughly 30-year-old conjecture about unsplittable flow, found in one model session.",
+  "context": "An independent exact-rational replication confirmed the finite instance forces a 16/15 demand blow-up. The broader cost-preserving O(d_max) rounding question remains open.",
+  "verificationLevel": "Exact finite certificate independently reproduced",
+  "aiRole": "One-session counterexample search",
+  "sourceTitle": "Dmitry Rybin's counterexample and transcript",
+  "sourceUrl": "https://x.com/DmitryRybin1/status/2079904005652893709",
+  "additionalSources": [
+    {
+      "title": "Independent exact-rational verification",
+      "url": "https://zenodo.org/records/21554259"
+    }
+  ]
+}

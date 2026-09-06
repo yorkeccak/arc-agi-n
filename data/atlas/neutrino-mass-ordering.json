@@ -1,0 +1,49 @@
+{
+  "id": "neutrino-mass-ordering",
+  "title": "Which neutrino is heaviest?",
+  "field": "Physics",
+  "subfield": "Neutrino physics",
+  "summary": "Are the two closely spaced neutrino masses lighter or heavier than the third?",
+  "statement": "Determine whether the third neutrino mass state lies above or below the first two, with a result robust to detector calibration, neutrino interaction models, and oscillation-parameter uncertainty.",
+  "whyOpen": "Oscillations measure mass differences, but their interpretation involves overlapping parameters and experimental uncertainties. The joint T2K-NOvA analysis found no strong preference between orderings; later proposals still target a decisive measurement.",
+  "smallestStep": "Reproduce a published oscillation likelihood using released probability grids, then measure how the ordering preference changes under each documented uncertainty model.",
+  "agentFit": 80,
+  "scale": "frontier",
+  "location": {
+    "name": "Kamioka, Japan (neutrino observatory)",
+    "longitude": 137.31,
+    "latitude": 36.43
+  },
+  "tags": [
+    "neutrinos",
+    "mass ordering",
+    "likelihoods",
+    "public data"
+  ],
+  "tools": [
+    "GLoBES",
+    "Python",
+    "Bayesian inference"
+  ],
+  "sources": [
+    {
+      "title": "Joint neutrino oscillation analysis from the T2K and NOvA experiments",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12545204/",
+      "kind": "primary",
+      "publishedAt": "2025-10-22",
+      "passage": "The data show no strong preference for either mass ordering"
+    },
+    {
+      "title": "Neutrino mass ordering from the next Galactic supernova at DUNE, HK, and JUNO",
+      "url": "https://arxiv.org/abs/2606.06580",
+      "kind": "primary",
+      "publishedAt": "2026-06-04",
+      "sourceType": "preprint"
+    }
+  ],
+  "agentReadiness": "hybrid",
+  "executionResources": "Released likelihood grids support a desktop analysis; event-level recalibration needs collaboration access, and a decisive result may require more detector exposure.",
+  "successCriterion": "Recover the published ordering comparison within its stated accuracy and identify which uncertainty most changes it, without treating a simulation forecast as a detection.",
+  "verified": "2026-09-06",
+  "starterPrompt": "Investigate: Which neutrino is heaviest?.\n\nQuestion: Determine whether the third neutrino mass state lies above or below the first two, with a result robust to detector calibration, neutrino interaction models, and oscillation-parameter uncertainty.\nBegin with this bounded task: Reproduce a published oscillation likelihood using released probability grids, then measure how the ordering preference changes under each documented uncertainty model.\nAvailable resources and limits: Released likelihood grids support a desktop analysis; event-level recalibration needs collaboration access, and a decisive result may require more detector exposure.\nCompletion criterion: Recover the published ordering comparison within its stated accuracy and identify which uncertainty most changes it, without treating a simulation forecast as a detection.\n\nRead the cited papers and check for later results before beginning. Reproduce the relevant baseline, preserve data provenance, and reserve an independent test set. Separate measured facts, model assumptions, and new hypotheses. Report uncertainty and failed checks. A successful first step is not a solution to the whole problem. Return reproducible code, results, and a short research log."
+}

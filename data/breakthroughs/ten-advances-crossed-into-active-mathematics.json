@@ -1,0 +1,20 @@
+{
+  "id": "ten-advances-crossed-into-active-mathematics",
+  "date": "2026-08-01",
+  "displayDate": "01 Aug 2026",
+  "title": "Ten advances crossed into active mathematics",
+  "field": "Mathematics and theoretical CS",
+  "kind": "Portfolio",
+  "result": "Astra produced ten announced results spanning sphere packing, codes, non-sofic groups, rigidity, circuit lower bounds, quantum information, lattice hardness, Ehrhart theory, Ramsey theory and extremal graphs.",
+  "context": "The release says these results either resolve problems or make substantial progress. Lean checks encoded statements, while significance and statement-to-conjecture fidelity still require field review.",
+  "verificationLevel": "Announced portfolio with Lean certificates",
+  "aiRole": "Automated theorem proving and mathematical search",
+  "sourceTitle": "Ten advances in mathematics and theoretical computer science",
+  "sourceUrl": "https://openai.com/index/ten-advances-in-mathematics/",
+  "additionalSources": [
+    {
+      "title": "Lean certificates for the ten results",
+      "url": "https://github.com/openai/ten-proofs"
+    }
+  ]
+}

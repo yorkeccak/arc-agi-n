@@ -1,0 +1,37 @@
+{
+  "id": "goldbach",
+  "title": "Goldbach conjecture",
+  "field": "Mathematics",
+  "subfield": "Additive number theory",
+  "summary": "Is every even integer greater than two the sum of two primes?",
+  "statement": "For every even integer n > 2, do primes p and q exist with n = p + q?",
+  "whyOpen": "The weak ternary form is proved and computation reaches enormous bounds, but current sieve methods cannot eliminate the parity obstruction for the binary statement.",
+  "smallestStep": "Reproduce a modern finite verification or density estimate with independently checked bounds, then test a sharply stated restricted family rather than extending a raw search.",
+  "agentFit": 72,
+  "scale": "frontier",
+  "introduced": 1742,
+  "location": {
+    "name": "St Petersburg, Russia",
+    "longitude": 30.3158,
+    "latitude": 59.9398
+  },
+  "tags": [
+    "primes",
+    "sieve methods",
+    "verification"
+  ],
+  "tools": [
+    "C++",
+    "Arb",
+    "Lean"
+  ],
+  "sources": [
+    {
+      "title": "Goldbach Conjecture",
+      "url": "https://mathworld.wolfram.com/GoldbachConjecture.html",
+      "kind": "index"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: the strong Goldbach conjecture.\n\nYour first objective is not to claim a proof. It is to select one rigorous restricted statement, reproduce its best bound, and improve the verification or analytic certificate without confusing finite evidence with proof.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

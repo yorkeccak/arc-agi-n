@@ -1,0 +1,46 @@
+{
+  "id": "high-tc",
+  "title": "Mechanism of high-temperature superconductivity",
+  "field": "Physics",
+  "subfield": "Condensed matter",
+  "summary": "What microscopic mechanism pairs electrons in unconventional superconductors?",
+  "statement": "Establish a quantitatively predictive account of electron pairing in cuprates, and identify observations that distinguish competing microscopic mechanisms.",
+  "whyOpen": "Competing orders, strong correlations and material complexity generate many plausible models with overlapping experimental signatures.",
+  "smallestStep": "Mine open spectroscopy data for a discriminating signature between two explicit mechanisms, with leakage-resistant validation.",
+  "agentFit": 86,
+  "scale": "frontier",
+  "introduced": 1986,
+  "location": {
+    "name": "Rüschlikon, Switzerland",
+    "longitude": 8.5555,
+    "latitude": 47.3068
+  },
+  "tags": [
+    "materials",
+    "many-body",
+    "data mining"
+  ],
+  "tools": [
+    "PyTorch",
+    "tensor networks",
+    "spectroscopy"
+  ],
+  "sources": [
+    {
+      "title": "From quantum matter to high-temperature superconductivity in copper oxides",
+      "url": "https://www.osti.gov/biblio/1357580",
+      "kind": "survey",
+      "publishedAt": "2015-02-11",
+      "doi": "10.1038/nature14165"
+    },
+    {
+      "title": "40 years of cuprate high-Tc superconductors: a perspective on theories",
+      "url": "https://arxiv.org/abs/2606.29249",
+      "kind": "survey",
+      "publishedAt": "2026-06-28",
+      "sourceType": "perspective preprint"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: the mechanism of high-temperature superconductivity.\n\nYour first objective is not to claim a proof. It is to choose two competing mechanisms and find one quantitative signature that can discriminate between them in public data.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

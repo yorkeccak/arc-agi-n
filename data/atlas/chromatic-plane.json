@@ -1,0 +1,37 @@
+{
+  "id": "chromatic-plane",
+  "title": "Chromatic number of the plane",
+  "field": "Mathematics",
+  "subfield": "Geometric graph theory",
+  "summary": "How many colors are needed so that points exactly one unit apart never share a color?",
+  "statement": "Determine the chromatic number of the unit-distance graph on the Euclidean plane; it is currently known to lie between 5 and 7.",
+  "whyOpen": "Finite unit-distance graphs prove lower bounds while geometric colorings prove upper bounds, but neither side has closed the remaining gap.",
+  "smallestStep": "Search symmetry-reduced unit-distance graphs for a six-chromatic certificate or formalize a new class of measurable colorings with exhaustive verification.",
+  "agentFit": 96,
+  "scale": "foothold",
+  "introduced": 1950,
+  "location": {
+    "name": "Santa Monica, California",
+    "longitude": -118.4912,
+    "latitude": 34.0195
+  },
+  "tags": [
+    "unit-distance graphs",
+    "graph coloring",
+    "SAT"
+  ],
+  "tools": [
+    "CaDiCaL",
+    "nauty",
+    "proof certificates"
+  ],
+  "sources": [
+    {
+      "title": "The chromatic number of the plane is at least 5",
+      "url": "https://arxiv.org/abs/1804.02385",
+      "kind": "primary"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: the chromatic number of the plane.\n\nYour first objective is not to claim a proof. It is to build a certificate-producing search over a new symmetry class of unit-distance graphs and independently verify every geometric constraint.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

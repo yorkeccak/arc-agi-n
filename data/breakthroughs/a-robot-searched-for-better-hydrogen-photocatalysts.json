@@ -1,0 +1,20 @@
+{
+  "id": "a-robot-searched-for-better-hydrogen-photocatalysts",
+  "date": "2020-07-08",
+  "displayDate": "08 Jul 2020",
+  "title": "A robot searched for better hydrogen photocatalysts",
+  "field": "Automated chemistry",
+  "kind": "Experiment",
+  "result": "A mobile robotic chemist performed 688 experiments over eight days, using batched Bayesian search to investigate a ten-variable space of photocatalyst mixtures for hydrogen production.",
+  "context": "The system used ordinary laboratory instruments and updated its experiment choices from measurements. Researchers defined the chemistry, equipment and search space; the result demonstrates bounded autonomous optimization rather than unrestricted scientific agency.",
+  "verificationLevel": "Peer reviewed with physical experiments and public optimization code",
+  "aiRole": "Bayesian experimental optimization coupled to mobile laboratory robotics",
+  "sourceTitle": "A mobile robotic chemist",
+  "sourceUrl": "https://www.nature.com/articles/s41586-020-2442-2",
+  "additionalSources": [
+    {
+      "title": "Authors' Bayesian optimizer implementation",
+      "url": "https://github.com/CooperComputationalCaucus/kuka_optimizer"
+    }
+  ]
+}

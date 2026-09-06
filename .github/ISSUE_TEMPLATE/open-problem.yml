@@ -1,0 +1,34 @@
+name: Add an open problem
+description: Suggest a sourced question for the atlas. No code needed.
+title: "[Atlas] "
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Problem name and field
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: What is the exact open question?
+      description: Include the assumptions, what is known and what remains unresolved.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sources and current status
+      description: Link primary papers or maintained expert problem lists. When did you check for newer results?
+    validations:
+      required: true
+  - type: textarea
+    id: start
+    attributes:
+      label: A useful first step
+      description: Suggest a small starting task, resources and a way to check progress.
+  - type: textarea
+    id: location
+    attributes:
+      label: A place connected to the problem
+      description: A researcher, institution or historical location, with a source for the connection if available.

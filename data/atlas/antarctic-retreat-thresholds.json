@@ -1,0 +1,43 @@
+{
+  "id": "antarctic-retreat-thresholds",
+  "title": "Thresholds for irreversible Antarctic ice loss",
+  "field": "Physics",
+  "subfield": "Cryosphere dynamics",
+  "summary": "Which warming and ocean-forcing thresholds make Antarctic ice-sheet retreat self-sustaining under climate change?",
+  "statement": "Constrain the onset thresholds, retreat rates and reversibility of marine ice-sheet and ice-cliff instabilities sufficiently to distinguish recoverable mass loss from committed multi-century sea-level rise.",
+  "whyOpen": "The direct record is far shorter than the response timescale, subglacial topography and ocean forcing remain incompletely observed, and competing ice-dynamic parameterizations produce substantially different threshold behavior.",
+  "smallestStep": "Choose one well-observed Antarctic basin and benchmark competing instability parameterizations against the same paleo, satellite and ocean-forcing constraints with a complete uncertainty budget.",
+  "agentFit": 90,
+  "scale": "frontier",
+  "introduced": 1978,
+  "location": {
+    "name": "Cambridge, United Kingdom",
+    "longitude": 0.1218,
+    "latitude": 52.2053
+  },
+  "tags": [
+    "climate change",
+    "ice sheets",
+    "sea-level rise",
+    "tipping points"
+  ],
+  "tools": [
+    "PISM",
+    "xarray",
+    "Bayesian calibration"
+  ],
+  "sources": [
+    {
+      "title": "Decadal-scale onset and termination of Antarctic ice-mass loss during the last deglaciation",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8602255/",
+      "kind": "primary"
+    },
+    {
+      "title": "Spatio-temporal variability of processes across Antarctic ice-bed-ocean interfaces",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6006349/",
+      "kind": "survey"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: thresholds for irreversible Antarctic ice loss.\n\nYour first objective is not to claim a proof. It is to select one data-rich Antarctic basin, reproduce a published retreat experiment, and test one competing instability parameterization under an identical uncertainty model.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

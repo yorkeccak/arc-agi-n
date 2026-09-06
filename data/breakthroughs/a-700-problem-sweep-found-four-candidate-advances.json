@@ -1,0 +1,14 @@
+{
+  "id": "a-700-problem-sweep-found-four-candidate-advances",
+  "date": "2026-02-06",
+  "displayDate": "06 Feb 2026",
+  "title": "A 700-problem sweep found four candidate advances",
+  "field": "Combinatorics and number theory",
+  "kind": "Proof",
+  "result": "Aletheia screened 700 Erdős database entries. Human review classified two outputs as full resolutions, two as partial resolutions, four as independent rediscoveries and five as literature matches.",
+  "context": "Only 13 of 200 definitively graded candidates were meaningful, and none of the four potentially novel items individually reached paper level. This is a warning that novelty review matters as much as proof checking.",
+  "verificationLevel": "Human-reviewed preprint evaluation",
+  "aiRole": "Semi-autonomous screening and proof attempts",
+  "sourceTitle": "Semi-Autonomous Mathematics Discovery with Gemini",
+  "sourceUrl": "https://arxiv.org/abs/2601.22401"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "homochirality",
+  "title": "Origin of biological homochirality",
+  "field": "Chemistry",
+  "subfield": "Prebiotic chemistry",
+  "summary": "Why did life select one molecular handedness from initially symmetric chemistry?",
+  "statement": "Identify a plausible prebiotic mechanism that breaks chiral symmetry, amplifies the imbalance and propagates it through a chemically compatible network to biological homochirality.",
+  "whyOpen": "Many mechanisms create or amplify asymmetry in isolation, but none yet establishes an end-to-end path under one coherent set of early-Earth conditions.",
+  "smallestStep": "Build a compatibility graph of demonstrated symmetry-breaking and amplification reactions, then identify one missing interface suitable for a decisive experiment.",
+  "agentFit": 94,
+  "scale": "foothold",
+  "introduced": 1848,
+  "location": {
+    "name": "Strasbourg, France",
+    "longitude": 7.7521,
+    "latitude": 48.5734
+  },
+  "tags": [
+    "chirality",
+    "reaction networks",
+    "origin of life"
+  ],
+  "tools": [
+    "RDKit",
+    "kinetic modeling",
+    "lab automation"
+  ],
+  "sources": [
+    {
+      "title": "The central dogma of biological homochirality: How does chiral information propagate in a prebiotic network?",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7615580/",
+      "kind": "survey"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: the origin of biological homochirality.\n\nYour first objective is not to claim a proof. It is to map experimentally demonstrated chiral amplification routes into one condition-compatible network and locate a single missing reaction interface to test.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

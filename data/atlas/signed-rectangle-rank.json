@@ -1,0 +1,41 @@
+{
+  "id": "signed-rectangle-rank",
+  "title": "A linear bound for signed rectangle decompositions",
+  "field": "Computer science",
+  "subfield": "Algebraic complexity",
+  "summary": "Can every Boolean matrix be built from only a constant times its rank many signed rectangles?",
+  "statement": "Is there an absolute constant C such that every Boolean matrix M can be expressed as a sum of at most C rankℝ(M) all-one rectangle indicator matrices, each with coefficient +1 or −1?",
+  "whyOpen": "The cited paper proves an O(r log r) upper bound and explicitly asks whether the logarithm can be removed. This narrower question does not itself settle the full log-rank conjecture.",
+  "smallestStep": "Enumerate small Boolean matrices up to row and column permutations, solve their signed rectangle decompositions exactly, and search for a family with a growing ratio to real rank.",
+  "successCriterion": "Certified optimal decompositions or lower bounds for the tested matrices, followed by a symbolic bound for one infinite family if the evidence supports it.",
+  "agentFit": 87,
+  "scale": "foothold",
+  "introduced": 2025,
+  "location": {
+    "name": "San Diego, California (Lovett's matrix research)",
+    "longitude": -117.1611,
+    "latitude": 32.7157
+  },
+  "tags": [
+    "Boolean matrices",
+    "integer programming",
+    "explicit open question"
+  ],
+  "tools": [
+    "ILP",
+    "SageMath",
+    "proof certificates"
+  ],
+  "sources": [
+    {
+      "title": "The Log-Rank Conjecture: New Equivalent Formulations, Question 1.5",
+      "url": "https://arxiv.org/html/2510.02583v3",
+      "kind": "primary",
+      "passage": "Is it true that for every Boolean matrix M, srr(M) ≤ O(r(M))?"
+    }
+  ],
+  "verified": "2026-09-06",
+  "agentReadiness": "agent-ready",
+  "executionResources": "A local computer and the cited literature are sufficient for the first step. Larger exhaustive searches may require additional compute.",
+  "starterPrompt": "Investigate A linear bound for signed rectangle decompositions. First check the current status of the exact statement against primary literature, including corrections and recent solution claims. The research question is: Is there an absolute constant C such that every Boolean matrix M can be expressed as a sum of at most C rankℝ(M) all-one rectangle indicator matrices, each with coefficient +1 or −1?\n\nBegin with this bounded task: Enumerate small Boolean matrices up to row and column permutations, solve their signed rectangle decompositions exactly, and search for a family with a growing ratio to real rank.\n\nSuccess for this first task means: Certified optimal decompositions or lower bounds for the tested matrices, followed by a symbolic bound for one infinite family if the evidence supports it.\n\nUse exact arithmetic or independently checkable proof certificates where applicable. State every assumption and search bound. Separate proved statements, numerical observations and conjectures. Compare any proposed result with the literature before calling it new. Return reproducible artifacts and an honest account of what remains unresolved."
+}

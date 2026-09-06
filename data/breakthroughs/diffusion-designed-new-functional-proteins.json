@@ -1,0 +1,20 @@
+{
+  "id": "diffusion-designed-new-functional-proteins",
+  "date": "2023-07-11",
+  "displayDate": "11 Jul 2023",
+  "title": "Diffusion designed new functional proteins",
+  "field": "Protein design",
+  "kind": "Experiment",
+  "result": "RFdiffusion generated protein backbones for binders, symmetric assemblies and other design tasks. Researchers experimentally characterized the structures and functions of hundreds of designed proteins.",
+  "context": "A designed influenza-haemagglutinin binder closely matched its model in cryo-electron microscopy. This is prospective molecular design with experimental testing, distinct from predicting the structures of existing proteins. Not every generated design works.",
+  "verificationLevel": "Peer reviewed with structural and functional experiments",
+  "aiRole": "Diffusion-based protein-backbone generation coupled to sequence design and experimental validation",
+  "sourceTitle": "De novo design of protein structure and function with RFdiffusion",
+  "sourceUrl": "https://www.nature.com/articles/s41586-023-06415-8",
+  "additionalSources": [
+    {
+      "title": "Original paper abstract and publication record at OSTI",
+      "url": "https://www.osti.gov/biblio/2420884"
+    }
+  ]
+}

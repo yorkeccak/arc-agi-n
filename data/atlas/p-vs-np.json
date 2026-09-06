@@ -1,0 +1,37 @@
+{
+  "id": "p-vs-np",
+  "title": "P versus NP",
+  "field": "Computer science",
+  "subfield": "Complexity theory",
+  "summary": "If a solution is quick to check, is it always quick to find?",
+  "statement": "Is the class P of problems solvable in polynomial time equal to NP, the class whose solutions are verifiable in polynomial time?",
+  "whyOpen": "Most natural proof techniques are blocked by formal barriers such as relativization, natural proofs and algebrization.",
+  "smallestStep": "Map one restricted circuit class or proof system, explicitly test known barriers, and seek a lower bound in a model not already exhausted.",
+  "agentFit": 36,
+  "scale": "monument",
+  "introduced": 1971,
+  "location": {
+    "name": "Toronto, Canada",
+    "longitude": -79.3832,
+    "latitude": 43.6532
+  },
+  "tags": [
+    "complexity",
+    "lower bounds",
+    "Clay Prize"
+  ],
+  "tools": [
+    "Lean",
+    "SAT",
+    "literature graph"
+  ],
+  "sources": [
+    {
+      "title": "Clay Mathematics Institute: P vs NP",
+      "url": "https://www.claymath.org/millennium/p-vs-np-problem/",
+      "kind": "primary"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: P versus NP.\n\nYour first objective is not to claim a proof. It is to identify a restricted lower-bound question that escapes at least one known proof barrier and state the barrier analysis explicitly.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

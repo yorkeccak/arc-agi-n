@@ -1,0 +1,14 @@
+{
+  "id": "a-learned-controller-held-new-plasma-shapes",
+  "date": "2022-02-16",
+  "displayDate": "16 Feb 2022",
+  "title": "A learned controller held new plasma shapes",
+  "field": "Fusion physics",
+  "kind": "Control",
+  "result": "A deep-reinforcement-learning controller operated all 19 magnetic coils on the TCV tokamak and sustained configurations including two separate plasma droplets.",
+  "context": "This solved a difficult real-time control task and reduced controller-design effort. It did not solve net-positive fusion energy or the broader confinement problem.",
+  "verificationLevel": "Peer reviewed and tested on tokamak hardware",
+  "aiRole": "Learned real-time control",
+  "sourceTitle": "Magnetic control of tokamak plasmas through deep reinforcement learning",
+  "sourceUrl": "https://www.nature.com/articles/s41586-021-04301-9"
+}

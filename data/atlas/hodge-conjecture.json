@@ -1,0 +1,40 @@
+{
+  "id": "hodge-conjecture",
+  "title": "Hodge conjecture",
+  "field": "Mathematics",
+  "subfield": "Algebraic geometry",
+  "summary": "Do the topological features identified by Hodge theory always come from algebraic pieces?",
+  "statement": "For every smooth complex projective variety X and integer p ≥ 0, is every class in H^{2p}(X,Q) ∩ H^{p,p}(X) a rational linear combination of classes of codimension-p algebraic subvarieties? Here H^{p,p} denotes the (p,p) component of the Hodge decomposition.",
+  "whyOpen": "The conjecture requires constructing algebraic cycles from cohomological information. Results for divisors and special varieties do not supply such cycles in all higher codimensions.",
+  "smallestStep": "Choose a smooth projective variety with a published cycle calculation, reproduce its cohomology dimensions and intersection matrix exactly, and isolate one dependency suitable for formal proof.",
+  "successCriterion": "A checked calculation for the chosen variety and a precisely scoped formal lemma, without extrapolating to arbitrary varieties.",
+  "agentFit": 28,
+  "scale": "monument",
+  "location": {
+    "name": "Cambridge, United Kingdom (Hodge's research base)",
+    "longitude": 0.1218,
+    "latitude": 52.2053
+  },
+  "tags": [
+    "algebraic cycles",
+    "cohomology",
+    "Clay Prize"
+  ],
+  "tools": [
+    "Macaulay2",
+    "SageMath",
+    "Lean"
+  ],
+  "sources": [
+    {
+      "title": "Hodge Conjecture, Clay Mathematics Institute",
+      "url": "https://www.claymath.org/millennium/hodge-conjecture/",
+      "kind": "primary",
+      "passage": "the pieces called Hodge cycles are actually (rational linear) combinations of geometric pieces called algebraic cycles"
+    }
+  ],
+  "verified": "2026-09-06",
+  "agentReadiness": "agent-ready",
+  "executionResources": "A local computer and the cited literature are sufficient for the first step. Larger exhaustive searches may require additional compute.",
+  "starterPrompt": "Investigate Hodge conjecture. First check the current status of the exact statement against primary literature, including corrections and recent solution claims. The research question is: For every smooth complex projective variety X and integer p ≥ 0, is every class in H^{2p}(X,Q) ∩ H^{p,p}(X) a rational linear combination of classes of codimension-p algebraic subvarieties? Here H^{p,p} denotes the (p,p) component of the Hodge decomposition.\n\nBegin with this bounded task: Choose a smooth projective variety with a published cycle calculation, reproduce its cohomology dimensions and intersection matrix exactly, and isolate one dependency suitable for formal proof.\n\nSuccess for this first task means: A checked calculation for the chosen variety and a precisely scoped formal lemma, without extrapolating to arbitrary varieties.\n\nUse exact arithmetic or independently checkable proof certificates where applicable. State every assumption and search bound. Separate proved statements, numerical observations and conjectures. Compare any proposed result with the literature before calling it new. Return reproducible artifacts and an honest account of what remains unresolved."
+}

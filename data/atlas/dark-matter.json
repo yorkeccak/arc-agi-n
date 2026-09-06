@@ -1,0 +1,37 @@
+{
+  "id": "dark-matter",
+  "title": "Identity of dark matter",
+  "field": "Physics",
+  "subfield": "Cosmology",
+  "summary": "What makes up the invisible matter inferred from gravity across the universe?",
+  "statement": "Identify the microscopic nature, production mechanism and interactions of the non-baryonic matter responsible for cosmological and galactic gravitational evidence.",
+  "whyOpen": "Multiple observations demand additional gravitating matter, but direct detection and collider searches have not selected a particle model.",
+  "smallestStep": "Choose one public survey or direct-detection dataset and test a neglected model signature with a preregistered statistical pipeline.",
+  "agentFit": 81,
+  "scale": "frontier",
+  "introduced": 1933,
+  "location": {
+    "name": "Pasadena, California",
+    "longitude": -118.1445,
+    "latitude": 34.1478
+  },
+  "tags": [
+    "cosmology",
+    "statistics",
+    "public data"
+  ],
+  "tools": [
+    "Astropy",
+    "JAX",
+    "Bayesian inference"
+  ],
+  "sources": [
+    {
+      "title": "Particle Data Group: Dark Matter review",
+      "url": "https://pdg.lbl.gov/2025/reviews/rpp2025-rev-dark-matter.pdf",
+      "kind": "survey"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: the identity of dark matter.\n\nYour first objective is not to claim a proof. It is to select one public dataset and one falsifiable model signature, then build a preregistered analysis with synthetic-data validation.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

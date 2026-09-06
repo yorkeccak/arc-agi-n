@@ -1,0 +1,24 @@
+{
+  "id": "fermat-s-last-theorem-became-computer-checkable",
+  "date": "2026-09-04",
+  "displayDate": "04 Sep 2026",
+  "title": "Fermat's Last Theorem became computer-checkable",
+  "field": "Number theory",
+  "kind": "Formalization",
+  "result": "Anthropic reports that Claude completed an end-to-end Lean formalization in 11 days, producing 13 million lines of code and about 29,500 intermediate theorems.",
+  "context": "Wiles proved the theorem in 1995. This formalizes the existing mathematical argument, building on Mathlib and community work led by Kevin Buzzard. The released artifact reports Lean kernel, comparator and independent-kernel checks; we have not rerun those resource-intensive checks.",
+  "verificationLevel": "Published proof artifact with reported kernel and comparator checks",
+  "aiRole": "Largely autonomous formalization with human orchestration and review",
+  "sourceTitle": "Formalizing Fermat's Last Theorem",
+  "sourceUrl": "https://www.anthropic.com/research/formalizing-fermats-last-theorem",
+  "additionalSources": [
+    {
+      "title": "Complete Lean proof and verification instructions",
+      "url": "https://github.com/anthropics/fermats-last-theorem"
+    },
+    {
+      "title": "Original announcement on X",
+      "url": "https://x.com/AnthropicAI/status/2095947707605266436"
+    }
+  ]
+}

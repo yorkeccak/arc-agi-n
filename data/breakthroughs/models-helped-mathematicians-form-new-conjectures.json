@@ -1,0 +1,14 @@
+{
+  "id": "models-helped-mathematicians-form-new-conjectures",
+  "date": "2021-12-01",
+  "displayDate": "01 Dec 2021",
+  "title": "Models helped mathematicians form new conjectures",
+  "field": "Topology and representation theory",
+  "kind": "Proof",
+  "result": "Machine-learning attribution guided mathematicians to a new relationship between algebraic and geometric knot invariants and to a conjectural route for a combinatorial invariance problem.",
+  "context": "The systems exposed patterns and useful variables; mathematicians iteratively interpreted them, formed conjectures and supplied the proofs. This was human-machine research, not autonomous theorem proving.",
+  "verificationLevel": "Peer reviewed with human proofs",
+  "aiRole": "Guided conjecture formation and mathematical intuition",
+  "sourceTitle": "Advancing mathematics by guiding human intuition with AI",
+  "sourceUrl": "https://www.nature.com/articles/s41586-021-04086-x"
+}

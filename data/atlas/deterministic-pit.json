@@ -1,0 +1,46 @@
+{
+  "id": "deterministic-pit",
+  "title": "Deterministic polynomial identity testing",
+  "field": "Computer science",
+  "subfield": "Algebraic algorithms",
+  "summary": "Can we test whether an arithmetic circuit computes zero without using randomness?",
+  "statement": "Over the rational numbers, can zero-polynomial identity testing for general arithmetic circuits of size s and degree d be done deterministically in time polynomial in s, d and the encoding length of constants?",
+  "whyOpen": "Random evaluations give efficient probabilistic tests. Deterministic hitting sets and algorithms cover restricted circuit models, but do not yet handle general circuits with the same efficiency.",
+  "smallestStep": "Reproduce the hitting-set construction for sums of high powers of sparse polynomials in the cited paper, then test which step fails when its degree restriction is relaxed.",
+  "successCriterion": "A verified hitting set for the stated restricted model, or a counterexample to an attempted extension with every parameter recorded.",
+  "agentFit": 78,
+  "scale": "frontier",
+  "location": {
+    "name": "Tel Aviv, Israel (Shpilka and Tal's circuit research)",
+    "longitude": 34.7818,
+    "latitude": 32.0853
+  },
+  "tags": [
+    "derandomization",
+    "arithmetic circuits",
+    "hitting sets"
+  ],
+  "tools": [
+    "SageMath",
+    "symbolic algebra",
+    "Lean"
+  ],
+  "sources": [
+    {
+      "title": "Polynomial Identity Testing and Reconstruction for Depth-4 Powering Circuits of High Degree",
+      "url": "https://arxiv.org/abs/2602.20832",
+      "kind": "primary",
+      "publishedAt": "2026-02-24"
+    },
+    {
+      "title": "Efficient Polynomial Identity Testing Over Nonassociative Algebras",
+      "url": "https://arxiv.org/abs/2509.11349",
+      "kind": "primary",
+      "publishedAt": "2025-09-14"
+    }
+  ],
+  "verified": "2026-09-06",
+  "agentReadiness": "agent-ready",
+  "executionResources": "A local computer and the cited literature are sufficient for the first step. Larger exhaustive searches may require additional compute.",
+  "starterPrompt": "Investigate Deterministic polynomial identity testing. First check the current status of the exact statement against primary literature, including corrections and recent solution claims. The research question is: Over the rational numbers, can zero-polynomial identity testing for general arithmetic circuits of size s and degree d be done deterministically in time polynomial in s, d and the encoding length of constants?\n\nBegin with this bounded task: Reproduce the hitting-set construction for sums of high powers of sparse polynomials in the cited paper, then test which step fails when its degree restriction is relaxed.\n\nSuccess for this first task means: A verified hitting set for the stated restricted model, or a counterexample to an attempted extension with every parameter recorded.\n\nUse exact arithmetic or independently checkable proof certificates where applicable. State every assumption and search bound. Separate proved statements, numerical observations and conjectures. Compare any proposed result with the literature before calling it new. Return reproducible artifacts and an honest account of what remains unresolved."
+}

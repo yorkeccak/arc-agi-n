@@ -1,0 +1,42 @@
+{
+  "id": "microbial-community-transfer",
+  "title": "Can microbial community models transfer between environments?",
+  "field": "Biology",
+  "subfield": "Microbial ecology",
+  "summary": "Predicting which microbes persist remains difficult when their surroundings change.",
+  "statement": "Predict community composition in a previously unseen natural environment using measured environmental conditions and ecological interactions, with uncertainty that separates missing drivers from measurement noise.",
+  "whyOpen": "Environmental filtering and interactions change with location and spatial scale. Recent work finds that predators can make communities more alike locally but more different globally, so a model fitted at one scale may learn the wrong transferable relationship.",
+  "smallestStep": "Reanalyze released environmental community data using region-held-out validation, comparing environment-only, spatial, and predator-aware models without selecting or modifying organisms.",
+  "agentFit": 91,
+  "scale": "foothold",
+  "location": {
+    "name": "Moscow, Russia (Gause's competition experiments)",
+    "longitude": 37.62,
+    "latitude": 55.75
+  },
+  "tags": [
+    "ecology",
+    "community assembly",
+    "spatial transfer",
+    "public observations"
+  ],
+  "tools": [
+    "R",
+    "community ecology models",
+    "spatial cross-validation"
+  ],
+  "sources": [
+    {
+      "title": "Predator-mediated local convergence fosters global microbial community divergence",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13000328/",
+      "kind": "primary",
+      "publishedAt": "2026-03-18",
+      "passage": "promoting local convergence"
+    }
+  ],
+  "agentReadiness": "agent-ready",
+  "executionResources": "Published observational community tables and environmental metadata. Limit the first study to natural-community analysis; collection of new field observations remains a separate activity.",
+  "successCriterion": "Show whether adding predator information improves held-out regional predictions beyond spatial and environmental baselines, with sampling-depth and compositional-data checks.",
+  "verified": "2026-09-06",
+  "starterPrompt": "Investigate: Can microbial community models transfer between environments?.\n\nQuestion: Predict community composition in a previously unseen natural environment using measured environmental conditions and ecological interactions, with uncertainty that separates missing drivers from measurement noise.\nBegin with this bounded task: Reanalyze released environmental community data using region-held-out validation, comparing environment-only, spatial, and predator-aware models without selecting or modifying organisms.\nAvailable resources and limits: Published observational community tables and environmental metadata. Limit the first study to natural-community analysis; collection of new field observations remains a separate activity.\nCompletion criterion: Show whether adding predator information improves held-out regional predictions beyond spatial and environmental baselines, with sampling-depth and compositional-data checks.\n\nRead the cited papers and check for later results before beginning. Reproduce the relevant baseline, preserve data provenance, and reserve an independent test set. Separate measured facts, model assumptions, and new hypotheses. Report uncertainty and failed checks. A successful first step is not a solution to the whole problem. Return reproducible code, results, and a short research log."
+}

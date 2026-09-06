@@ -1,0 +1,43 @@
+{
+  "id": "permafrost-carbon-feedback",
+  "title": "Permafrost carbon feedback under abrupt thaw",
+  "field": "Physics",
+  "subfield": "Earth system science",
+  "summary": "How much additional climate change will be driven by carbon released through gradual and abrupt permafrost thaw?",
+  "statement": "Estimate the timing, magnitude and gas composition of the permafrost carbon-climate feedback across gradual active-layer deepening and abrupt-thaw processes, with uncertainty calibrated against field observations.",
+  "whyOpen": "Circumpolar carbon stocks are heterogeneous, abrupt thaw is sparsely observed, microbial conversion controls the balance of carbon dioxide and methane, and many Earth-system models omit or simplify these coupled processes.",
+  "smallestStep": "Build a harmonized benchmark from open flux, active-layer and soil-carbon datasets, then quantify which omitted process contributes most to out-of-sample feedback uncertainty.",
+  "agentFit": 95,
+  "scale": "foothold",
+  "introduced": 1991,
+  "location": {
+    "name": "Fairbanks, Alaska",
+    "longitude": -147.7164,
+    "latitude": 64.8378
+  },
+  "tags": [
+    "climate change",
+    "permafrost",
+    "carbon cycle",
+    "methane"
+  ],
+  "tools": [
+    "xarray",
+    "geospatial ML",
+    "uncertainty quantification"
+  ],
+  "sources": [
+    {
+      "title": "A simplified, data-constrained approach to estimate the permafrost carbon-climate feedback",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4608038/",
+      "kind": "primary"
+    },
+    {
+      "title": "Timescales of the permafrost carbon cycle and legacy effects of temperature overshoot scenarios",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8113593/",
+      "kind": "primary"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: the permafrost carbon feedback under abrupt thaw.\n\nYour first objective is not to claim a proof. It is to assemble a leakage-resistant public-data benchmark and isolate the omitted process that contributes most to out-of-sample carbon-flux uncertainty.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

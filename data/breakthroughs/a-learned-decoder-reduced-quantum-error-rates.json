@@ -1,0 +1,20 @@
+{
+  "id": "a-learned-decoder-reduced-quantum-error-rates",
+  "date": "2024-11-20",
+  "displayDate": "20 Nov 2024",
+  "title": "A learned decoder reduced quantum error rates",
+  "field": "Quantum error correction",
+  "kind": "Algorithm",
+  "result": "On the largest tested Sycamore experiments, AlphaQubit made 6% fewer decoding errors than the tensor-network comparator and 30% fewer than correlated matching.",
+  "context": "These are relative reductions in decoding errors on experimental data, not a 30% improvement in every quantum computation. Larger devices were tested in simulation; the reported model was still too slow for real-time correction on superconducting hardware.",
+  "verificationLevel": "Peer reviewed on experimental data and simulated scaling tests",
+  "aiRole": "Transformer-based decoding trained in simulation and fine-tuned on processor measurements",
+  "sourceTitle": "AlphaQubit research paper",
+  "sourceUrl": "https://www.nature.com/articles/s41586-024-08148-8",
+  "additionalSources": [
+    {
+      "title": "Research teams: AlphaQubit results and limitations",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/alphaqubit-quantum-error-correction/"
+    }
+  ]
+}

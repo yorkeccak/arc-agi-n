@@ -1,0 +1,48 @@
+{
+  "id": "solid-electrolyte-filaments",
+  "title": "Why does lithium penetrate solid electrolytes?",
+  "field": "Chemistry",
+  "subfield": "Battery materials",
+  "summary": "Even a stiff solid electrolyte can develop metal filaments that short a battery.",
+  "statement": "Predict the onset and path of lithium penetration through a specified solid electrolyte from measured defects, interfacial contact, electrical conditions, and mechanical properties.",
+  "whyOpen": "Several routes can produce similar failures, including uneven plating, internal metal deposition, and crack growth. Coupled simulations reproduce selected patterns, but their parameters and mechanisms do not yet transfer reliably between microstructures and operating conditions.",
+  "smallestStep": "Reproduce a published phase-field calculation, then vary contact defects, electronic leakage, and fracture parameters separately to identify observations that distinguish the proposed failure routes.",
+  "agentFit": 84,
+  "scale": "foothold",
+  "location": {
+    "name": "Cambridge, United Kingdom (solid-state battery research)",
+    "longitude": 0.12,
+    "latitude": 52.21
+  },
+  "tags": [
+    "batteries",
+    "solid electrolyte",
+    "filaments",
+    "fracture"
+  ],
+  "tools": [
+    "FEniCS",
+    "phase-field simulation",
+    "sensitivity analysis"
+  ],
+  "sources": [
+    {
+      "title": "Phase field simulation of dendrite growth in solid-state lithium batteries based on mechanical-thermo-electrochemical coupling",
+      "url": "https://arxiv.org/abs/2509.02013",
+      "kind": "primary",
+      "publishedAt": "2025-09-02",
+      "sourceType": "preprint"
+    },
+    {
+      "title": "Exploring the current engineering challenges of solid-state lithium-sulfur batteries with fundamental materials science: A review",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13132942/",
+      "kind": "survey",
+      "publishedAt": "2026-02-12"
+    }
+  ],
+  "agentReadiness": "hybrid",
+  "executionResources": "A workstation supports small simulations. Parameter calibration and decisive tests require microscopy and controlled electrochemical experiments; simulation stability alone is not material validation.",
+  "successCriterion": "Recover a published failure regime and produce an uncertainty-aware discrimination plot showing where competing mechanisms predict measurably different onset or propagation.",
+  "verified": "2026-09-06",
+  "starterPrompt": "Investigate: Why does lithium penetrate solid electrolytes?.\n\nQuestion: Predict the onset and path of lithium penetration through a specified solid electrolyte from measured defects, interfacial contact, electrical conditions, and mechanical properties.\nBegin with this bounded task: Reproduce a published phase-field calculation, then vary contact defects, electronic leakage, and fracture parameters separately to identify observations that distinguish the proposed failure routes.\nAvailable resources and limits: A workstation supports small simulations. Parameter calibration and decisive tests require microscopy and controlled electrochemical experiments; simulation stability alone is not material validation.\nCompletion criterion: Recover a published failure regime and produce an uncertainty-aware discrimination plot showing where competing mechanisms predict measurably different onset or propagation.\n\nRead the cited papers and check for later results before beginning. Reproduce the relevant baseline, preserve data provenance, and reserve an independent test set. Separate measured facts, model assumptions, and new hypotheses. Report uncertainty and failed checks. A successful first step is not a solution to the whole problem. Return reproducible code, results, and a short research log."
+}

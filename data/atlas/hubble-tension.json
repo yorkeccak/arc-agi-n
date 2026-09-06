@@ -1,0 +1,37 @@
+{
+  "id": "hubble-tension",
+  "title": "Origin of the Hubble tension",
+  "field": "Physics",
+  "subfield": "Observational cosmology",
+  "summary": "Why do early- and late-universe measurements infer different cosmic expansion rates?",
+  "statement": "Determine whether the statistically persistent discrepancy in inferred H₀ arises from unmodeled systematics, new cosmological physics, or both.",
+  "whyOpen": "Independent distance ladders and early-universe fits remain difficult to reconcile, while proposed solutions often damage agreement with other observables.",
+  "smallestStep": "Reanalyse one public calibration rung or one proposed extension under a preregistered systematics model and publish the full covariance audit.",
+  "agentFit": 92,
+  "scale": "foothold",
+  "introduced": 2019,
+  "location": {
+    "name": "Baltimore, Maryland",
+    "longitude": -76.6158,
+    "latitude": 39.3299
+  },
+  "tags": [
+    "cosmology",
+    "distance ladder",
+    "systematics"
+  ],
+  "tools": [
+    "Astropy",
+    "Bayesian inference",
+    "public survey data"
+  ],
+  "sources": [
+    {
+      "title": "In the realm of the Hubble tension",
+      "url": "https://arxiv.org/abs/2103.01183",
+      "kind": "survey"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: the origin of the Hubble tension.\n\nYour first objective is not to claim a proof. It is to select one public dataset and reproduce a complete calibration or covariance analysis that discriminates systematics from one explicit new-physics model.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

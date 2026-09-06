@@ -1,0 +1,52 @@
+{
+  "id": "union-closed-sets",
+  "title": "Union-closed sets conjecture",
+  "field": "Mathematics",
+  "subfield": "Extremal combinatorics",
+  "summary": "Must some element appear in at least half the sets of a union-closed family?",
+  "statement": "For every finite nonempty family F of finite sets with nonempty union, if A ∪ B belongs to F whenever A and B belong to F, must some element occur in at least |F|/2 members?",
+  "whyOpen": "Entropy methods prove a positive universal frequency, and structural arguments settle special families. The required frequency of one half remains beyond the general results.",
+  "smallestStep": "Enumerate union-closed families on a small ground set up to relabeling, compute element frequencies exactly, and test a precisely stated extra hypothesis suggested by extremal examples.",
+  "successCriterion": "A complete classification for the declared finite domain, followed by either a checked special-case lemma or an explicit counterexample to the proposed strengthening.",
+  "agentFit": 84,
+  "scale": "foothold",
+  "introduced": 1979,
+  "location": {
+    "name": "Taipei, Taiwan (Das and Wu's frequency bounds)",
+    "longitude": 121.5654,
+    "latitude": 25.033
+  },
+  "tags": [
+    "set families",
+    "entropy",
+    "finite enumeration"
+  ],
+  "tools": [
+    "SAT",
+    "SageMath",
+    "Lean"
+  ],
+  "sources": [
+    {
+      "title": "A constant lower bound for the union-closed sets conjecture",
+      "url": "https://arxiv.org/abs/2211.09055",
+      "kind": "primary"
+    },
+    {
+      "title": "Frequent elements in union-closed set families",
+      "url": "https://arxiv.org/html/2412.03862",
+      "kind": "primary",
+      "passage": "The problem has stubbornly resisted all attacks, with only partial results having been obtained to date."
+    },
+    {
+      "title": "On the lattice formulation of the union-closed sets conjecture",
+      "url": "https://arxiv.org/abs/2503.00277",
+      "kind": "primary",
+      "publishedAt": "2025-03-01"
+    }
+  ],
+  "verified": "2026-09-06",
+  "agentReadiness": "agent-ready",
+  "executionResources": "A local computer and the cited literature are sufficient for the first step. Larger exhaustive searches may require additional compute.",
+  "starterPrompt": "Investigate Union-closed sets conjecture. First check the current status of the exact statement against primary literature, including corrections and recent solution claims. The research question is: For every finite nonempty family F of finite sets with nonempty union, if A ∪ B belongs to F whenever A and B belong to F, must some element occur in at least |F|/2 members?\n\nBegin with this bounded task: Enumerate union-closed families on a small ground set up to relabeling, compute element frequencies exactly, and test a precisely stated extra hypothesis suggested by extremal examples.\n\nSuccess for this first task means: A complete classification for the declared finite domain, followed by either a checked special-case lemma or an explicit counterexample to the proposed strengthening.\n\nUse exact arithmetic or independently checkable proof certificates where applicable. State every assumption and search bound. Separate proved statements, numerical observations and conjectures. Compare any proposed result with the literature before calling it new. Return reproducible artifacts and an honest account of what remains unresolved."
+}

@@ -4,7 +4,7 @@
 
 Find open questions in mathematics, physics, computer science and more. Read the papers, copy a prompt, or get a research plan.
 
-Planned home: [arc-agi-n.com](https://arc-agi-n.com) · [MIT license](LICENSE) · [Contributing](CONTRIBUTING.md)
+[arc-agi-n.com](https://arc-agi-n.com) · [MIT license](LICENSE) · [Contributing](CONTRIBUTING.md)
 
 ![ARC-AGI-N globe and problem search](public/arc-agi-n.png)
 
@@ -12,7 +12,7 @@ Planned home: [arc-agi-n.com](https://arc-agi-n.com) · [MIT license](LICENSE) �
 
 Self-hosting is the default: bring your own keys, run the app and start searching. Search and research usage is billed to your API account.
 
-Requires Node.js 22 or newer, pnpm 10, a [Valyu API key](https://platform.valyu.ai) and a [Mapbox public token](https://account.mapbox.com/access-tokens/).
+Requires Node.js 22 or newer, pnpm 10, a [Valyu API key](https://platform.valyu.ai), an [OpenAI API key](https://platform.openai.com/api-keys) and a [Mapbox public token](https://account.mapbox.com/access-tokens/).
 
 ```bash
 git clone https://github.com/yorkeccak/arc-agi-n.git
@@ -77,7 +77,7 @@ Reports have a return URL, live status, Markdown and LaTeX rendering, linked cit
 
 [Valyu](https://docs.valyu.ai) provides web and academic search, and long-running research plans through DeepResearch. Live discovery uses a tool-calling model to search, follow up and stream structured problem cards with source links. Mapbox renders the globe. The app is Next.js 16, React 19 and TypeScript, with React Markdown, GFM and KaTeX for reports.
 
-Self-hosting uses your own server-side API key. No sign-in, separate model API key or local database is required.
+Self-hosting uses your own server-side Valyu and OpenAI API keys. No sign-in or local database is required.
 
 ### What it does not promise
 
@@ -93,9 +93,31 @@ Optional `DEEPRESEARCH_ALERT_EMAIL` enables completion emails. The app displays 
 
 The optional OAuth mode also keeps search public and bills it to the deployment's API key; only DeepResearch requires sign-in and uses the user's credits. See [Hosting](docs/HOSTING.md) for configuration and [Security](SECURITY.md) before exposing an instance publicly.
 
-## Development
+## Add a problem or breakthrough
 
-Optional [Vercel Web Analytics](docs/ANALYTICS.md) measures visits and product actions without recording search text, prompts or private report links. It is off by default for self-hosting.
+The atlas and breakthrough log are community-editable. **One entry, one JSON file.** You do not need API keys or a running app to contribute a record.
+
+| What to add | Folder | Starting template |
+| --- | --- | --- |
+| An open research question | [`data/atlas/`](data/atlas/) | [`open-problem.json`](data/templates/open-problem.json) |
+| A result AI helped achieve | [`data/breakthroughs/`](data/breakthroughs/) | [`breakthrough.json`](data/templates/breakthrough.json) |
+
+Fork the repository, install dependencies with Node.js 22+ and pnpm 10, then copy a template into its folder with a descriptive filename, such as `my-problem.json`. Replace every placeholder and validate it:
+
+```bash
+pnpm install --frozen-lockfile
+pnpm catalogue:check
+```
+
+Open a pull request with the new file. Entries are picked up automatically: no component edits or registry to maintain. For corrections, edit the existing file instead of adding a duplicate.
+
+Include primary sources and the date you checked the status. For breakthroughs, say what was actually achieved, what the AI contributed, and how the result was checked. A formalization, a better bound and a new proof are different contributions.
+
+Prefer to suggest something without editing files? [Open an issue](https://github.com/yorkeccak/arc-agi-n/issues/new/choose) and choose **Add an open problem** or **Add a breakthrough**.
+
+See the [field reference](data/README.md) and [contribution guide](CONTRIBUTING.md) for examples, evidence requirements and the review checklist.
+
+## Development
 
 ```bash
 pnpm lint
@@ -110,15 +132,16 @@ In a second terminal, run `pnpm test`. The HTTP smoke suite expects a running ap
 src/app/api/                 Search, research and authentication routes
 src/app/research/[taskId]/   Research report pages
 src/components/             Globe, search, dossiers and report UI
-src/lib/problems.ts         Curated problem records
-src/lib/breakthroughs.ts    Research milestones and sources
+data/atlas/                 One JSON file per open problem
+data/breakthroughs/          One JSON file per research milestone
+data/templates/             Templates for new catalogue entries
 tests/                      HTTP and security-contract smoke tests
 docs/RESEARCH.md             Evidence and further reading
 ```
 
-## Contribute
+`pnpm dev` and `pnpm build` prepare the catalogue automatically. Restart `pnpm dev` after editing catalogue files, or run `pnpm catalogue:build` to refresh them directly. The generated `src/generated/catalogue.json` is ignored by Git; edit the source files in `data/`, not the generated file.
 
-Add a well-sourced problem, correct an outdated claim, improve an accessible interaction, or contribute a reproducible way to check a result. See [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow and evidence requirements.
+Code, accessibility improvements and reproducible verification tools are welcome too. See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow.
 
 Report vulnerabilities privately using the guidance in [SECURITY.md](SECURITY.md). Do not include credentials or private report links in issues.
 

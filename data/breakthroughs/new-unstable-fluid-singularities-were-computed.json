@@ -1,0 +1,14 @@
+{
+  "id": "new-unstable-fluid-singularities-were-computed",
+  "date": "2025-09-18",
+  "displayDate": "18 Sep 2025",
+  "title": "New unstable fluid singularities were computed",
+  "field": "Fluid dynamics",
+  "kind": "Construction",
+  "result": "Curated physics-informed neural networks and high-precision optimization found new families of unstable self-similar singularities for incompressible porous media and three-dimensional Euler flow with a boundary.",
+  "context": "These are high-precision numerical solutions suitable for later computer-assisted proof. They do not prove Navier-Stokes blow-up or boundary-free Euler singularity formation.",
+  "verificationLevel": "Numerical research preprint",
+  "aiRole": "Machine-assisted numerical discovery with expert curation",
+  "sourceTitle": "Discovery of unstable singularities",
+  "sourceUrl": "https://arxiv.org/abs/2509.14185"
+}

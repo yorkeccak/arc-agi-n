@@ -1,0 +1,37 @@
+{
+  "id": "quantum-pcp",
+  "title": "Quantum PCP conjecture",
+  "field": "Computer science",
+  "subfield": "Quantum complexity",
+  "summary": "Does approximating the energy density of a local quantum system remain QMA-hard?",
+  "statement": "Is estimating the ground-state energy of a local Hamiltonian to constant relative accuracy QMA-hard?",
+  "whyOpen": "Entanglement creates both candidate hardness mechanisms and possible low-energy structure, while classical PCP reductions do not transfer cleanly.",
+  "smallestStep": "Reproduce a known games-formulation barrier on small instances and search for a finite counterexample or strengthening with exact tensor-network calculations.",
+  "agentFit": 84,
+  "scale": "frontier",
+  "introduced": 2006,
+  "location": {
+    "name": "Jerusalem, Israel",
+    "longitude": 35.2137,
+    "latitude": 31.7683
+  },
+  "tags": [
+    "QMA",
+    "Hamiltonians",
+    "entanglement"
+  ],
+  "tools": [
+    "tensor networks",
+    "SDP",
+    "exact diagonalization"
+  ],
+  "sources": [
+    {
+      "title": "The status of the quantum PCP conjecture",
+      "url": "https://arxiv.org/abs/2403.13084",
+      "kind": "survey"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: the quantum PCP conjecture.\n\nYour first objective is not to claim a proof. It is to select one games-version subproblem, reproduce the known obstruction exactly, and test a bounded construction using certified numerical methods.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "quadratic-primes",
+  "title": "Infinitely many primes of the form n² + 1",
+  "field": "Mathematics",
+  "subfield": "Number theory",
+  "summary": "Does squaring an integer and adding one produce infinitely many primes?",
+  "statement": "Are there infinitely many positive integers n for which n² + 1 is prime?",
+  "whyOpen": "Extensive prime lists and conjectural density formulas support infinitude, but no theorem proves it for this quadratic polynomial. Results about large prime factors or almost primes do not suffice.",
+  "smallestStep": "Reproduce a bounded segment of the cited prime enumeration with primality certificates, then investigate a specific congruence obstruction or an explicit error estimate in its counting heuristic.",
+  "successCriterion": "A reproducible certified segment and a proved local obstruction or explicit conditional estimate, with numerical evidence clearly separated from infinitude.",
+  "agentFit": 59,
+  "scale": "frontier",
+  "location": {
+    "name": "Bowie, Maryland (Grantham and Graves's enumeration)",
+    "longitude": -76.7791,
+    "latitude": 38.9428
+  },
+  "tags": [
+    "polynomial primes",
+    "sieves",
+    "primality certificates"
+  ],
+  "tools": [
+    "PARI/GP",
+    "SageMath",
+    "Arb"
+  ],
+  "sources": [
+    {
+      "title": "Primes of the Form m²+1 and Goldbach's 'Other Other' Conjecture",
+      "url": "https://arxiv.org/html/2502.03513v1",
+      "kind": "primary",
+      "passage": "More than a century later, the problem still resists all attempts."
+    }
+  ],
+  "verified": "2026-09-06",
+  "agentReadiness": "agent-ready",
+  "executionResources": "A local computer and the cited literature are sufficient for the first step. Larger exhaustive searches may require additional compute.",
+  "starterPrompt": "Investigate Infinitely many primes of the form n² + 1. First check the current status of the exact statement against primary literature, including corrections and recent solution claims. The research question is: Are there infinitely many positive integers n for which n² + 1 is prime?\n\nBegin with this bounded task: Reproduce a bounded segment of the cited prime enumeration with primality certificates, then investigate a specific congruence obstruction or an explicit error estimate in its counting heuristic.\n\nSuccess for this first task means: A reproducible certified segment and a proved local obstruction or explicit conditional estimate, with numerical evidence clearly separated from infinitude.\n\nUse exact arithmetic or independently checkable proof certificates where applicable. State every assumption and search bound. Separate proved statements, numerical observations and conjectures. Compare any proposed result with the literature before calling it new. Return reproducible artifacts and an honest account of what remains unresolved."
+}

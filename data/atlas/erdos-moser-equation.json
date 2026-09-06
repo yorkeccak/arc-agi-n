@@ -1,0 +1,41 @@
+{
+  "id": "erdos-moser-equation",
+  "title": "Erdős-Moser equation",
+  "field": "Mathematics",
+  "subfield": "Diophantine equations",
+  "summary": "Can a sum of consecutive equal powers equal the next power, beyond 1 + 2 = 3?",
+  "statement": "Are m = 3 and k = 1 the only positive integer solution with m ≥ 2 and k ≥ 1 to 1ᵏ + 2ᵏ + ⋯ + (m − 1)ᵏ = mᵏ?",
+  "whyOpen": "Congruence arguments exclude odd exponents beyond the known solution and force any further solution to be enormous. They do not rule out all even exponents.",
+  "smallestStep": "Reproduce Moser's congruence restrictions using exact power sums and formalize one residue-class exclusion; then test whether combining a small set of moduli removes an additional class.",
+  "successCriterion": "A checked modular exclusion lemma and a complete account of the exponents and residues it covers.",
+  "agentFit": 82,
+  "scale": "foothold",
+  "introduced": 1953,
+  "location": {
+    "name": "Edmonton, Canada (Moser's research base)",
+    "longitude": -113.4938,
+    "latitude": 53.5461
+  },
+  "tags": [
+    "power sums",
+    "congruences",
+    "formal proof"
+  ],
+  "tools": [
+    "SageMath",
+    "PARI/GP",
+    "Lean"
+  ],
+  "sources": [
+    {
+      "title": "Erdős-Moser Equation in Arithmetic Progressions",
+      "url": "https://arxiv.org/abs/2608.03375",
+      "kind": "primary",
+      "publishedAt": "2026-08-04"
+    }
+  ],
+  "verified": "2026-09-06",
+  "agentReadiness": "agent-ready",
+  "executionResources": "A local computer and the cited literature are sufficient for the first step. Larger exhaustive searches may require additional compute.",
+  "starterPrompt": "Investigate Erdős-Moser equation. First check the current status of the exact statement against primary literature, including corrections and recent solution claims. The research question is: Are m = 3 and k = 1 the only positive integer solution with m ≥ 2 and k ≥ 1 to 1ᵏ + 2ᵏ + ⋯ + (m − 1)ᵏ = mᵏ?\n\nBegin with this bounded task: Reproduce Moser's congruence restrictions using exact power sums and formalize one residue-class exclusion; then test whether combining a small set of moduli removes an additional class.\n\nSuccess for this first task means: A checked modular exclusion lemma and a complete account of the exponents and residues it covers.\n\nUse exact arithmetic or independently checkable proof certificates where applicable. State every assumption and search bound. Separate proved statements, numerical observations and conjectures. Compare any proposed result with the literature before calling it new. Return reproducible artifacts and an honest account of what remains unresolved."
+}

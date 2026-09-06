@@ -1,0 +1,20 @@
+{
+  "id": "designed-enzymes-catalysed-multistep-reactions",
+  "date": "2025-02-13",
+  "displayDate": "13 Feb 2025",
+  "title": "Designed enzymes catalysed multistep reactions",
+  "field": "Enzyme design",
+  "kind": "Experiment",
+  "result": "Researchers designed new serine hydrolases that bind and cleave ester compounds, with selected catalysts outperforming prior computationally designed esterases.",
+  "context": "The team tested more than 300 proteins and iterated through design and screening. Crystal structures closely matched the designs. This establishes activity for selected reactions, not a general ability to design any enzyme on demand.",
+  "verificationLevel": "Peer reviewed with biochemical and structural validation",
+  "aiRole": "Deep-learning protein design and assessment across reaction states, followed by human-led laboratory screening",
+  "sourceTitle": "Computational design of serine hydrolases",
+  "sourceUrl": "https://www.science.org/doi/10.1126/science.adu2454",
+  "additionalSources": [
+    {
+      "title": "Baker Lab: generating enzymes with complex active sites",
+      "url": "https://www.bakerlab.org/2025/02/13/ai-enzymes-with-complex-active-sites/"
+    }
+  ]
+}

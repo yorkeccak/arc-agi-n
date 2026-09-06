@@ -1,0 +1,20 @@
+{
+  "id": "tensor-search-reduced-expensive-quantum-gates",
+  "date": "2024-02-22",
+  "displayDate": "22 Feb 2024",
+  "title": "Tensor search reduced expensive quantum gates",
+  "field": "Quantum algorithms",
+  "kind": "Algorithm",
+  "result": "AlphaTensor-Quantum improved T-gate counts over existing optimization methods on a set of arithmetic circuits and recovered efficient constructions for operations used in factoring and quantum chemistry.",
+  "context": "This date marks the first preprint. The improvement concerns circuit resource counts, with a Karatsuba-like finite-field multiplication method among the results. It does not demonstrate a new factoring complexity bound or a working fault-tolerant quantum computer.",
+  "verificationLevel": "Research preprint with explicit circuit constructions and benchmark comparisons",
+  "aiRole": "Deep reinforcement learning for tensor decompositions that encode quantum circuits",
+  "sourceTitle": "Quantum Circuit Optimization with AlphaTensor",
+  "sourceUrl": "https://arxiv.org/abs/2402.14396",
+  "additionalSources": [
+    {
+      "title": "Research team publication record",
+      "url": "https://deepmind.google/research/publications/77240/"
+    }
+  ]
+}

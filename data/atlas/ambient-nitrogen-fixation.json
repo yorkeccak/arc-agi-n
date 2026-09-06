@@ -1,0 +1,37 @@
+{
+  "id": "ambient-nitrogen-fixation",
+  "title": "Ambient catalytic nitrogen fixation",
+  "field": "Chemistry",
+  "subfield": "Catalysis",
+  "summary": "Can nitrogen be converted to ammonia efficiently under mild conditions using renewable energy?",
+  "statement": "Develop a selective, durable catalytic route from N₂ to ammonia at near-ambient temperature and pressure whose full-system energy and carbon cost beats conventional production.",
+  "whyOpen": "The nitrogen triple bond is exceptionally inert, competing hydrogen evolution dominates many systems, and trace contamination has produced false positive ammonia claims.",
+  "smallestStep": "Reproduce one catalyst under isotope-labeled controls and a complete contamination protocol, then publish a calibrated detection and energy-efficiency ledger.",
+  "agentFit": 88,
+  "scale": "foothold",
+  "introduced": 2003,
+  "location": {
+    "name": "Tokyo, Japan",
+    "longitude": 139.6503,
+    "latitude": 35.6762
+  },
+  "tags": [
+    "ammonia",
+    "electrocatalysis",
+    "isotope controls"
+  ],
+  "tools": [
+    "DFT",
+    "Bayesian optimization",
+    "lab automation"
+  ],
+  "sources": [
+    {
+      "title": "Ammonia from dinitrogen at ambient conditions by organometallic catalysts",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9682445/",
+      "kind": "survey"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: ambient catalytic nitrogen fixation.\n\nYour first objective is not to claim a proof. It is to select one reported catalyst and design an isotope-controlled reproduction that accounts for contamination, selectivity and full-system energy use.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

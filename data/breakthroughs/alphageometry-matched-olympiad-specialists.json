@@ -1,0 +1,14 @@
+{
+  "id": "alphageometry-matched-olympiad-specialists",
+  "date": "2024-01-17",
+  "displayDate": "17 Jan 2024",
+  "title": "AlphaGeometry matched Olympiad specialists",
+  "field": "Euclidean geometry",
+  "kind": "Benchmark",
+  "result": "AlphaGeometry solved 25 of 30 historical Olympiad geometry problems, compared with 10 for the previous state of the art and 25.9 for the average gold medallist.",
+  "context": "The system combines a neural language model with symbolic deduction. Its proofs are checkable, but the domain is tightly formalized and the problems already had known solutions.",
+  "verificationLevel": "Published benchmark evaluation",
+  "aiRole": "Neuro-symbolic proof generation",
+  "sourceTitle": "An Olympiad-level system for geometry",
+  "sourceUrl": "https://deepmind.google/blog/alphageometry-an-olympiad-level-ai-system-for-geometry/"
+}

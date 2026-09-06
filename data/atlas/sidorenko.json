@@ -1,0 +1,46 @@
+{
+  "id": "sidorenko",
+  "title": "Sidorenko's conjecture",
+  "field": "Mathematics",
+  "subfield": "Extremal graph theory",
+  "summary": "Does a random graph minimize every bipartite pattern at a fixed edge density?",
+  "statement": "For every finite bipartite graph H and every nonempty finite simple graph G, is t(H,G) ≥ t(K₂,G)^|E(H)|, where t(H,G) counts all edge-preserving vertex maps divided by |V(G)|^|V(H)|?",
+  "whyOpen": "The inequality holds for many bipartite patterns, but no argument covers all of them. Recent symmetry and spectral reductions still leave a universal inequality to prove.",
+  "smallestStep": "Choose one bipartite pattern not covered by the cited closure rules, optimize its density on rational step-function graph models, and try to turn the resulting inequality into an exact sum-of-squares certificate.",
+  "successCriterion": "A rational certificate for the declared model family, or a rigorously validated counterexample to a proposed stronger inequality.",
+  "agentFit": 77,
+  "scale": "frontier",
+  "location": {
+    "name": "Budapest, Hungary (the Erdős-Simonovits formulation)",
+    "longitude": 19.0402,
+    "latitude": 47.4979
+  },
+  "tags": [
+    "graph densities",
+    "inequalities",
+    "sum of squares"
+  ],
+  "tools": [
+    "SDP",
+    "SageMath",
+    "rational certificates"
+  ],
+  "sources": [
+    {
+      "title": "Conjugacy Class Averages and Sidorenko's Conjecture",
+      "url": "https://arxiv.org/abs/2606.15368",
+      "kind": "primary",
+      "publishedAt": "2026-06-13"
+    },
+    {
+      "title": "Spectral Sidorenko inequalities and edge-spectral supersaturation",
+      "url": "https://arxiv.org/abs/2605.26614",
+      "kind": "primary",
+      "publishedAt": "2026-06-03"
+    }
+  ],
+  "verified": "2026-09-06",
+  "agentReadiness": "agent-ready",
+  "executionResources": "A local computer and the cited literature are sufficient for the first step. Larger exhaustive searches may require additional compute.",
+  "starterPrompt": "Investigate Sidorenko's conjecture. First check the current status of the exact statement against primary literature, including corrections and recent solution claims. The research question is: For every finite bipartite graph H and every nonempty finite simple graph G, is t(H,G) ≥ t(K₂,G)^|E(H)|, where t(H,G) counts all edge-preserving vertex maps divided by |V(G)|^|V(H)|?\n\nBegin with this bounded task: Choose one bipartite pattern not covered by the cited closure rules, optimize its density on rational step-function graph models, and try to turn the resulting inequality into an exact sum-of-squares certificate.\n\nSuccess for this first task means: A rational certificate for the declared model family, or a rigorously validated counterexample to a proposed stronger inequality.\n\nUse exact arithmetic or independently checkable proof certificates where applicable. State every assumption and search bound. Separate proved statements, numerical observations and conjectures. Compare any proposed result with the literature before calling it new. Return reproducible artifacts and an honest account of what remains unresolved."
+}

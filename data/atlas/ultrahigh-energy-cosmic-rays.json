@@ -1,0 +1,48 @@
+{
+  "id": "ultrahigh-energy-cosmic-rays",
+  "title": "Where do the highest-energy cosmic rays come from?",
+  "field": "Physics",
+  "subfield": "Astroparticle physics",
+  "summary": "Which objects accelerate atomic nuclei to energies far beyond human accelerators?",
+  "statement": "Identify a source population that jointly explains the energy spectrum, nuclear composition, and sky pattern of ultra-high-energy cosmic rays after propagation through radiation and magnetic fields.",
+  "whyOpen": "Large-scale arrival-direction anisotropy is established, but it does not identify individual accelerators. Unknown magnetic deflections, mixed nuclear composition, and air-shower modeling can make different source populations look similar.",
+  "smallestStep": "Use the public Pierre Auger event sample to reproduce a published angular statistic, then test one catalog association against exposure-matched randomized skies and magnetic-deflection sensitivity cases.",
+  "agentFit": 88,
+  "scale": "frontier",
+  "location": {
+    "name": "Malargüe, Argentina (Pierre Auger Observatory)",
+    "longitude": -69.59,
+    "latitude": -35.47
+  },
+  "tags": [
+    "cosmic rays",
+    "astronomy",
+    "source identification",
+    "public data"
+  ],
+  "tools": [
+    "CRPropa",
+    "HEALPix",
+    "Astropy"
+  ],
+  "sources": [
+    {
+      "title": "A composition-informed search for large-scale anisotropy with the Pierre Auger Observatory",
+      "url": "https://arxiv.org/abs/2507.08564",
+      "kind": "primary",
+      "publishedAt": "2025-07-11",
+      "sourceType": "collaboration conference paper"
+    },
+    {
+      "title": "The Pierre Auger Observatory: Results and Prospects",
+      "url": "https://arxiv.org/abs/2504.10333",
+      "kind": "survey",
+      "publishedAt": "2025-04-14"
+    }
+  ],
+  "agentReadiness": "hybrid",
+  "executionResources": "The open event subset supports limited analyses; it does not provide every composition estimator or the statistical power of the full collaboration dataset.",
+  "successCriterion": "Recover the expected exposure distribution and a documented baseline statistic, then quantify trials and magnetic-field uncertainty for a preregistered association test.",
+  "verified": "2026-09-06",
+  "starterPrompt": "Investigate: Where do the highest-energy cosmic rays come from?.\n\nQuestion: Identify a source population that jointly explains the energy spectrum, nuclear composition, and sky pattern of ultra-high-energy cosmic rays after propagation through radiation and magnetic fields.\nBegin with this bounded task: Use the public Pierre Auger event sample to reproduce a published angular statistic, then test one catalog association against exposure-matched randomized skies and magnetic-deflection sensitivity cases.\nAvailable resources and limits: The open event subset supports limited analyses; it does not provide every composition estimator or the statistical power of the full collaboration dataset.\nCompletion criterion: Recover the expected exposure distribution and a documented baseline statistic, then quantify trials and magnetic-field uncertainty for a preregistered association test.\n\nRead the cited papers and check for later results before beginning. Reproduce the relevant baseline, preserve data provenance, and reserve an independent test set. Separate measured facts, model assumptions, and new hypotheses. Report uncertainty and failed checks. A successful first step is not a solution to the whole problem. Return reproducible code, results, and a short research log."
+}

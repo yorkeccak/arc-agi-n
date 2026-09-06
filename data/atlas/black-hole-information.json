@@ -1,0 +1,38 @@
+{
+  "id": "black-hole-information",
+  "title": "Black hole information problem",
+  "field": "Physics",
+  "subfield": "Quantum gravity",
+  "summary": "How does information escape, or survive, when a black hole evaporates?",
+  "statement": "Reconcile unitary quantum evolution with semiclassical Hawking evaporation and the apparently thermal radiation emitted by a black hole.",
+  "whyOpen": "Recent entropy calculations reproduce a unitary Page curve in controlled settings, but the microscopic mechanism and its extension to realistic evaporating black holes remain disputed.",
+  "smallestStep": "Reproduce an island-formula calculation in a tractable model and test exactly which assumptions fail under one controlled deformation.",
+  "agentFit": 69,
+  "scale": "frontier",
+  "introduced": 1976,
+  "location": {
+    "name": "Cambridge, United Kingdom",
+    "longitude": 0.1166,
+    "latitude": 52.2058
+  },
+  "tags": [
+    "quantum gravity",
+    "entropy",
+    "unitarity"
+  ],
+  "tools": [
+    "symbolic algebra",
+    "tensor networks",
+    "literature graph"
+  ],
+  "sources": [
+    {
+      "title": "The Black Hole Information Problem",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12191829/",
+      "kind": "index",
+      "sourceType": "special-issue editorial"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: the black hole information problem.\n\nYour first objective is not to claim a proof. It is to reproduce one island or Page-curve calculation and isolate a single assumption whose controlled failure gives a discriminating result.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

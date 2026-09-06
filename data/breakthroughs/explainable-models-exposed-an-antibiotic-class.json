@@ -1,0 +1,20 @@
+{
+  "id": "explainable-models-exposed-an-antibiotic-class",
+  "date": "2023-12-20",
+  "displayDate": "20 Dec 2023",
+  "title": "Explainable models exposed an antibiotic class",
+  "field": "Drug discovery",
+  "kind": "Experiment",
+  "result": "Models screening roughly 12 million compounds identified chemical substructures associated with antibacterial activity. Two candidates from one structural class reduced MRSA bacterial loads in two mouse infection models.",
+  "context": "The researchers combined predictions of antibacterial activity and cell toxicity with physical testing. The new result was a structural class of preclinical candidates and an interpretable discovery method, not clinical evidence or a cure for antibiotic resistance.",
+  "verificationLevel": "Peer reviewed with in-vitro and mouse validation",
+  "aiRole": "Graph neural networks plus tree search to identify predictive molecular substructures",
+  "sourceTitle": "Discovery of a structural class of antibiotics with explainable deep learning",
+  "sourceUrl": "https://www.nature.com/articles/s41586-023-06887-8",
+  "additionalSources": [
+    {
+      "title": "MIT: experimental results and discovery method",
+      "url": "https://news.mit.edu/2023/using-ai-mit-researchers-identify-antibiotic-candidates-1220"
+    }
+  ]
+}

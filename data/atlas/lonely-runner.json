@@ -1,0 +1,37 @@
+{
+  "id": "lonely-runner",
+  "title": "Lonely runner conjecture",
+  "field": "Mathematics",
+  "subfield": "Diophantine approximation",
+  "summary": "At some time, must every runner on a circular track be far from all the others?",
+  "statement": "For k runners with distinct constant speeds, is every runner at some time at distance at least 1/k from every other runner?",
+  "whyOpen": "The statement connects view-obstruction geometry, chromatic numbers and simultaneous Diophantine approximation. General proofs remain elusive despite progress for fixed dimensions.",
+  "smallestStep": "Generate extremal speed sets in the first unresolved dimension and use exact arithmetic to classify their obstruction patterns.",
+  "agentFit": 88,
+  "scale": "foothold",
+  "introduced": 1967,
+  "location": {
+    "name": "Jerusalem, Israel",
+    "longitude": 35.2137,
+    "latitude": 31.7683
+  },
+  "tags": [
+    "geometry",
+    "optimization",
+    "exact computation"
+  ],
+  "tools": [
+    "Python",
+    "ILP",
+    "Lean"
+  ],
+  "sources": [
+    {
+      "title": "The Lonely Runner Conjecture turns 60",
+      "url": "https://arxiv.org/abs/1910.06077",
+      "kind": "survey"
+    }
+  ],
+  "starterPrompt": "You are beginning a serious research attempt on: the lonely runner conjecture.\n\nYour first objective is not to claim a proof. It is to map extremal instances and extract a lemma that reduces one unresolved finite-dimensional case.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
+  "verified": "2026-09-04"
+}

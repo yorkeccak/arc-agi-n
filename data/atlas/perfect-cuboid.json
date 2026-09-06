@@ -1,0 +1,50 @@
+{
+  "id": "perfect-cuboid",
+  "title": "Perfect cuboid",
+  "field": "Mathematics",
+  "subfield": "Diophantine equations",
+  "summary": "Can a rectangular box have integer edges, face diagonals and space diagonal?",
+  "statement": "Do positive integers a, b, c exist such that a² + b², a² + c², b² + c² and a² + b² + c² are all squares?",
+  "whyOpen": "Boxes with integer face diagonals are known, but no nondegenerate box satisfying all four square conditions is established. Geometric descriptions and bounded searches do not classify all rational points on the associated surface.",
+  "smallestStep": "Implement the four equations with exact integers, reproduce the exclusion of one published parameterized family, and certify a bounded search after symmetry and congruence reductions.",
+  "successCriterion": "A checked family-exclusion lemma or a complete finite-search certificate with explicit bounds and independently verified candidate tests.",
+  "agentFit": 81,
+  "scale": "foothold",
+  "location": {
+    "name": "Bayreuth, Germany (Stoll's cuboid-surface research)",
+    "longitude": 11.5789,
+    "latitude": 49.9456
+  },
+  "tags": [
+    "integer geometry",
+    "rational points",
+    "exact search"
+  ],
+  "tools": [
+    "SageMath",
+    "PARI/GP",
+    "Lean"
+  ],
+  "sources": [
+    {
+      "title": "The surface parametrizing cuboids",
+      "url": "https://arxiv.org/html/1009.0388",
+      "kind": "primary",
+      "passage": "It is an open problem whether a ‘rational box’ exists"
+    },
+    {
+      "title": "The L-function of the surface parametrizing cuboids",
+      "url": "https://arxiv.org/pdf/2512.22520",
+      "kind": "primary"
+    },
+    {
+      "title": "Treasure Hunting Perfect Euler bricks",
+      "url": "https://people.math.harvard.edu/~knill/various/eulercuboid/lecture.pdf",
+      "kind": "survey"
+    }
+  ],
+  "verified": "2026-09-06",
+  "agentReadiness": "agent-ready",
+  "executionResources": "A local computer and the cited literature are sufficient for the first step. Larger exhaustive searches may require additional compute.",
+  "starterPrompt": "Investigate Perfect cuboid. First check the current status of the exact statement against primary literature, including corrections and recent solution claims. The research question is: Do positive integers a, b, c exist such that a² + b², a² + c², b² + c² and a² + b² + c² are all squares?\n\nBegin with this bounded task: Implement the four equations with exact integers, reproduce the exclusion of one published parameterized family, and certify a bounded search after symmetry and congruence reductions.\n\nSuccess for this first task means: A checked family-exclusion lemma or a complete finite-search certificate with explicit bounds and independently verified candidate tests.\n\nUse exact arithmetic or independently checkable proof certificates where applicable. State every assumption and search bound. Separate proved statements, numerical observations and conjectures. Compare any proposed result with the literature before calling it new. Return reproducible artifacts and an honest account of what remains unresolved."
+}

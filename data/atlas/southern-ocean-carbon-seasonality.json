@@ -1,0 +1,42 @@
+{
+  "id": "southern-ocean-carbon-seasonality",
+  "title": "How much carbon does the Southern Ocean absorb in winter?",
+  "field": "Physics",
+  "subfield": "Ocean carbon cycle",
+  "summary": "Sparse winter measurements leave a major part of the ocean carbon budget uncertain.",
+  "statement": "Constrain the annual Southern Ocean carbon sink by resolving winter outgassing, sea-ice effects, and measurement biases consistently across ships, floats, and year-round coastal observations.",
+  "whyOpen": "Ships undersample winter and ice-covered water, while float-derived carbon estimates have sensor and conversion uncertainties. A decade of Rothera observations identifies a sea-ice and stratification mechanism, but one coastal record cannot establish its ocean-wide contribution.",
+  "smallestStep": "Reproduce the seasonal carbon-flux calculation for the Rothera record, then subsample it to ship-like schedules and quantify the resulting annual-budget bias.",
+  "agentFit": 95,
+  "scale": "foothold",
+  "location": {
+    "name": "Rothera Research Station, Antarctica",
+    "longitude": -68.13,
+    "latitude": -67.57
+  },
+  "tags": [
+    "climate change",
+    "ocean carbon",
+    "sea ice",
+    "sampling bias"
+  ],
+  "tools": [
+    "xarray",
+    "PyCO2SYS",
+    "geospatial analysis"
+  ],
+  "sources": [
+    {
+      "title": "Sea ice controls net ocean uptake of carbon dioxide by regulating wintertime stratification",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12176633/",
+      "kind": "primary",
+      "publishedAt": "2025-06-18",
+      "passage": "spatial and temporal data scarcity"
+    }
+  ],
+  "agentReadiness": "agent-ready",
+  "executionResources": "Released carbonate-chemistry observations and sea-ice records permit the first test. Ocean-wide attribution requires broader coverage and independently calibrated sensors.",
+  "successCriterion": "Recover the published seasonal behavior and give a bias interval for annual uptake under realistic missing-winter sampling, including carbonate-system uncertainty.",
+  "verified": "2026-09-06",
+  "starterPrompt": "Investigate: How much carbon does the Southern Ocean absorb in winter?.\n\nQuestion: Constrain the annual Southern Ocean carbon sink by resolving winter outgassing, sea-ice effects, and measurement biases consistently across ships, floats, and year-round coastal observations.\nBegin with this bounded task: Reproduce the seasonal carbon-flux calculation for the Rothera record, then subsample it to ship-like schedules and quantify the resulting annual-budget bias.\nAvailable resources and limits: Released carbonate-chemistry observations and sea-ice records permit the first test. Ocean-wide attribution requires broader coverage and independently calibrated sensors.\nCompletion criterion: Recover the published seasonal behavior and give a bias interval for annual uptake under realistic missing-winter sampling, including carbonate-system uncertainty.\n\nRead the cited papers and check for later results before beginning. Reproduce the relevant baseline, preserve data provenance, and reserve an independent test set. Separate measured facts, model assumptions, and new hypotheses. Report uncertainty and failed checks. A successful first step is not a solution to the whole problem. Return reproducible code, results, and a short research log."
+}

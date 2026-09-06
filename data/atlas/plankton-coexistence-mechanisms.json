@@ -1,0 +1,49 @@
+{
+  "id": "plankton-coexistence-mechanisms",
+  "title": "What keeps so many plankton species coexisting?",
+  "field": "Biology",
+  "subfield": "Theoretical ecology",
+  "summary": "Many plankton species share a small set of resources, yet no single explanation predicts their diversity.",
+  "statement": "Determine which combination of resource differences, density dependence, predation, and environmental variation quantitatively explains persistent plankton coexistence across measured ecosystems.",
+  "whyOpen": "Many models permit coexistence, so the paradox is not a lack of possible mechanisms. The unresolved task is distinguishing their contributions and predicting abundance and diversity beyond the system used to fit them.",
+  "smallestStep": "Reproduce the recent density-dependent consumer-resource model, then compare it with a resource-only model on a public plankton time series using blocked future-time validation.",
+  "agentFit": 91,
+  "scale": "foothold",
+  "introduced": 1961,
+  "location": {
+    "name": "New Haven, Connecticut (Hutchinson's research at Yale)",
+    "longitude": -72.93,
+    "latitude": 41.31
+  },
+  "tags": [
+    "biodiversity",
+    "plankton",
+    "coexistence",
+    "dynamical systems"
+  ],
+  "tools": [
+    "Julia",
+    "ODE solvers",
+    "ecological time series"
+  ],
+  "sources": [
+    {
+      "title": "Density Dependence Promotes Species Coexistence and Provides a Unifying Explanation for Distinct Productivity-Diversity Relationships",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12719913/",
+      "kind": "primary",
+      "publishedAt": "2025-12-21"
+    },
+    {
+      "title": "Interspecific information use facilitates species coexistence in ecosystems",
+      "url": "https://arxiv.org/abs/2511.10520",
+      "kind": "primary",
+      "publishedAt": "2025-11-13",
+      "sourceType": "preprint"
+    }
+  ],
+  "agentReadiness": "agent-ready",
+  "executionResources": "Published model equations and open ecological time series. Field data may not identify every interaction; report indistinguishable mechanisms rather than asserting a unique cause.",
+  "successCriterion": "Reproduce the published coexistence behavior and identify a measurable time-series prediction on which the competing mechanisms differ under realistic sampling noise.",
+  "verified": "2026-09-06",
+  "starterPrompt": "Investigate: What keeps so many plankton species coexisting?.\n\nQuestion: Determine which combination of resource differences, density dependence, predation, and environmental variation quantitatively explains persistent plankton coexistence across measured ecosystems.\nBegin with this bounded task: Reproduce the recent density-dependent consumer-resource model, then compare it with a resource-only model on a public plankton time series using blocked future-time validation.\nAvailable resources and limits: Published model equations and open ecological time series. Field data may not identify every interaction; report indistinguishable mechanisms rather than asserting a unique cause.\nCompletion criterion: Reproduce the published coexistence behavior and identify a measurable time-series prediction on which the competing mechanisms differ under realistic sampling noise.\n\nRead the cited papers and check for later results before beginning. Reproduce the relevant baseline, preserve data provenance, and reserve an independent test set. Separate measured facts, model assumptions, and new hypotheses. Report uncertainty and failed checks. A successful first step is not a solution to the whole problem. Return reproducible code, results, and a short research log."
+}
