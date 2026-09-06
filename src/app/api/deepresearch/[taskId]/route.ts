@@ -5,6 +5,7 @@ import { withDeadline } from "@/lib/network";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { verifyReportAccessToken } from "@/lib/report-access";
 import { parseResearchEffort } from "@/lib/research-effort";
+import { activitySources, researchActivity } from "@/lib/research-activity";
 import { getValyuAccessToken } from "@/lib/valyu-session";
 
 export const dynamic = "force-dynamic";
@@ -12,6 +13,8 @@ export const dynamic = "force-dynamic";
 async function statusViaOAuth(taskId: string, accessToken: string) {
   const requestStatus = (token: string) => fetch(`${process.env.VALYU_APP_URL || "https://platform.valyu.ai"}/api/oauth/proxy`, {
     method: "POST",
+    cache: "no-store",
+    signal: AbortSignal.timeout(15_000),
     headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
     body: JSON.stringify({ path: `/v1/deepresearch/tasks/${taskId}/status`, method: "GET" }),
   });
@@ -67,6 +70,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ task
         currentStep: data.progress.current_step ?? data.progress.currentStep ?? 0,
         totalSteps: data.progress.total_steps ?? data.progress.totalSteps ?? 0,
       } : undefined,
+      activity: researchActivity(data.messages, data.status || "unknown"),
+      activitySources: activitySources(data.sources),
       output: data.status === "completed" ? (typeof data.output === "string" ? data.output : JSON.stringify(data.output)) : undefined,
       sources: data.status === "completed" ? (data.sources || [])
         .filter((source: { url?: string }) => {
@@ -87,7 +92,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ task
       createdAt: data.created_at,
       completedAt: data.completed_at,
       error: data.status === "failed" ? "Research task failed." : undefined,
-    }, { headers: { "Cache-Control": "no-store" } });
+    }, { headers: { "Cache-Control": "private, no-store", Vary: "Cookie" } });
   } catch (error) {
     if (error instanceof Error && error.message === "TASK_NOT_FOUND") {
       return NextResponse.json({ error: "Research task not found." }, { status: 404 });
