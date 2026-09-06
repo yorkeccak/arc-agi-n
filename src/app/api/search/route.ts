@@ -530,7 +530,7 @@ export async function POST(request: Request) {
         };
 
         try {
-          send({ type: "status", message: "Opening research and web indexes" });
+          send({ type: "status", message: "Searching papers and the web…" });
           let problems: DiscoveredProblem[] = [];
 
           await Promise.allSettled((["all", "proprietary"] as const).map(async (searchType) => {
@@ -538,7 +538,7 @@ export async function POST(request: Request) {
             await emitSources(evidence);
           }));
           searchSignal.throwIfAborted();
-          if (seenSources.size > 0) send({ type: "status", message: `Reading ${seenSources.size} authoritative sources` });
+          if (seenSources.size > 0) send({ type: "status", message: `Reading ${seenSources.size} sources` });
 
           const answer = answerViaApiKey(
             groundWithSources(researchQuery, authoritativeSources.values()),
@@ -553,13 +553,13 @@ export async function POST(request: Request) {
             if (searchSignal.aborted) break;
             if (chunk.type === "search_results" && chunk.search_results) {
               await emitSources(chunk.search_results);
-              send({ type: "status", message: `Reading ${seenSources.size} promising sources` });
+              send({ type: "status", message: `Reading ${seenSources.size} sources` });
             }
             if (chunk.type === "content" && chunk.content) {
               streamedContent += chunk.content;
               if (!synthesisStarted) {
                 synthesisStarted = true;
-                send({ type: "status", message: "Synthesizing exact open questions" });
+                send({ type: "status", message: "Finding open questions in the sources…" });
               }
             }
             if (chunk.type === "metadata") {
@@ -573,8 +573,8 @@ export async function POST(request: Request) {
           send({
             type: "status",
             message: problems.length > 0
-              ? `Checking ${problems.length} ${problems.length === 1 ? "candidate" : "candidates"} against the source text`
-              : "No exact questions were returned; keeping the relevant atlas matches",
+              ? `Checking ${problems.length} ${problems.length === 1 ? "question" : "questions"} against the sources`
+              : "No new questions found. Showing matches from our collection.",
           });
           const validatedProblems = validateProblems(problems, authoritativeSources, field);
           for (const problem of validatedProblems) {
@@ -584,10 +584,10 @@ export async function POST(request: Request) {
           send({
             type: "done",
             message: validatedProblems.length > 0
-              ? `${validatedProblems.length} ${validatedProblems.length === 1 ? "question cleared" : "questions cleared"} the source check`
+              ? `${validatedProblems.length} ${validatedProblems.length === 1 ? "question matches" : "questions match"} the sources`
               : problems.length > 0
-                ? `${problems.length} ${problems.length === 1 ? "candidate did" : "candidates did"} not clear the source check`
-                : "No exact question was returned from the live synthesis",
+                ? `Could not confirm ${problems.length} ${problems.length === 1 ? "question" : "questions"} from the sources`
+                : "No new open questions found in these sources",
           });
         } catch (error) {
           if (searchSignal.aborted) return;

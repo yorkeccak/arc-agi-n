@@ -113,12 +113,12 @@ export function BreakthroughsPanel({ onClose }: BreakthroughsPanelProps) {
       <div className="breakthrough-scroll">
         <section className="breakthrough-intro">
           <div>
-            <p>The evidence behind the thesis</p>
-            <h1 id="breakthrough-title">Beyond the benchmarks.</h1>
+            <p>Maths, science and code</p>
+            <h1 id="breakthrough-title">Recent breakthroughs.</h1>
             <p className="breakthrough-lede">
-              {breakthroughs.length} milestones in discovery and verification. See what changed, how it was checked, and what remains open.
+              {breakthroughs.length} results, with the papers, code and details of how each was checked.
             </p>
-            <a className="breakthrough-jump" href="#breakthrough-timeline">Explore the milestones <ArrowUpRight size={16} /></a>
+            <a className="breakthrough-jump" href="#breakthrough-timeline">See the results <ArrowUpRight size={16} /></a>
           </div>
           <figure className="astra-result">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -137,17 +137,17 @@ export function BreakthroughsPanel({ onClose }: BreakthroughsPanelProps) {
           </figure>
         </section>
 
-        <section id="breakthrough-timeline" className="breakthrough-log" aria-label="Source-backed breakthrough timeline">
+        <section id="breakthrough-timeline" className="breakthrough-log" aria-label="Breakthroughs by date">
           <header>
             <h2>Breakthrough log</h2>
             <p>Newest first · Sources reviewed 5 September 2026</p>
           </header>
           <div className="breakthrough-tools">
-            <label><span>Find a milestone</span><input type="search" value={filter} onChange={(event) => setFilter(event.target.value)} placeholder="Fermat, protein folding, Claude…" /></label>
+            <label><span>Find a result</span><input type="search" value={filter} onChange={(event) => setFilter(event.target.value)} placeholder="Fermat, protein folding, Claude…" /></label>
             <label><span>Type of result</span><select value={kind} onChange={(event) => setKind(event.target.value as BreakthroughKind | "All")}><option value="All">All results</option>{resultKinds.map((value) => <option key={value} value={value}>{value}</option>)}</select></label>
-            <p role="status">{visibleBreakthroughs.length} of {breakthroughs.length} milestones</p>
+            <p role="status">{visibleBreakthroughs.length} of {breakthroughs.length} results</p>
           </div>
-          {visibleBreakthroughs.length === 0 && <p className="empty-curated">No milestones match these filters. <button onClick={() => { setFilter(""); setKind("All"); }}>Clear filters</button></p>}
+          {visibleBreakthroughs.length === 0 && <p className="empty-curated">No results match these filters. <button onClick={() => { setFilter(""); setKind("All"); }}>Clear filters</button></p>}
           <ol>
             {visibleBreakthroughs.map((breakthrough, index) => (
               <li key={`${breakthrough.date}-${breakthrough.title}`}>
@@ -162,7 +162,7 @@ export function BreakthroughsPanel({ onClose }: BreakthroughsPanelProps) {
                   <div className="breakthrough-detail">
                     <p className="breakthrough-result">{breakthrough.result}</p>
                     <p className="breakthrough-context">{breakthrough.context}</p>
-                    <dl className="breakthrough-verification"><div><dt>Verification</dt><dd>{breakthrough.verificationLevel}</dd></div><div><dt>Model contribution</dt><dd>{breakthrough.aiRole}</dd></div></dl>
+                    <dl className="breakthrough-verification"><div><dt>How it was checked</dt><dd>{breakthrough.verificationLevel}</dd></div><div><dt>What the model did</dt><dd>{breakthrough.aiRole}</dd></div></dl>
                   </div>
                   <div className="breakthrough-sources">
                     <BreakthroughSourceLink title={breakthrough.sourceTitle} url={breakthrough.sourceUrl} />
@@ -177,7 +177,7 @@ export function BreakthroughsPanel({ onClose }: BreakthroughsPanelProps) {
         </section>
 
         <footer className="breakthrough-footer">
-          <p>This is not a leaderboard and it is not a claim that research is solved. It is evidence that choosing, grounding and verifying the next problem is becoming the bottleneck.</p>
+          <p>What will you work on next?</p>
           <button onClick={onClose}>Find an open problem <ArrowUpRight size={16} /></button>
         </footer>
       </div>

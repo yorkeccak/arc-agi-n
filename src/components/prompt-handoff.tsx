@@ -49,7 +49,7 @@ export function PromptHandoff({ prompt }: { prompt: string }) {
         closePreview();
       }
     }}>
-      <div className="prompt-handoff-heading"><strong>Take a stab at it.</strong><span>One prompt. Any agent.</span></div>
+      <div className="prompt-handoff-heading"><strong>Take a stab at it.</strong><span>Copy into your agent</span></div>
       <div className="prompt-handoff-controls">
         <button className="copy-prompt-button" onClick={copy}>
           <span className="agent-logo-stack" aria-hidden="true">{targets.slice(0, 3).map((target) => <span key={target.name}><AgentMark name={target.name} /></span>)}</span>
@@ -60,7 +60,7 @@ export function PromptHandoff({ prompt }: { prompt: string }) {
           Preview & open in an app <ChevronDown size={15} />
         </button>
       </div>
-      <p className="copy-feedback" role="status">{error ? "Clipboard unavailable. Select and copy the prompt in the preview." : copied ? "Ready to paste. Or open an app with the options above." : "Includes the question, sources, a first step and encouragement to keep going."}</p>
+      <p className="copy-feedback" role="status">{error ? "Clipboard unavailable. Select and copy the prompt in the preview." : copied ? "Ready to paste. Or open an app with the options above." : "The question, sources and a suggested first step, ready to paste."}</p>
       {expanded && <section id="prompt-options" className="prompt-options" aria-label="Prompt preview and app links">
         <header><strong>Your starting prompt</strong><button aria-label="Close prompt preview" onClick={closePreview}><X size={18} /></button></header>
         <textarea ref={previewRef} aria-label="Starting prompt" readOnly value={prompt} onFocus={(event) => event.target.select()} />
