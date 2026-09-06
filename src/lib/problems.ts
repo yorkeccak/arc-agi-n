@@ -1,4 +1,6 @@
 import type { Field, OpenProblem } from "@/lib/types";
+import { additionalMathsProblems } from "@/lib/problems-maths";
+import { additionalScienceProblems } from "@/lib/problems-sciences";
 
 const prompt = (title: string, goal: string) => `You are beginning a serious research attempt on: ${title}.
 
@@ -103,30 +105,9 @@ export const problems: OpenProblem[] = [
     tags: ["matrix", "SAT", "certificate"],
     tools: ["CaDiCaL", "Python", "proof certificates"],
     sources: [
-      { title: "Hadamard matrices", url: "https://www.hadamard.ca/", kind: "index" },
+      { title: "A database of constructions of Hadamard matrices", url: "https://arxiv.org/abs/2411.18897", kind: "primary" },
     ],
     starterPrompt: prompt("the Hadamard matrix conjecture", "identify a high-value unresolved order and produce a reproducible symmetry-reduced search plan with verifiable certificates."),
-    verified: "2026-09-04",
-  },
-  {
-    id: "moving-sofa",
-    title: "Moving sofa problem",
-    field: "Mathematics",
-    subfield: "Geometry",
-    summary: "What is the largest rigid shape that can turn through a unit-width right-angled hallway?",
-    statement: "Determine the supremal area of a planar shape that can be moved around a right-angled corner in a corridor of width one.",
-    whyOpen: "Gerver’s construction gives the best classical lower bound, while recent computer-assisted work has tightened the upper bound without meeting it.",
-    smallestStep: "Reproduce the current bounds, parameterize a richer family of smooth shapes, and optimize it with interval-certified collision checks.",
-    agentFit: 94,
-    scale: "foothold",
-    introduced: 1966,
-    location: { name: "Vienna, Austria", longitude: 16.3738, latitude: 48.2082 },
-    tags: ["geometry", "numerical optimization", "interval arithmetic"],
-    tools: ["Julia", "interval arithmetic", "CAD"],
-    sources: [
-      { title: "A new upper bound on the moving sofa problem", url: "https://arxiv.org/abs/2411.19826", kind: "primary" },
-    ],
-    starterPrompt: prompt("the moving sofa problem", "reproduce a known construction and test a strictly broader parameterized family with certified collision constraints."),
     verified: "2026-09-04",
   },
   {
@@ -282,7 +263,7 @@ export const problems: OpenProblem[] = [
     field: "Physics",
     subfield: "Condensed matter",
     summary: "What microscopic mechanism pairs electrons in unconventional superconductors?",
-    statement: "Derive and experimentally discriminate the mechanism responsible for superconductivity in cuprates and related materials at temperatures beyond conventional phonon pairing.",
+    statement: "Establish a quantitatively predictive account of electron pairing in cuprates, and identify observations that distinguish competing microscopic mechanisms.",
     whyOpen: "Competing orders, strong correlations and material complexity generate many plausible models with overlapping experimental signatures.",
     smallestStep: "Mine open spectroscopy data for a discriminating signature between two explicit mechanisms, with leakage-resistant validation.",
     agentFit: 86,
@@ -292,7 +273,8 @@ export const problems: OpenProblem[] = [
     tags: ["materials", "many-body", "data mining"],
     tools: ["PyTorch", "tensor networks", "spectroscopy"],
     sources: [
-      { title: "The challenge of unconventional superconductivity", url: "https://www.nature.com/articles/s41586-023-06751-9", kind: "survey" },
+      { title: "From quantum matter to high-temperature superconductivity in copper oxides", url: "https://www.osti.gov/biblio/1357580", kind: "survey", publishedAt: "2015-02-11", doi: "10.1038/nature14165" },
+      { title: "40 years of cuprate high-Tc superconductors: a perspective on theories", url: "https://arxiv.org/abs/2606.29249", kind: "survey", publishedAt: "2026-06-28", sourceType: "perspective preprint" },
     ],
     starterPrompt: prompt("the mechanism of high-temperature superconductivity", "choose two competing mechanisms and find one quantitative signature that can discriminate between them in public data."),
     verified: "2026-09-04",
@@ -325,7 +307,7 @@ export const problems: OpenProblem[] = [
     subfield: "Structural biology",
     summary: "Can we predict a protein’s full functional motion, not only a likely static structure, from sequence?",
     statement: "Predict conformational ensembles, transition rates and environment-dependent functional dynamics from amino-acid sequence with experimentally calibrated uncertainty.",
-    whyOpen: "Static structure prediction has advanced rapidly, but rare states, kinetics, ligands and cellular context determine much biological function.",
+    whyOpen: "Structure and equilibrium-ensemble prediction have advanced, but predicting rare states, transition rates and responses to cellular conditions remains difficult.",
     smallestStep: "Benchmark one dynamics model against a leakage-audited set of NMR or single-molecule measurements and locate its sharpest failure mode.",
     agentFit: 93,
     scale: "foothold",
@@ -334,7 +316,7 @@ export const problems: OpenProblem[] = [
     tags: ["proteins", "benchmark", "molecular dynamics"],
     tools: ["OpenMM", "JAX", "NMR datasets"],
     sources: [
-      { title: "Protein dynamics and function", url: "https://doi.org/10.1038/s41580-023-00680-9", kind: "survey" },
+      { title: "Protein Dynamics Beyond Structure Prediction", url: "https://arxiv.org/abs/2606.08647", kind: "survey", publishedAt: "2026-06-07", sourceType: "roadmap preprint" },
     ],
     starterPrompt: prompt("sequence-to-protein-dynamics prediction", "build a leakage-audited benchmark for one measurable dynamic property and expose the strongest current model failure."),
     verified: "2026-09-04",
@@ -468,7 +450,7 @@ export const problems: OpenProblem[] = [
     location: { name: "Cambridge, United Kingdom", longitude: 0.1166, latitude: 52.2058 },
     tags: ["quantum gravity", "entropy", "unitarity"],
     tools: ["symbolic algebra", "tensor networks", "literature graph"],
-    sources: [{ title: "The Black Hole Information Problem", url: "https://pubmed.ncbi.nlm.nih.gov/PMC12191829", kind: "survey" }],
+    sources: [{ title: "The Black Hole Information Problem", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12191829/", kind: "index", sourceType: "special-issue editorial" }],
     starterPrompt: prompt("the black hole information problem", "reproduce one island or Page-curve calculation and isolate a single assumption whose controlled failure gives a discriminating result."),
     verified: "2026-09-04",
   },
@@ -525,7 +507,7 @@ export const problems: OpenProblem[] = [
     location: { name: "Strasbourg, France", longitude: 7.7521, latitude: 48.5734 },
     tags: ["chirality", "reaction networks", "origin of life"],
     tools: ["RDKit", "kinetic modeling", "lab automation"],
-    sources: [{ title: "How does chiral information propagate in a prebiotic network?", url: "https://pubmed.ncbi.nlm.nih.gov/PMC7615580", kind: "survey" }],
+    sources: [{ title: "The central dogma of biological homochirality: How does chiral information propagate in a prebiotic network?", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC7615580/", kind: "survey" }],
     starterPrompt: prompt("the origin of biological homochirality", "map experimentally demonstrated chiral amplification routes into one condition-compatible network and locate a single missing reaction interface to test."),
     verified: "2026-09-04",
   },
@@ -563,7 +545,7 @@ export const problems: OpenProblem[] = [
     location: { name: "Berkeley, California", longitude: -122.2585, latitude: 37.8719 },
     tags: ["enhancers", "gene expression", "causal sequence models"],
     tools: ["PyTorch", "MPRA data", "genome browsers"],
-    sources: [{ title: "Decoding enhancer complexity with machine learning and high-throughput discovery", url: "https://pubmed.ncbi.nlm.nih.gov/PMC10176946", kind: "survey" }],
+    sources: [{ title: "Decoding enhancer complexity with machine learning and high-throughput discovery", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10176946/", kind: "survey" }],
     starterPrompt: prompt("predictive enhancer grammar", "construct a cell-type transfer benchmark that distinguishes motif detection from causal regulatory syntax using held-out perturbations."),
     verified: "2026-09-04",
   },
@@ -583,7 +565,7 @@ export const problems: OpenProblem[] = [
     tags: ["climate change", "cloud feedback", "climate sensitivity", "public observations"],
     tools: ["xarray", "Earth observation", "causal inference"],
     sources: [
-      { title: "Mechanisms and model diversity of trade-wind shallow cumulus cloud feedbacks", url: "https://pubmed.ncbi.nlm.nih.gov/PMC5717165", kind: "survey" },
+      { title: "Mechanisms and model diversity of trade-wind shallow cumulus cloud feedbacks", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5717165/", kind: "survey" },
       { title: "Perturbing parameters to understand cloud contributions to climate change", url: "https://arxiv.org/abs/2310.08665", kind: "primary" },
     ],
     starterPrompt: prompt("low-cloud feedback on climate sensitivity", "reproduce one process-oriented cloud-feedback diagnostic across matched public observations and high-resolution simulations, then identify a discriminating result that could rule out one mechanism."),
@@ -605,8 +587,8 @@ export const problems: OpenProblem[] = [
     tags: ["climate change", "ice sheets", "sea-level rise", "tipping points"],
     tools: ["PISM", "xarray", "Bayesian calibration"],
     sources: [
-      { title: "Decadal-scale onset and termination of Antarctic ice-mass loss", url: "https://pubmed.ncbi.nlm.nih.gov/PMC8602255", kind: "primary" },
-      { title: "Spatio-temporal variability across Antarctic ice-bed-ocean interfaces", url: "https://pubmed.ncbi.nlm.nih.gov/PMC6006349", kind: "survey" },
+      { title: "Decadal-scale onset and termination of Antarctic ice-mass loss during the last deglaciation", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC8602255/", kind: "primary" },
+      { title: "Spatio-temporal variability of processes across Antarctic ice-bed-ocean interfaces", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC6006349/", kind: "survey" },
     ],
     starterPrompt: prompt("thresholds for irreversible Antarctic ice loss", "select one data-rich Antarctic basin, reproduce a published retreat experiment, and test one competing instability parameterization under an identical uncertainty model."),
     verified: "2026-09-04",
@@ -627,8 +609,8 @@ export const problems: OpenProblem[] = [
     tags: ["climate change", "permafrost", "carbon cycle", "methane"],
     tools: ["xarray", "geospatial ML", "uncertainty quantification"],
     sources: [
-      { title: "A simplified, data-constrained estimate of the permafrost carbon-climate feedback", url: "https://pubmed.ncbi.nlm.nih.gov/PMC4608038", kind: "primary" },
-      { title: "Timescales of the permafrost carbon cycle and temperature overshoot", url: "https://pubmed.ncbi.nlm.nih.gov/PMC8113593", kind: "primary" },
+      { title: "A simplified, data-constrained approach to estimate the permafrost carbon-climate feedback", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC4608038/", kind: "primary" },
+      { title: "Timescales of the permafrost carbon cycle and legacy effects of temperature overshoot scenarios", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC8113593/", kind: "primary" },
     ],
     starterPrompt: prompt("the permafrost carbon feedback under abrupt thaw", "assemble a leakage-resistant public-data benchmark and isolate the omitted process that contributes most to out-of-sample carbon-flux uncertainty."),
     verified: "2026-09-04",
@@ -648,10 +630,12 @@ export const problems: OpenProblem[] = [
     location: { name: "Tokyo, Japan", longitude: 139.6503, latitude: 35.6762 },
     tags: ["ammonia", "electrocatalysis", "isotope controls"],
     tools: ["DFT", "Bayesian optimization", "lab automation"],
-    sources: [{ title: "Ammonia from dinitrogen at ambient conditions by organometallic catalysts", url: "https://pubmed.ncbi.nlm.nih.gov/PMC9682445", kind: "survey" }],
+    sources: [{ title: "Ammonia from dinitrogen at ambient conditions by organometallic catalysts", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC9682445/", kind: "survey" }],
     starterPrompt: prompt("ambient catalytic nitrogen fixation", "select one reported catalyst and design an isotope-controlled reproduction that accounts for contamination, selectivity and full-system energy use."),
     verified: "2026-09-04",
   },
+  ...additionalMathsProblems,
+  ...additionalScienceProblems,
 ];
 
 export const problemById = new Map(problems.map((problem) => [problem.id, problem]));

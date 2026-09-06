@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "motion/react";
+import Link from "next/link";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { ArcLogo } from "@/components/arc-logo";
 import { SourceFavicon, sourceHost } from "@/components/source-favicon";
@@ -12,6 +13,7 @@ const resultKinds = [...new Set(breakthroughs.map((item) => item.kind))].sort();
 
 interface BreakthroughsPanelProps {
   onClose: () => void;
+  onHome: () => void;
 }
 
 function BreakthroughSourceLink({ title, url }: { title: string; url: string }) {
@@ -27,7 +29,7 @@ function BreakthroughSourceLink({ title, url }: { title: string; url: string }) 
   );
 }
 
-export function BreakthroughsPanel({ onClose }: BreakthroughsPanelProps) {
+export function BreakthroughsPanel({ onClose, onHome }: BreakthroughsPanelProps) {
   const [filter, setFilter] = useState("");
   const [kind, setKind] = useState<BreakthroughKind | "All">("All");
   const visibleBreakthroughs = useMemo(() => {
@@ -104,7 +106,7 @@ export function BreakthroughsPanel({ onClose }: BreakthroughsPanelProps) {
       transition={{ duration: 0.3 }}
     >
       <header className="breakthrough-header">
-        <ArcLogo title="ARC-AGI-N breakthrough log" />
+        <Link href="/" onClick={onHome} className="report-logo" aria-label="Return to the ARC-AGI-N globe"><ArcLogo /></Link>
         <button ref={closeButtonRef} onClick={onClose} aria-label="Return to the problem atlas">
           <ArrowLeft size={15} /> Back to the atlas
         </button>
@@ -116,7 +118,7 @@ export function BreakthroughsPanel({ onClose }: BreakthroughsPanelProps) {
             <p>Maths, science and code</p>
             <h1 id="breakthrough-title">Recent breakthroughs.</h1>
             <p className="breakthrough-lede">
-              {breakthroughs.length} results, with the papers, code and details of how each was checked.
+              {breakthroughs.length} results. Read the original sources and see how each was checked.
             </p>
             <a className="breakthrough-jump" href="#breakthrough-timeline">See the results <ArrowUpRight size={16} /></a>
           </div>
@@ -140,7 +142,7 @@ export function BreakthroughsPanel({ onClose }: BreakthroughsPanelProps) {
         <section id="breakthrough-timeline" className="breakthrough-log" aria-label="Breakthroughs by date">
           <header>
             <h2>Breakthrough log</h2>
-            <p>Newest first · Sources reviewed 5 September 2026</p>
+            <p>Newest first · Updated 6 September 2026</p>
           </header>
           <div className="breakthrough-tools">
             <label><span>Find a result</span><input type="search" value={filter} onChange={(event) => setFilter(event.target.value)} placeholder="Fermat, protein folding, Claude…" /></label>

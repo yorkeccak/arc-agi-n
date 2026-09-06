@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { ArcLogo } from "@/components/arc-logo";
 import { AuthDialog } from "@/components/auth-dialog";
+import { AccountMenu } from "@/components/account-menu";
 import { BreakthroughsPanel } from "@/components/breakthroughs-panel";
 import { ProblemDrawer } from "@/components/problem-drawer";
 import { SourceFavicon, sourceHost } from "@/components/source-favicon";
@@ -268,6 +269,12 @@ export function AtlasApp() {
   };
 
   const resetSearch = () => clearSearch(false);
+  const goHome = () => {
+    resetSearch();
+    closeProblem();
+    closeBreakthroughs();
+    setMobileMenu(false);
+  };
   const browseAtlas = () => clearSearch(true);
 
   const stopSearch = () => {
@@ -284,7 +291,8 @@ export function AtlasApp() {
   };
 
   const logOut = async () => {
-    await fetch("/api/auth/session", { method: "DELETE" });
+    const response = await fetch("/api/auth/session", { method: "DELETE" });
+    if (!response.ok) throw new Error("Could not sign out");
     setUser(undefined);
   };
 
@@ -318,7 +326,7 @@ export function AtlasApp() {
   return (
     <main className="arc-shell" id="atlas">
       <header className="arc-header">
-        <button className="arc-wordmark" aria-label="Return to the ARC-AGI-N globe" onClick={() => { resetSearch(); setSelected(undefined); }}>
+        <button className="arc-wordmark" aria-label="Return to the ARC-AGI-N globe" onClick={goHome}>
           <ArcLogo />
         </button>
         <button
@@ -336,12 +344,8 @@ export function AtlasApp() {
           <button aria-label="Surprise me with a problem" onClick={surprise}>Surprise me</button>
           <button onClick={browseAtlas}>Browse the atlas</button>
           <Link href="/research">Research history</Link>
-          {isValyuMode && (user ? (
-            <button onClick={logOut}>{user.name || user.email.split("@")[0]} · Sign out</button>
-          ) : (
-            <button onClick={() => { setAuthReturnTo(undefined); setAuthOpen(true); }}>Sign in for DeepResearch</button>
-          ))}
         </nav>
+        {isValyuMode && <AccountMenu user={user} onSignOut={logOut} onSignIn={() => { setMobileMenu(false); setAuthReturnTo(undefined); setAuthOpen(true); }} />}
       </header>
 
       <AnimatePresence mode="wait">
@@ -541,7 +545,7 @@ export function AtlasApp() {
       <div className="map-shade" />
 
       {!submittedQuery && !browsing && nearbyProblems.length === 0 && (
-        <div className="map-guide" aria-hidden="true"><i /> Drag to explore · choose a problem</div>
+        <div className="map-guide" aria-hidden="true">Drag to rotate · click a problem</div>
       )}
 
       {nearbyProblems.length > 0 && !selected && (
@@ -557,9 +561,9 @@ export function AtlasApp() {
         </section>
       )}
 
-      {selected && <ProblemDrawer key={selected.id} problem={selected} signedIn={Boolean(user)} isValyuMode={isValyuMode} autoStartResearch={resumeResearch} initialEffort={initialResearchEffort} onClose={closeProblem} onRequireAuth={requireResearchAuth} />}
+      {selected && <ProblemDrawer key={selected.id} problem={selected} signedIn={Boolean(user)} isValyuMode={isValyuMode} autoStartResearch={resumeResearch} initialEffort={initialResearchEffort} onClose={closeProblem} onHome={goHome} onRequireAuth={requireResearchAuth} />}
       <AnimatePresence>
-        {breakthroughsOpen && <BreakthroughsPanel onClose={closeBreakthroughs} />}
+        {breakthroughsOpen && <BreakthroughsPanel onClose={closeBreakthroughs} onHome={goHome} />}
       </AnimatePresence>
       <AuthDialog open={authOpen} onClose={closeAuth} returnTo={authReturnTo} />
     </main>

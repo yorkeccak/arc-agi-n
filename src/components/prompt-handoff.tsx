@@ -19,13 +19,19 @@ export function PromptHandoff({ prompt }: { prompt: string }) {
   const [error, setError] = useState(false);
   const optionsButtonRef = useRef<HTMLButtonElement>(null);
   const previewRef = useRef<HTMLTextAreaElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const targets = buildAgentLinks(prompt);
 
   useEffect(() => {
-    if (expanded) previewRef.current?.focus();
+    if (!expanded) return;
+    const dialog = dialogRef.current;
+    dialog?.showModal();
+    previewRef.current?.focus();
+    return () => dialog?.close();
   }, [expanded]);
 
   const closePreview = () => {
+    dialogRef.current?.close();
     setExpanded(false);
     optionsButtonRef.current?.focus();
   };
@@ -61,7 +67,11 @@ export function PromptHandoff({ prompt }: { prompt: string }) {
         </button>
       </div>
       <p className="copy-feedback" role="status">{error ? "Clipboard unavailable. Select and copy the prompt in the preview." : copied ? "Ready to paste. Or open an app with the options above." : "The question, sources and a suggested first step, ready to paste."}</p>
-      {expanded && <section id="prompt-options" className="prompt-options" aria-label="Prompt preview and app links">
+      {expanded && <dialog ref={dialogRef} id="prompt-options" className="prompt-options" aria-label="Prompt preview and app links" onCancel={(event) => { event.preventDefault(); closePreview(); }} onClick={(event) => {
+        if (event.target !== event.currentTarget) return;
+        const bounds = event.currentTarget.getBoundingClientRect();
+        if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) closePreview();
+      }}>
         <header><strong>Your starting prompt</strong><button aria-label="Close prompt preview" onClick={closePreview}><X size={18} /></button></header>
         <textarea ref={previewRef} aria-label="Starting prompt" readOnly value={prompt} onFocus={(event) => event.target.select()} />
         <p>Desktop apps must be installed. Nothing is submitted automatically. If an app does not open, paste the copied prompt yourself.</p>
@@ -71,7 +81,7 @@ export function PromptHandoff({ prompt }: { prompt: string }) {
           </a>
         ))}</div>
         <p className="prompt-inspiration">Inspired by <a href="https://www.anthropic.com/research/riemann-zeta" target="_blank" rel="noreferrer">the prompt behind a new Riemann zeta bound <ArrowUpRight size={12} /></a>. The hypothesis itself remains open.</p>
-      </section>}
+      </dialog>}
     </div>
   );
 }

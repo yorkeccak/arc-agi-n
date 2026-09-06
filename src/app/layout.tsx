@@ -12,14 +12,14 @@ export const metadata: Metadata = {
     description: "Find an open problem, read the papers, and give your agent a place to start.",
     url: "https://arc-agi-n.com",
     siteName: "ARC-AGI-N",
-    images: [{ url: "/arc-agi-n.png", width: 1280, height: 720 }],
+    images: [{ url: "/share-card.png", width: 1730, height: 909, alt: "ARC-AGI-N: Find open problems. Take a stab at them." }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "ARC-AGI-N - Find more problems to solve",
     description: "AI solved the benchmarks. Now find more problems to solve.",
-    images: ["/arc-agi-n.png"],
+    images: [{ url: "/share-card.png", alt: "ARC-AGI-N: Find open problems. Take a stab at them." }],
   },
 };
 

@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { ArrowLeft, ArrowRight, ArrowUpRight, LoaderCircle } from "lucide-react";
+import Link from "next/link";
+import { ArrowLeft, ArrowRight, ArrowUpRight, ChevronDown, LoaderCircle } from "lucide-react";
 import { ArcLogo } from "@/components/arc-logo";
 import { PromptHandoff } from "@/components/prompt-handoff";
 import { SourceFavicon, sourceHost } from "@/components/source-favicon";
@@ -18,6 +19,7 @@ interface ProblemDrawerProps {
   autoStartResearch?: boolean;
   initialEffort?: ResearchEffort;
   onClose: () => void;
+  onHome: () => void;
   onRequireAuth: (effort: ResearchEffort) => void;
 }
 
@@ -29,12 +31,14 @@ export function ProblemDrawer({
   autoStartResearch = false,
   initialEffort = "fast",
   onClose,
+  onHome,
   onRequireAuth,
 }: ProblemDrawerProps) {
   const router = useRouter();
   const [effort, setEffort] = useState<ResearchEffort>(initialEffort);
   const [startingResearch, setStartingResearch] = useState(false);
   const [researchUncertain, setResearchUncertain] = useState(false);
+  const [actionsExpanded, setActionsExpanded] = useState(true);
   const [error, setError] = useState<string>();
   const drawerRef = useRef<HTMLElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -65,7 +69,7 @@ export function ProblemDrawer({
     closeButtonRef.current?.focus();
 
     const handleKeyboard = (event: KeyboardEvent) => {
-      if (document.querySelector(".auth-dialog")) return;
+      if (document.querySelector(".auth-dialog, dialog[open]")) return;
       if (event.key === "Escape") {
         onClose();
         return;
@@ -73,7 +77,7 @@ export function ProblemDrawer({
       if (event.key !== "Tab" || !drawerRef.current) return;
       const focusable = Array.from(drawerRef.current.querySelectorAll<HTMLElement>(
         "a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex='-1'])",
-      ));
+      )).filter((element) => element.getClientRects().length > 0);
       if (focusable.length === 0) return;
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
@@ -186,9 +190,9 @@ export function ProblemDrawer({
     >
       <div className="drawer-scroll">
         <header className="drawer-header">
-          <ArcLogo title="ARC-AGI-N problem details" />
+          <Link href="/" onClick={onHome} className="report-logo" aria-label="Return to the ARC-AGI-N globe"><ArcLogo /></Link>
           <button ref={closeButtonRef} onClick={onClose} aria-label="Return to previous view"><ArrowLeft size={15} /> Back</button>
-          <button className="drawer-actions-jump" onClick={() => document.getElementById("problem-actions")?.scrollIntoView({ block: "start" })} aria-label="Jump to prompt and research actions">Start here</button>
+          <button className="drawer-actions-jump" onClick={() => { setActionsExpanded(true); document.getElementById("actions-toggle")?.focus(); }} aria-label="Jump to prompt and research actions">Start here</button>
         </header>
 
         <div className="drawer-title-block">
@@ -199,7 +203,7 @@ export function ProblemDrawer({
             <p className="problem-meta-row">Found in papers and web sources<br />Check that it is still open before starting</p>
           ) : (
             <p className="problem-meta-row">
-              First posed {problem.introduced} · {problem.location.name}<br />
+              {problem.introduced && <>First posed {problem.introduced} · </>}{problem.location.name}<br />
               Status last checked {problem.verified}
             </p>
           )}
@@ -211,6 +215,7 @@ export function ProblemDrawer({
             <div><dt>Checking your work</dt><dd>{problem.provisional ? "Confirm the question is still open" : hasExactVerifier ? "Use a solver or proof checker" : "Have the result independently reviewed"}</dd></div>
             <div><dt>Where to focus</dt><dd>{researchHorizon}</dd></div>
             <div><dt>Suggested methods</dt><dd>{problem.tools.slice(0, 3).join(", ")}</dd></div>
+            {problem.agentReadiness && <div><dt>Work needed</dt><dd>{problem.agentReadiness === "agent-ready" ? "Code or data analysis" : problem.agentReadiness === "hybrid" ? "Computation and physical validation" : "Lab or field work"}</dd></div>}
           </dl>
           <p>{problem.provisional ? "This result has not been reviewed. Read the original papers and check for newer work first." : "Check for newer papers before starting. Someone may have already tried your approach."}</p>
         </section>
@@ -261,10 +266,21 @@ export function ProblemDrawer({
       </div>
 
       <footer className="drawer-actions" id="problem-actions">
+        <button id="actions-toggle" className="actions-toggle" aria-expanded={actionsExpanded} aria-controls="problem-action-controls" onClick={() => setActionsExpanded(!actionsExpanded)}>
+          <span>Prompt & research</span><span>{actionsExpanded ? "Hide controls" : "Show controls"}<ChevronDown size={16} /></span>
+        </button>
         {error && <div className="drawer-action-error" role="alert">{error}</div>}
+        <div className="drawer-actions-content" id="problem-action-controls" hidden={!actionsExpanded}>
         <PromptHandoff key={problem.id} prompt={buildSolverBrief(problem)} />
         <div className="research-action-group">
-          <p>Want a research plan first?</p>
+          <button className="primary-action" aria-label="Build a DeepResearch plan for this problem" onClick={startResearch} disabled={startingResearch || researchUncertain}>
+            {startingResearch ? <LoaderCircle className="spin" size={19} /> : null}
+            <span>
+              <b>{startingResearch ? "Starting DeepResearch…" : "Build a DeepResearch plan"}</b>
+              <small>Previous attempts, papers to read, and a plan for your first 72 hours.</small>
+            </span>
+            {!startingResearch && <ArrowRight size={18} />}
+          </button>
           <fieldset className="research-effort" disabled={startingResearch || researchUncertain} aria-describedby="research-effort-note">
             <legend>Research effort</legend>
             <div className="research-effort-options">
@@ -281,15 +297,8 @@ export function ProblemDrawer({
             </div>
             <p id="research-effort-note">More depth takes more time and credits.</p>
           </fieldset>
-          <button className="primary-action" aria-label="Build a DeepResearch plan for this problem" onClick={startResearch} disabled={startingResearch || researchUncertain}>
-            {startingResearch ? <LoaderCircle className="spin" size={19} /> : null}
-            <span>
-              <b>{startingResearch ? "Starting DeepResearch…" : "Build a DeepResearch plan"}</b>
-              <small>What is known, what has been tried, and what to try next. Includes papers and a plan for your first 72 hours.</small>
-            </span>
-            {!startingResearch && <ArrowRight size={18} />}
-          </button>
           <a className="research-powered-by" href="https://valyu.ai" target="_blank" rel="noreferrer">DeepResearch powered by <Image src="/valyu.svg" alt="Valyu" width={42} height={16} /></a>
+        </div>
         </div>
       </footer>
     </aside>
