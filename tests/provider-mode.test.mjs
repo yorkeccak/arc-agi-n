@@ -21,10 +21,12 @@ const loadModule = async (path, { env = {}, dependencies = {}, fetch: mockFetch 
 };
 
 const requestSecurity = await loadModule("../src/lib/request-security.ts");
+const searchDiagnostics = await loadModule("../src/lib/search-diagnostics.ts");
 const sharedDependencies = {
   "next/server": { NextResponse: Response },
   "@/lib/request-security": requestSecurity,
   "@/lib/rate-limit": { checkRateLimit: () => ({ allowed: true, retryAfter: 0 }) },
+  "@/lib/search-diagnostics": searchDiagnostics,
 };
 const createRequest = (path, body, options = {}) => new Request(`https://arc-agi-n.com/api/${path}`, {
   method: "POST",

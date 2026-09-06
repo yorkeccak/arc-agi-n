@@ -13,7 +13,8 @@ import { BreakthroughsPanel } from "@/components/breakthroughs-panel";
 import { ProblemDrawer } from "@/components/problem-drawer";
 import { SourceFavicon, sourceHost } from "@/components/source-favicon";
 import { fieldColors, fields, problems } from "@/lib/problems";
-import { trackEvent } from "@/lib/analytics";
+import { reportSearchFailure, trackEvent } from "@/lib/analytics";
+import { searchRequestId } from "@/lib/search-diagnostics";
 import { readSearchResponse, SearchResponseError } from "@/lib/search-stream";
 import { parseResearchEffort, type ResearchEffort } from "@/lib/research-effort";
 import type { AuthUser } from "@/lib/oauth";
@@ -181,6 +182,8 @@ export function AtlasApp() {
     const startedAt = performance.now();
     const foundSources = new Set<string>();
     const foundProblems = new Set<string>();
+    let requestId: string | undefined;
+    let httpStatus = 0;
     trackEvent("search_started", { field: nextField, origin });
     const controller = new AbortController();
     searchController.current = controller;
@@ -203,6 +206,8 @@ export function AtlasApp() {
         body: JSON.stringify({ query: nextQuery, field: nextField === "All" ? undefined : nextField }),
         signal: controller.signal,
       });
+      requestId = searchRequestId(response.headers.get("x-search-request-id"));
+      httpStatus = response.status;
       await readSearchResponse(response, (event) => {
         if (controller.signal.aborted || searchController.current !== controller) return;
         if (event.type === "status") setSearchPhase(event.message);
@@ -223,7 +228,15 @@ export function AtlasApp() {
       }
     } catch (error) {
       if (controller.signal.aborted || searchController.current !== controller) return;
-      trackEvent("search_failed", { duration_ms: Math.round(performance.now() - startedAt) });
+      reportSearchFailure({
+        reason: error instanceof SearchResponseError ? error.reason : error instanceof TypeError ? "network_error" : "unknown",
+        request_id: requestId,
+        http_status: httpStatus,
+        duration_ms: Math.min(3_600_000, Math.round(performance.now() - startedAt)),
+        source_count: foundSources.size,
+        problem_count: foundProblems.size,
+        online: navigator.onLine,
+      });
       setSearchError(error instanceof SearchResponseError ? error.message : "The search connection was interrupted. Please try again.");
       controller.abort();
     } finally {
