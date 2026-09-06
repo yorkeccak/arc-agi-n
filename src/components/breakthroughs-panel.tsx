@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { ArcLogo } from "@/components/arc-logo";
+import { RepositoryLink } from "@/components/repository-link";
 import { SourceFavicon, sourceHost } from "@/components/source-favicon";
 import { breakthroughs, type BreakthroughKind } from "@/lib/breakthroughs";
 import { trackEvent } from "@/lib/analytics";
@@ -183,6 +184,7 @@ export function BreakthroughsPanel({ onClose, onHome }: BreakthroughsPanelProps)
           <p>What will you work on next?</p>
           <button onClick={onClose}>Find an open problem <ArrowUpRight size={16} /></button>
         </footer>
+        <RepositoryLink />
       </div>
     </motion.section>
   );

@@ -25,6 +25,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .sr-only { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
 
 /* Brand */
+.repository-footer { display: flex; flex: none; justify-content: center; width: 100%; padding: 8px 0; pointer-events: none; }
+.repository-footer a { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 44px; min-height: 44px; padding: 0 12px; border-radius: 8px; color: var(--muted); font-size: 13px; text-decoration: none; pointer-events: auto; transition: color .15s, background .15s; }
+.repository-footer a:hover { color: var(--white); background: #ffffff0a; }
+.repository-footer svg { flex: none; }
 .arc-logo-type { fill: currentColor; font-family: var(--font-now); font-size: 25px; font-weight: 700; letter-spacing: -.75px; }
 .arc-logo-n { fill: none; stroke: currentColor; stroke-width: 2.7; stroke-linecap: square; stroke-linejoin: bevel; }
 .arc-logo-flight { fill: none; stroke: var(--signal); stroke-width: 2.2; stroke-linecap: square; stroke-linejoin: bevel; }

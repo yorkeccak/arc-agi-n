@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "reac
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, Check, CirclePause, Copy, Download, LogIn, LoaderCircle, RefreshCw } from "lucide-react";
 import { ArcLogo } from "@/components/arc-logo";
+import { RepositoryLink } from "@/components/repository-link";
 import { AuthDialog } from "@/components/auth-dialog";
 import { ResearchDocument, countUnresolvedCitations, extractReportSections } from "@/components/research-document";
 import { SourceFavicon, sourceHost } from "@/components/source-favicon";
@@ -308,6 +309,7 @@ export function ResearchReport({ taskId, access, selfHosted }: ResearchReportPro
           </section>
         )}
       </div>
+      <RepositoryLink />
     </main>
     <AuthDialog open={authOpen} onClose={() => setAuthOpen(false)} returnTo={typeof window === "undefined" ? undefined : `${window.location.pathname}${window.location.search}`} />
     </>
