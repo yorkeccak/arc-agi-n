@@ -1,6 +1,6 @@
 "use client";
 
-import { Children, isValidElement, type ReactNode, useMemo, useState } from "react";
+import { Children, isValidElement, memo, type ReactNode, useMemo, useState } from "react";
 import { ArrowUpRight, Check, Copy, ImageIcon } from "lucide-react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import rehypeKatex from "rehype-katex";
@@ -194,7 +194,7 @@ function ReportCodeBlock({ children }: { children: ReactNode }) {
   );
 }
 
-export function ResearchDocument({ content, sources = [] }: { content: string; sources?: ResearchSource[] }) {
+export const ResearchDocument = memo(function ResearchDocument({ content, sources = [] }: { content: string; sources?: ResearchSource[] }) {
   const prepared = useMemo(() => replaceBareCitations(stripTerminalSources(prepareReportMarkdown(content)), sources), [content, sources]);
   const headingIds = useMemo(() => reportHeadings(prepared).byLine, [prepared]);
   const sourceMap = useMemo(() => new Map(sources.flatMap((source) => [
@@ -278,4 +278,4 @@ export function ResearchDocument({ content, sources = [] }: { content: string; s
       {prepared}
     </ReactMarkdown>
   );
-}
+});

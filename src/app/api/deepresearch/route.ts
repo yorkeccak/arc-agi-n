@@ -13,6 +13,8 @@ import type { OpenProblem } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
+const researchTools = { code_execution: true, charts: true };
+
 const buildQuery = (problem: OpenProblem) => {
   const sourceLedger = problem.sources.map((source, index) => [
     `${index + 1}. ${source.title}`,
@@ -42,6 +44,8 @@ Produce:
 7. A 72-hour starting plan with reproducible experiments, tests, falsification criteria and required tools.
 8. An agent-ready prompt that forbids claiming numerical evidence as proof and requires a claim ledger.
 
+Use code execution for useful numerical checks and reproducible experiments. Include charts where they clarify results, with labelled axes and source data. Do not invent measurements or treat a computation as a proof.
+
 Return polished GitHub-flavoured Markdown. Put inline mathematics inside $...$ and display equations on separate lines inside $$...$$ so a KaTeX renderer can typeset them. Use fenced code blocks with a language identifier. Use web sources and academic literature, preferring primary sources. Every material claim needs a directly linked citation in the form [[n]](https://source-url). Never emit an unlinked citation number and never cite an identifier that is absent from the returned source set.`;
 };
 
@@ -66,6 +70,7 @@ async function createViaOAuth(problem: OpenProblem, accessToken: string, effort:
         query: buildQuery(problem),
         mode: effort,
         output_formats: ["markdown", "pdf"],
+        tools: researchTools,
         alert_email: alertEmail,
         metadata: { source: "arc-agi-n", problem_id: problem.id, problem_title: problem.title, effort },
       },
@@ -143,6 +148,7 @@ export async function POST(request: Request) {
         query: buildQuery(problem),
         mode: effort,
         outputFormats: ["markdown", "pdf"],
+        tools: researchTools,
         alertEmail: userEmail,
         metadata: { source: "arc-agi-n", problem_id: problem.id, problem_title: problem.title, effort },
       }), 30_000, "DeepResearch launch timed out");
