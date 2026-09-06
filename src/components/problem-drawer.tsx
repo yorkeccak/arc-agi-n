@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, ArrowUpRight, ChevronDown, LoaderCircle } from "lucide-react";
 import { ArcLogo } from "@/components/arc-logo";
+import { RepositoryLink } from "@/components/repository-link";
 import { PromptHandoff } from "@/components/prompt-handoff";
 import { SourceFavicon, sourceHost } from "@/components/source-favicon";
 import { buildSolverBrief } from "@/lib/solver-brief";
@@ -277,6 +278,7 @@ export function ProblemDrawer({
           </div>
         </section>
 
+        <RepositoryLink />
       </div>
 
       <footer className="drawer-actions" id="problem-actions">

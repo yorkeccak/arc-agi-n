@@ -6,6 +6,7 @@ import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "re
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { ArcLogo } from "@/components/arc-logo";
+import { RepositoryLink } from "@/components/repository-link";
 import { AuthDialog } from "@/components/auth-dialog";
 import { AccountMenu } from "@/components/account-menu";
 import { BreakthroughsPanel } from "@/components/breakthroughs-panel";
@@ -402,6 +403,7 @@ export function AtlasApp() {
             </div>
 
             {fieldNavigation}
+            <RepositoryLink />
           </motion.section>
         )}
       </AnimatePresence>
@@ -545,6 +547,7 @@ export function AtlasApp() {
                   </button>
                 ))}
               </section>
+              <RepositoryLink />
             </div>
           </motion.section>
         )}

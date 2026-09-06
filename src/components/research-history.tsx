@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, BookOpen, Check, Clock3, LoaderCircle, RefreshCw, Search } from "lucide-react";
 import { ArcLogo } from "@/components/arc-logo";
+import { RepositoryLink } from "@/components/repository-link";
 import { readLocalResearchHistory, type LocalResearchJob } from "@/lib/local-research-history";
 import type { ResearchHistoryJob } from "@/lib/research-history";
 
@@ -143,6 +144,7 @@ export function ResearchHistory({ selfHosted }: { selfHosted: boolean }) {
           </>
         )}
       </div>
+      <RepositoryLink />
     </main>
   );
 }
