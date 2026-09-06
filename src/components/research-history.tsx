@@ -103,7 +103,7 @@ export function ResearchHistory({ selfHosted }: { selfHosted: boolean }) {
             <BookOpen size={28} strokeWidth={1.4} />
             <h2>Sign in to see your reports.</h2>
             <p>Sign in with the Valyu account you use for DeepResearch to see your reports and running jobs. Problem search stays free to use without signing in.</p>
-            <a className="history-primary" href="/api/oauth/start?returnTo=%2Fresearch">Continue with Valyu <ArrowRight size={17} /></a>
+            <a className="history-primary" href="/api/oauth/start?returnTo=%2Fresearch" onClick={() => trackEvent("sign_in_started", { resumes_research: false })}>Continue with Valyu <ArrowRight size={17} /></a>
           </section>
         ) : (
           <>
