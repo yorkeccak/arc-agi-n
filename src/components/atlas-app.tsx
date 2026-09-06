@@ -324,7 +324,7 @@ export function AtlasApp() {
   );
 
   return (
-    <main className="arc-shell" id="atlas">
+    <main className={`arc-shell${!submittedQuery && !browsing ? " is-landing" : ""}`} id="atlas">
       <header className="arc-header">
         <button className="arc-wordmark" aria-label="Return to the ARC-AGI-N globe" onClick={goHome}>
           <ArcLogo />
@@ -369,7 +369,7 @@ export function AtlasApp() {
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 maxLength={500}
-                placeholder='Try “Open problems in climate science”'
+                placeholder="Find open problems…"
                 aria-label="Search open problems by field, method, dataset, or time budget"
               />
               <button type="submit" aria-label="Find open problems" disabled={query.trim().length < 2}><ArrowRight size={22} strokeWidth={1.5} /></button>
