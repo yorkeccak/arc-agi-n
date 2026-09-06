@@ -1,6 +1,6 @@
 # Hosting
 
-ARC-AGI-N is a Next.js application with two deployment modes. Most personal deployments should use self-hosted mode: no sign-in, one server-side API key, and no database to manage.
+ARC-AGI-N is a Next.js application with two deployment modes. Most personal deployments should use self-hosted mode: no sign-in, server-side API keys, and no database to manage.
 
 ## Self-hosted deployment
 
@@ -14,7 +14,7 @@ NEXT_PUBLIC_SITE_URL=https://research.example.com
 NEXT_PUBLIC_APP_URL=https://research.example.com
 ```
 
-Add your `VALYU_API_KEY`, `NEXT_PUBLIC_MAPBOX_TOKEN` and a strong `RESEARCH_TOKEN_SECRET`. Optional `DEEPRESEARCH_ALERT_EMAIL` enables the provider's standard completion email. The app displays a signed report link when a task starts; that link is an access capability and should remain private.
+Add your `VALYU_API_KEY`, `OPENAI_API_KEY`, `NEXT_PUBLIC_MAPBOX_TOKEN` and a strong `RESEARCH_TOKEN_SECRET`. Both API keys are required for live search in either mode. Optional `DEEPRESEARCH_ALERT_EMAIL` enables the provider's standard completion email. The app displays a signed report link when a task starts; that link is an access capability and should remain private.
 
 All search and research requests use the deployment owner's API account. Add access controls and provider-side spending limits before allowing other people to use the instance.
 
@@ -30,6 +30,7 @@ NEXT_PUBLIC_SITE_URL=https://research.example.com
 NEXT_PUBLIC_APP_URL=https://research.example.com
 NEXT_PUBLIC_MAPBOX_TOKEN=pk_your_mapbox_public_token
 VALYU_API_KEY=your_valyu_api_key
+OPENAI_API_KEY=your_openai_api_key
 NEXT_PUBLIC_VALYU_SUPABASE_URL=https://auth.valyu.ai
 NEXT_PUBLIC_VALYU_CLIENT_ID=your_client_id
 VALYU_CLIENT_SECRET=your_client_secret
@@ -38,9 +39,11 @@ NEXT_PUBLIC_REDIRECT_URI=https://research.example.com/auth/valyu/callback
 RESEARCH_TOKEN_SECRET=replace_with_a_random_64_character_hex_value
 ```
 
-Replace the example origin with your domain. Keep preview and production credentials separate, and register only the callback URLs you need. Do not expose `VALYU_CLIENT_SECRET` or `VALYU_API_KEY` through public variables.
+Replace the example origin with your domain. Keep preview and production credentials separate, and register only the callback URLs you need. Never expose API keys or client secrets through public variables.
 
 The owner API key is required in both modes. Public search spends that account's credits without visitor authentication, so configure edge abuse protection and provider-side spending limits before launch. DeepResearch sign-in does not limit public search spending.
+
+Each search is bounded to four retrieval calls, five model steps and a 165-second deadline. Source cards arrive as retrieval completes; structured problem cards stream individually. These per-request limits complement the IP rate limit, not an account-wide spending cap.
 
 ## Deployment checks
 

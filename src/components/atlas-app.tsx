@@ -431,7 +431,7 @@ export function AtlasApp() {
                 {searchError && <div className="search-error" role="alert">{searchError} <button onClick={() => void search(submittedQuery)}>Retry search</button></div>}
                 {leads.length > 0 && (
                   <div className="source-stream">
-                    <div className="source-stream-head"><span>{loading ? "Sources arriving" : "Sources scanned"}</span><span>{leads.length}</span></div>
+                    <div className="source-stream-head"><span>{loading ? "Sources arriving" : "Sources found"}</span><span>{leads.length}</span></div>
                     <div className="source-track">
                       <AnimatePresence initial={false}>
                         {leads.map((lead, index) => (
@@ -465,7 +465,7 @@ export function AtlasApp() {
                     <div className="discovered-meta">
                       <span>{problem.field}</span>
                       <span>{problem.subfield}</span>
-                      <span className={`evidence-${problem.evidenceStrength || "provisional"}`}>{problem.evidenceStrength === "strong" ? "Found in multiple sources" : "One source - check for newer work"}</span>
+                      <span className={`evidence-${problem.evidenceStrength || "provisional"}`}>{problem.sourceUrls.length} {problem.sourceUrls.length === 1 ? "source" : "sources"} · Check latest status</span>
                     </div>
                     <h4>{problem.title}</h4>
                     <p className="discovered-question">{problem.question}</p>
@@ -486,7 +486,7 @@ export function AtlasApp() {
                               <span>
                                 <small>{lead?.sourceType || sourceHost(evidence.url)}{lead?.publishedAt ? ` · ${lead.publishedAt.slice(0, 10)}` : ""}</small>
                                 <b>{lead?.title || sourceHost(evidence.url)}</b>
-                                <q>{evidence.passage}</q>
+                                {evidence.passage && <q>{evidence.passage}</q>}
                               </span>
                               <ArrowRight size={13} />
                             </a>

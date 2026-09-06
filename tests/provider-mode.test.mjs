@@ -32,12 +32,12 @@ const createRequest = (path, body, options = {}) => new Request(`https://arc-agi
   body: JSON.stringify(body),
   signal: options.signal,
 });
-const loadSearch = (env, fetch) => loadModule("../src/app/api/search/route.ts", {
+const loadSearch = (env, runDiscovery = async () => 0, dependencies = {}) => loadModule("../src/app/api/search/route.ts", {
   env,
-  fetch,
   dependencies: {
     ...sharedDependencies,
-    "@/lib/research-token": { issueResearchToken: () => "test-signature" },
+    "@/lib/search-discovery": { runDiscovery },
+    ...dependencies,
   },
 });
 
@@ -49,157 +49,134 @@ test("self-hosted is the default and only valyu selects hosted research", async 
   }
 });
 
-test("search is public and uses only the deployment key in every mode", async () => {
+const searchEnv = { VALYU_API_KEY: "test-deployment-key", OPENAI_API_KEY: "test-model-key" };
+const readEvents = async (response) => (await response.text()).trim().split("\n").filter(Boolean).map(JSON.parse);
+
+test("search is public and uses deployment keys in every mode", async () => {
   for (const mode of [undefined, "self-hosted", "valyu"]) {
     const calls = [];
-    const { POST } = await loadSearch({ NEXT_PUBLIC_APP_MODE: mode, VALYU_API_KEY: "test-deployment-key" }, async (url, options) => {
-      calls.push({ url, options });
-      return url.endsWith("/search")
-        ? Response.json({ success: true, results: [] })
-        : new Response('data: {"success":true,"contents":{"problems":[]}}\n\ndata: [DONE]\n\n');
-    });
+    const { POST } = await loadSearch({ ...searchEnv, NEXT_PUBLIC_APP_MODE: mode }, async (options) => { calls.push(options); });
     for (const headers of [{}, { cookie: "unsolved_access=untrusted-cookie" }]) {
       const response = await POST(createRequest("search", { query: "Open problems in quantum physics" }, { headers }));
       assert.equal(response.status, 200);
-      assert.match(await response.text(), /"type":"done"/);
+      assert.equal((await readEvents(response)).at(-1).type, "done");
     }
-    assert.equal(calls.length, 6);
-    for (const { url, options } of calls) {
-      assert.ok(url.startsWith("https://api.valyu.ai/v1/"));
-      assert.equal(options.headers["x-api-key"], "test-deployment-key");
-      assert.equal(options.headers.Authorization, undefined);
-      if (url.endsWith("/search")) {
-        const payload = JSON.parse(options.body);
-        assert.equal(payload.is_tool_call, true);
-        assert.ok(Array.isArray(payload.excluded_sources));
-        assert.equal(payload.exclude_sources, undefined);
-      }
+    assert.equal(calls.length, 2);
+    for (const options of calls) {
+      assert.equal(options.apiKey, searchEnv.VALYU_API_KEY);
+      assert.equal(options.openaiKey, searchEnv.OPENAI_API_KEY);
+      assert.equal(options.query, "Open problems in quantum physics");
+      assert.equal(options.accessToken, undefined);
     }
   }
 });
 
-test("public search cannot fall back to OAuth when its deployment key is absent", async () => {
-  const { POST } = await loadSearch({ NEXT_PUBLIC_APP_MODE: "valyu" });
-  const response = await POST(createRequest("search", { query: "Open problems in physics" }, {
-    headers: { cookie: "unsolved_access=untrusted-cookie" },
-  }));
-  assert.equal(response.status, 503);
-});
-
-test("access challenges are excluded from visible sources and synthesis grounding", async () => {
-  const blockedTitles = ["Checking your browser - reCAPTCHA", "Access denied", "Just a moment...", "Attention Required! | Cloudflare", "Client Challenge"];
-  const { POST } = await loadSearch({ VALYU_API_KEY: "test-deployment-key" }, async (url, options) => {
-    if (url.endsWith("/search")) {
-      return Response.json({ success: true, results: [
-        ...blockedTitles.map((title, index) => ({ title, url: `https://www.nature.com/articles/blocked-${index}`, content: "Please verify you are human." })),
-        { title: "Cloud feedback uncertainty", url: "https://www.nature.com/articles/valid-paper", content: "Cloud feedback remains uncertain." },
-      ] });
-    }
-    const query = JSON.parse(options.body).query;
-    for (const title of blockedTitles) assert.equal(query.includes(title), false);
-    assert.match(query, /Cloud feedback uncertainty/);
-    return new Response('data: {"success":true,"contents":{"problems":[]}}\n\n');
-  });
-  const response = await POST(createRequest("search", { query: "Open problems in climate science" }));
-  const events = (await response.text()).trim().split("\n").map((line) => JSON.parse(line));
-  assert.deepEqual(events.filter((event) => event.type === "source").map((event) => event.lead.title), ["Cloud feedback uncertainty"]);
-});
-
-test("explicit open-status passages must still match a retrieved paper", async () => {
-  const paperUrl = "https://arxiv.org/pdf/2502.19278.pdf";
-  const observedPassage = "The problem of outcomes is still open: After the basis is chosen and quantum superpositions are suppressed";
-  const candidate = (url, passage) => ({
-    title: "Problem of outcomes in quantum measurements",
-    question: "Why does a measurement yield a single definite outcome?",
-    whyOpen: "The review describes the outcome problem as open.",
-    firstStep: "Reproduce a published decoherence example with QuTiP.",
-    field: "Physics",
-    subfield: "Quantum foundations",
-    sourceEvidence: [{ url, passage }],
-    agentReadiness: "agent-ready",
-    executionResources: "Python and QuTiP",
-    successCriterion: "A reproducible comparison against the published baseline.",
-  });
-  for (const [sourceUrl, sourceText, passage, expected] of [
-    [paperUrl, observedPassage, observedPassage, 1],
-    [paperUrl, observedPassage.replace("is still open", "is open"), observedPassage.replace("is still open", "is open"), 1],
-    [paperUrl, "The retrieved paper discusses a different topic entirely.", observedPassage, 0],
-    ["https://arxiv.org/list/quant-ph/new", observedPassage, observedPassage, 0],
-  ]) {
-    const { POST } = await loadSearch({ VALYU_API_KEY: "test-deployment-key" }, async (url, options) => {
-      if (url.endsWith("/search")) {
-        return Response.json({ success: true, results: [{
-          title: "The Quantum Measurement Problem: A Review of Recent Trends",
-          url: sourceUrl,
-          source_type: "academic paper",
-          content: sourceText,
-        }] });
-      }
-      if (sourceUrl.includes("/list/")) assert.equal(JSON.parse(options.body).query.includes(sourceUrl), false);
-      return new Response(`data: ${JSON.stringify({ success: true, contents: { problems: [candidate(sourceUrl, passage)] } })}\n\n`);
-    });
-    const response = await POST(createRequest("search", { query: "Open problems in quantum physics" }));
-    const events = (await response.text()).trim().split("\n").map((line) => JSON.parse(line));
-    assert.equal(events.filter((event) => event.type === "problem").length, expected);
+test("public search requires both deployment keys and cannot fall back to OAuth", async () => {
+  for (const env of [{}, { VALYU_API_KEY: searchEnv.VALYU_API_KEY }, { OPENAI_API_KEY: searchEnv.OPENAI_API_KEY }]) {
+    const { POST } = await loadSearch({ ...env, NEXT_PUBLIC_APP_MODE: "valyu" }, async () => assert.fail("Missing credentials must not start discovery"));
+    const response = await POST(createRequest("search", { query: "Open problems in physics" }, { headers: { cookie: "unsolved_access=untrusted-cookie" } }));
+    assert.equal(response.status, 503);
+    assert.doesNotMatch(await response.text(), /test-model-key|test-deployment-key|untrusted-cookie/);
   }
 });
 
-test("provider failures produce a sanitized error rather than successful empty results", async () => {
-  for (const failure of [
-    'data: {"success":false,"error":"provider-private-detail"}\n\n',
-    'data:{"type":"error","message":"provider-private-detail"}\n\n',
-    'data: {"error":{"message":"provider-private-detail"}}\n\n',
-    'event: error\ndata: provider-private-detail\n\n',
-  ]) {
-    const { POST } = await loadSearch({ VALYU_API_KEY: "test-deployment-key", NODE_ENV: "production" }, async (url) => {
-      return url.endsWith("/search")
-        ? Response.json({ success: true, results: [] })
-        : new Response(`${failure}data: [DONE]\n\n`);
-    });
+test("search streams sources and individual problems before discovery finishes", async () => {
+  let finish;
+  const pending = new Promise((resolve) => { finish = resolve; });
+  const lead = { title: "Quantum measurement review", url: "https://arxiv.org/abs/2502.19278", snippet: "The general question remains unsolved.", source: "arxiv.org", relevance: 1 };
+  const problem = { title: "Measurement outcomes", question: "Why one outcome?", sourceUrls: [lead.url] };
+  const { POST } = await loadSearch(searchEnv, async ({ onStatus, onSource, onProblem }) => {
+    onStatus("Reading retrieved papers");
+    onSource(lead);
+    onProblem(problem);
+    await pending;
+  });
+  const response = await POST(createRequest("search", { query: "Open problems in quantum physics" }));
+  assert.match(response.headers.get("content-type"), /application\/x-ndjson/);
+  assert.match(response.headers.get("cache-control"), /no-store/);
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let partial = "";
+  while (!partial.includes('"type":"problem"')) {
+    const { value, done } = await reader.read();
+    assert.equal(done, false);
+    partial += decoder.decode(value);
+  }
+  assert.doesNotMatch(partial, /"type":"done"/);
+  const earlyEvents = partial.trim().split("\n").map(JSON.parse);
+  assert.deepEqual(earlyEvents.find((event) => event.type === "source").lead, lead);
+  assert.equal(earlyEvents.find((event) => event.type === "problem").problem.title, problem.title);
+  finish();
+  let remainder = "";
+  while (true) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    remainder += decoder.decode(value);
+  }
+  assert.match(remainder, /"type":"done"/);
+});
+
+test("provider failures emit a sanitized error without reporting success", async () => {
+  for (const detail of ["provider-private-detail", "credits test-deployment-key", "timed out test-model-key"]) {
+    const { POST } = await loadSearch({ ...searchEnv, NODE_ENV: "production" }, async () => { throw new Error(detail); });
     const response = await POST(createRequest("search", { query: "Open problems in physics" }));
     const output = await response.text();
-    const events = output.trim().split("\n").map((line) => JSON.parse(line));
-    assert.deepEqual(events.at(-1), { type: "error", message: "Live research search failed. Try again." });
+    const events = output.trim().split("\n").map(JSON.parse);
+    assert.equal(events.at(-1).type, "error");
     assert.equal(events.some((event) => event.type === "done"), false);
-    assert.doesNotMatch(output, /provider-private-detail/);
+    assert.doesNotMatch(output, /provider-private-detail|test-deployment-key|test-model-key/);
   }
 });
 
-test("cancelling evidence search aborts both requests and never starts Answer", async () => {
-  const signals = [];
-  const { POST } = await loadSearch({ VALYU_API_KEY: "test-deployment-key" }, async (url, options) => {
-    assert.ok(url.endsWith("/search"), "Answer must not start after cancellation");
-    signals.push(options.signal);
-    return new Promise((_, reject) => options.signal.addEventListener("abort", () => reject(options.signal.reason), { once: true }));
+test("request cancellation aborts discovery without a misleading error or completion", async () => {
+  let discoverySignal;
+  const { POST } = await loadSearch(searchEnv, async ({ signal }) => {
+    discoverySignal = signal;
+    await new Promise((_, reject) => signal.addEventListener("abort", () => reject(signal.reason), { once: true }));
   });
   const controller = new AbortController();
   const response = await POST(createRequest("search", { query: "Open problems in physics" }, { signal: controller.signal }));
-  assert.equal(signals.length, 2);
   controller.abort();
-  await response.text();
-  assert.ok(signals.every((signal) => signal.aborted));
+  const events = await readEvents(response);
+  assert.equal(discoverySignal.aborted, true);
+  assert.equal(events.some((event) => event.type === "error" || event.type === "done"), false);
 });
 
-test("cancelling Answer stops the direct API stream", async () => {
-  let answerSignal;
-  let notifyAnswer;
-  const answerStarted = new Promise((resolve) => { notifyAnswer = resolve; });
-  const { POST } = await loadSearch({ VALYU_API_KEY: "test-deployment-key" }, async (url, options) => {
-    if (url.endsWith("/search")) return Response.json({ success: true, results: [] });
-    answerSignal = options.signal;
-    notifyAnswer();
-    return new Response(new ReadableStream({
-      start(controller) {
-        options.signal.addEventListener("abort", () => controller.error(options.signal.reason), { once: true });
-      },
-    }));
+test("closing the response stream aborts upstream discovery", async () => {
+  let discoverySignal;
+  const { POST } = await loadSearch(searchEnv, async ({ signal }) => {
+    discoverySignal = signal;
+    await new Promise((_, reject) => signal.addEventListener("abort", () => reject(signal.reason), { once: true }));
   });
-  const controller = new AbortController();
-  const response = await POST(createRequest("search", { query: "Open problems in physics" }, { signal: controller.signal }));
-  await answerStarted;
-  controller.abort();
-  await response.text();
-  assert.equal(answerSignal.aborted, true);
+  const response = await POST(createRequest("search", { query: "Open problems in physics" }));
+  await response.body.cancel();
+  assert.equal(discoverySignal.aborted, true);
+});
+
+test("invalid queries, fields, and oversized bodies never start paid discovery", async () => {
+  const { POST } = await loadSearch(searchEnv, async () => assert.fail("Invalid request reached discovery"));
+  for (const body of [{}, { query: " " }, { query: "x" }, { query: 12 }, { query: "x".repeat(501) }, { query: "physics", field: "unknown" }, { query: "physics", field: {} }, null]) {
+    assert.equal((await POST(createRequest("search", body))).status, 400);
+  }
+  assert.equal((await POST(createRequest("search", { query: "physics", padding: "x".repeat(12_000) }))).status, 413);
+  assert.equal((await POST(new Request("https://arc-agi-n.com/api/search", { method: "POST", headers: { "content-type": "application/json" }, body: "{" }))).status, 400);
+});
+
+test("cross-site requests and non-JSON requests never start discovery", async () => {
+  const { POST } = await loadSearch(searchEnv, async () => assert.fail("Unsafe request reached discovery"));
+  for (const headers of [{ origin: "https://other.example" }, { "sec-fetch-site": "cross-site" }]) {
+    assert.equal((await POST(createRequest("search", { query: "physics" }, { headers }))).status, 403);
+  }
+  assert.equal((await POST(createRequest("search", { query: "physics" }, { headers: { "content-type": "text/plain" } }))).status, 415);
+});
+
+test("rate limiting stops discovery and returns a retry delay", async () => {
+  const { POST } = await loadSearch(searchEnv, async () => assert.fail("Rate-limited request reached discovery"), {
+    "@/lib/rate-limit": { checkRateLimit: () => ({ allowed: false, retryAfter: 37 }) },
+  });
+  const response = await POST(createRequest("search", { query: "physics" }));
+  assert.equal(response.status, 429);
+  assert.equal(response.headers.get("retry-after"), "37");
 });
 
 const canonicalProblem = {
