@@ -29,6 +29,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .repository-footer a { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 44px; min-height: 44px; padding: 0 12px; border-radius: 8px; color: var(--muted); font-size: 13px; text-decoration: none; pointer-events: auto; transition: color .15s, background .15s; }
 .repository-footer a:hover { color: var(--white); background: #ffffff0a; }
 .repository-footer svg { flex: none; }
+.arc-hero > .repository-footer { position: absolute; right: 76px; bottom: 32px; width: auto; padding: 0; }
+.arc-hero > .repository-footer a { width: 44px; padding: 0; border-radius: 50%; }
+.arc-hero > .repository-footer span { display: none; }
 .arc-logo-type { fill: currentColor; font-family: var(--font-now); font-size: 25px; font-weight: 700; letter-spacing: -.75px; }
 .arc-logo-n { fill: none; stroke: currentColor; stroke-width: 2.7; stroke-linecap: square; stroke-linejoin: bevel; }
 .arc-logo-flight { fill: none; stroke: var(--signal); stroke-width: 2.2; stroke-linecap: square; stroke-linejoin: bevel; }
@@ -784,6 +787,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .arc-header > nav { display: none; }.arc-header > nav.is-open { position: absolute; top: 71px; left: 0; right: 0; display: grid; padding: 9px 20px 18px; border-bottom: 1px solid var(--line-strong); background: var(--panel); }.arc-header > nav.is-open button, .arc-header > nav.is-open a { min-height: 44px; display: flex; align-items: center; border-bottom: 1px solid var(--line); }
   .mobile-menu { display: block; margin-left: auto; }
   .arc-hero { position: relative; inset: auto; min-height: 100svh; padding: 108px 20px calc(88px + env(safe-area-inset-bottom)); }
+  .arc-hero > .repository-footer { right: 80px; bottom: calc(22px + env(safe-area-inset-bottom)); }
   .arc-hero > * { flex-shrink: 0; }
   .hero-copy-block { width: min(100%, 760px); pointer-events: auto; }.hero-proof { max-width: 580px; margin-left: auto; margin-right: auto; font-size: 12px; }
   .arc-hero h1 { max-width: 720px; font-size: clamp(47px, 11vw, 82px); }
