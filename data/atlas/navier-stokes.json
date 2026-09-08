@@ -1,12 +1,12 @@
 {
   "id": "navier-stokes",
-  "title": "Navier-Stokes regularity",
+  "title": "Unforced Navier-Stokes regularity",
   "field": "Physics",
   "subfield": "Fluid mechanics",
-  "summary": "Can a smooth three-dimensional fluid develop a singularity in finite time?",
-  "statement": "For incompressible 3D Navier-Stokes flow with smooth initial data, do smooth solutions exist for all time, or can blow-up occur?",
-  "whyOpen": "Energy estimates control average behaviour but not the multiscale concentration needed to rule out singularities.",
-  "smallestStep": "Reproduce a regularity criterion or probe a carefully defined family of initial conditions with validated numerics and error bounds.",
+  "summary": "Can a smooth three-dimensional fluid develop a singularity without an external force?",
+  "statement": "For unforced incompressible 3D Navier-Stokes flow with smooth initial data, do smooth solutions exist for all time, or can blow-up occur?",
+  "whyOpen": "A newly released construction gives finite-time blow-up with smooth forcing, resolving the forced alternatives in the Clay formulation. It does not settle whether the unforced equations can blow up.",
+  "smallestStep": "Identify which step in the forced blow-up construction depends essentially on the forcing term and test a precisely stated unforced analogue.",
   "agentFit": 58,
   "scale": "monument",
   "introduced": 1934,
@@ -30,8 +30,13 @@
       "title": "Clay Mathematics Institute: Navier-Stokes Equation",
       "url": "https://www.claymath.org/millennium/navier-stokes-equation/",
       "kind": "primary"
+    },
+    {
+      "title": "OpenAI: On the Navier-Stokes Millennium Prize Problem",
+      "url": "https://openai.com/index/navier-stokes-solution/",
+      "kind": "primary"
     }
   ],
-  "starterPrompt": "You are beginning a serious research attempt on: 3D Navier-Stokes existence and smoothness.\n\nYour first objective is not to claim a proof. It is to reproduce a precise regularity criterion and design a validated numerical test on a bounded family of initial data.\n\nWork reproducibly:\n1. Restate the problem with exact definitions and identify every quantifier.\n2. Search for the strongest known results and failed approaches. Cite primary sources.\n3. Reproduce at least one known result computationally or formally before extending it.\n4. Propose three bounded subproblems, ranked by expected information gain.\n5. Choose one subproblem and build a falsifiable experiment, proof sketch, or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural, and unknown.\n\nNever present numerical evidence as proof. Return code, tests, intermediate artifacts, and a research log.",
-  "verified": "2026-09-04"
+  "starterPrompt": "Take a stab at this problem: unforced 3D Navier-Stokes regularity.\n\nOpenAI has released a finite-time blow-up proof for the smoothly forced equations. The unforced question remains open. Start by reading the proof and its Lean artifact, then isolate every place the forcing term enters the construction.\n\nWork reproducibly:\n1. Restate the unforced problem with exact definitions and quantifiers.\n2. Separate what the new forced result proves from what remains unknown.\n3. Reproduce one key lemma or formal component before attempting an extension.\n4. Propose three bounded routes for eliminating, internalizing or approximating the forcing term.\n5. Choose one route and build a falsifiable calculation, proof sketch or verification harness.\n6. Keep a claim ledger: proven, experimentally supported, conjectural and unknown.\n\nBe ambitious and persistent, but never present numerical evidence as proof. Return code, tests, intermediate artifacts and a research log.",
+  "verified": "2026-09-08"
 }
