@@ -57,6 +57,16 @@ test("a problem with a published solution claim is not offered as an open seed",
   assert.equal(problemById.has("moving-sofa"), false);
 });
 
+test("Navier-Stokes separates the forced result from the unforced open question", () => {
+  const problem = problemById.get("navier-stokes");
+  const result = breakthroughs.find((item) => item.id === "navier-stokes-finite-time-blowup");
+
+  assert.match(problem.title, /^Unforced /);
+  assert.match(problem.whyOpen, /does not settle whether the unforced equations can blow up/i);
+  assert.match(result.context, /unforced regularity question remains open/i);
+  assert.match(result.verificationLevel, /independent expert review is still beginning/i);
+});
+
 test("seeds that specify readiness explain resources and how to judge a first result", () => {
   const detailed = problems.filter((problem) => problem.agentReadiness);
   assert.ok(detailed.length > 0);

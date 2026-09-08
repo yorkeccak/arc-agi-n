@@ -1,0 +1,24 @@
+{
+  "id": "navier-stokes-finite-time-blowup",
+  "date": "2026-09-08",
+  "displayDate": "08 Sep 2026",
+  "title": "Navier-Stokes blew up in finite time",
+  "field": "Partial differential equations",
+  "kind": "Proof",
+  "result": "OpenAI reports that an internal system found a finite-time singularity for the three-dimensional incompressible Navier-Stokes equations with smooth forcing and finite energy, resolving statements C and D in the Clay problem formulation.",
+  "context": "The construction uses the forced formulation. The corresponding unforced regularity question remains open, and the mathematical community has only just begun reviewing the newly released argument. OpenAI says it will not claim the Millennium Prize.",
+  "verificationLevel": "Public 165-page proof and Lean artifact; independent expert review is still beginning",
+  "aiRole": "Up to 10,000 agents produced the argument in about 88 hours; GPT-6 Astra completed Lean formalization and verification in another 17 hours",
+  "sourceTitle": "On the Navier-Stokes Millennium Prize Problem",
+  "sourceUrl": "https://openai.com/index/navier-stokes-solution/",
+  "additionalSources": [
+    {
+      "title": "Proof and Lean formalization",
+      "url": "https://github.com/openai/NavierStokesAndEuler"
+    },
+    {
+      "title": "Independent report and mathematical context",
+      "url": "https://www.scientificamerican.com/article/openai-claims-blockbuster-math-breakthrough-amid-swirl-of-controversy/"
+    }
+  ]
+}

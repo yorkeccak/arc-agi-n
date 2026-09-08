@@ -120,7 +120,7 @@ export function BreakthroughsPanel({ onClose, onHome }: BreakthroughsPanelProps)
             <p>Maths, science and code</p>
             <h1 id="breakthrough-title">Recent breakthroughs.</h1>
             <p className="breakthrough-lede">
-              Fermat, Ramsey numbers, protein design and more.
+              Navier-Stokes, Fermat, prime gaps, protein design and more.
             </p>
             <a className="breakthrough-jump" href="#breakthrough-timeline">Start at the newest <ArrowUpRight size={16} /></a>
           </div>
@@ -144,7 +144,7 @@ export function BreakthroughsPanel({ onClose, onHome }: BreakthroughsPanelProps)
         <section id="breakthrough-timeline" className="breakthrough-log" aria-label="Breakthroughs by date">
           <header>
             <h2>Breakthrough log</h2>
-            <p>Newest first · Updated 6 September 2026</p>
+            <p>Newest first · Updated 8 September 2026</p>
           </header>
           <div className="breakthrough-tools">
             <label><span>Find a result</span><input type="search" value={filter} onChange={(event) => setFilter(event.target.value)} placeholder="Fermat, protein folding, Claude…" /></label>

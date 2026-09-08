@@ -1,6 +1,6 @@
 # Research context and sources
 
-Last reviewed: 5 September 2026.
+Last reviewed: 8 September 2026.
 
 This document records the evidence behind ARC-AGI-N's problem-discovery thesis and breakthrough log. It is a dated reading list, not an exhaustive survey or an independent reproduction of every result.
 
@@ -30,6 +30,7 @@ The useful lesson for a starting prompt is persistence with verification: explor
 
 | Date | Result | What it proves, and what it does not |
 | --- | --- | --- |
+| 8 Sep 2026 | OpenAI released a proof and Lean artifact for finite-time blow-up in the smoothly forced three-dimensional Navier-Stokes equations. It reports an 88-hour search with up to 10,000 agents, followed by 17 hours of Lean formalization with GPT-6 Astra. | The result addresses statements C and D in the Clay formulation. Independent expert review is only beginning, the unforced regularity question remains open, and OpenAI says it will not claim the Millennium Prize. [OpenAI](https://openai.com/index/navier-stokes-solution/) · [proof and Lean artifact](https://github.com/openai/NavierStokesAndEuler) |
 | 20 Feb 2020 | A deep neural model repurposed halicin as an antibiotic candidate; it was validated in vitro and in mouse infection models. | A landmark closed-loop lead-discovery result, not a clinical approval or proof of human efficacy. [Cell](https://www.cell.com/cell/fulltext/S0092-8674(20)30102-1) |
 | 15 Jul 2021 | AlphaFold predicted protein structures to near-experimental accuracy for a majority of CASP14 targets. | It transformed static structure prediction from sequence. It does not fully solve dynamics, interactions, folding pathways or every protein. [Nature](https://www.nature.com/articles/s41586-021-03819-2) |
 | 1 Dec 2021 | Machine-learning attribution guided mathematicians to new relationships between knot invariants and to conjectures in representation theory. | A foundational human-machine mathematics result: models exposed patterns while experts formed the conjectures and supplied proofs. [Nature](https://www.nature.com/articles/s41586-021-04086-x) |
